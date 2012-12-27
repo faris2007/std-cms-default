@@ -2,6 +2,23 @@
 
 /*
 |--------------------------------------------------------------------------
+| Base Site Folder
+|--------------------------------------------------------------------------
+|
+| Folder to your CodeIgniter root. Typically this will be your base URL,
+| WITH a trailing slash:
+|
+|	cms
+|
+| If this is not set then CodeIgniter will guess the protocol, domain and
+| path to your installation.
+|
+*/
+$config['base_folder']	= 'cms';
+
+
+/*
+|--------------------------------------------------------------------------
 | Base Site URL
 |--------------------------------------------------------------------------
 |
@@ -14,7 +31,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= '';
+$config['base_url']	= 'http://' . $_SERVER['SERVER_NAME'].'/'.$config['base_folder'].'/';
 
 /*
 |--------------------------------------------------------------------------
@@ -224,7 +241,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = '';
+$config['encryption_key'] = sha1('s!fdsDF21f;gd');
 
 /*
 |--------------------------------------------------------------------------
@@ -279,7 +296,7 @@ $config['cookie_secure']	= FALSE;
 | COOKIE data is encountered
 |
 */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
