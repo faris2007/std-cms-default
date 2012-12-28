@@ -5,9 +5,10 @@
     <script type="text/javascript">
         var Token = '<?=$this->core->token(TRUE)?>';
         var base_url = '<?=base_url()?>';
+        var style_dir = base_url + 'default';
         var js_files = ["jquery","jquery.dataTables","functions","jquery.popupWindow"];
-        for (js_x in js_files){document.write('<script type="text/javascript" src="' + base_url + 'style/default/js/' + js_files[js_x] + '.js"></' + 'script>');}
-	document.write('<link type="text/css" rel="stylesheet" href="' + base_url + 'style/default/style.css">');
+        for (js_x in js_files){document.write('<script type="text/javascript" src="' + style_dir + '/js/' + js_files[js_x] + '.js"></' + 'script>');}
+	document.write('<link type="text/css" rel="stylesheet" href="' + style_dir + '/style.css">');
     </script>
     
     <!--[if IE 6]>
