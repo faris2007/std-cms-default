@@ -101,7 +101,12 @@ class users extends CI_Model{
         $this->db->trans_start();
         $this->db->insert($this->_table,$data);
         $this->db->trans_complete();
-        return ($this->db->trans_status() === FALSE)? FALSE : True;
+        if($this->db->trans_status() === FALSE)
+        {
+            $this->error();
+            return false;
+        }else
+            return True;
     }
     
     public function updateUser($id,$data){
@@ -112,7 +117,12 @@ class users extends CI_Model{
         $this->db->where("id",$id);
         $this->db->update($this->_table,$data);
         $this->db->trans_complete();
-        return ($this->db->trans_status() === FALSE)? FALSE : True;
+        if($this->db->trans_status() === FALSE)
+        {
+            $this->error();
+            return false;
+        }else
+            return True;
     }
     
     public function deleteUser($id){
@@ -123,7 +133,12 @@ class users extends CI_Model{
         $this->db->where('id', $id);
         $this->db->delete($this->_table);
         $this->db->trans_complete();
-        return ($this->db->trans_status() === FALSE)? FALSE : True;
+        if($this->db->trans_status() === FALSE)
+        {
+            $this->error();
+            return false;
+        }else
+            return True;
     }
     
     public function getUser($id){
@@ -134,9 +149,10 @@ class users extends CI_Model{
         $this->db->where('id', $id);
         $query = $this->db->get($this->_table);
         $this->db->trans_complete();
-        if($this->db->trans_status() === FALSE)
+        if($this->db->trans_status() === FALSE){
+            $this->error();
             return false;
-        else{
+        }else{
             return ($query->num_rows() > 0)? $query->row() : false;
         }
             
@@ -147,9 +163,10 @@ class users extends CI_Model{
         $this->db->trans_start();
         $query = $this->db->get($this->_table);
         $this->db->trans_complete();
-        if($this->db->trans_status() === FALSE)
+        if($this->db->trans_status() === FALSE){
+            $this->error();
             return false;
-        else{
+        }else{
             return ($query->num_rows() > 0)? $query->result() : false;
         }
             
@@ -163,9 +180,10 @@ class users extends CI_Model{
         $this->db->where('username', $username);
         $query = $this->db->get($this->_table);
         $this->db->trans_complete();
-        if($this->db->trans_status() === FALSE)
+        if($this->db->trans_status() === FALSE){
+            $this->error();
             return false;
-        else{
+        }else{
             if($query->num_rows() > 0)
             { 
                 $result = $query->row() ;
@@ -243,6 +261,12 @@ class users extends CI_Model{
         }else
             return false;
             
+    }
+    
+    private function error(){
+        $query = $this->db->last_query();
+        $typeOfError =  $this->db->_error_message();
+        log_message("error", "-- " . $query . " -- " . $typeOfError);
     }
     
     

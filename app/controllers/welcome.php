@@ -21,6 +21,7 @@ class Welcome extends CI_Controller {
 	{
             $data['CONTENT'] = "default/controller/home";
             $data['TITLE'] = "welcome in cms";
+            print_r($t);
             $this->core->load_template($data);
 	}
 }

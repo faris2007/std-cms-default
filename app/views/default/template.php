@@ -5,7 +5,7 @@
     <script type="text/javascript">
         var Token = '<?=$this->core->token(TRUE)?>';
         var base_url = '<?=base_url()?>';
-        var style_dir = base_url + 'default';
+        var style_dir = base_url + 'style/default';
         var js_files = ["jquery","jquery.dataTables","functions","jquery.popupWindow"];
         for (js_x in js_files){document.write('<script type="text/javascript" src="' + style_dir + '/js/' + js_files[js_x] + '.js"></' + 'script>');}
 	document.write('<link type="text/css" rel="stylesheet" href="' + style_dir + '/style.css">');
