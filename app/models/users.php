@@ -246,15 +246,14 @@ class users extends CI_Model{
             
     } 
     
-    public function resetPassword($email){
-        if(empty($email))
+    public function resetPassword($email,$newPassword){
+        if(empty($email) || empty($newPassword))
             return false;
         $this->db->where("email",  $email);
         $query = $this->db->get($this->_tables['users']);
         if($query->num_rows() == 0)
             return false;
         $result = $query->row();
-        $newPassword = md5(rand(0, 100000)*time());
         $data['password'] = $this->encrypt_password($newPassword);
         if($this->updateUser($result->id, $data)){
             return true;
