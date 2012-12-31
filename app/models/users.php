@@ -265,7 +265,7 @@ class users extends CI_Model{
     private function error(){
         $query = $this->db->last_query();
         $typeOfError =  $this->db->_error_message();
-        log_message("error", "-- " . $query . " -- " . $typeOfError);
+        log_message("error", "In This Query -- " . $query . " -- " . $typeOfError);
     }
     
     

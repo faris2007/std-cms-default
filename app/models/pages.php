@@ -1,11 +1,11 @@
 <?php
 
 /**
- * this class for add,edit and remove from error_log table
+ * this class for add,edit and remove from pages table
  * 
  * @author Faris Al-Otaibi
  */
-class error_logs extends CI_Model {
+class pages extends CI_Model{
     
     private $_table = "error_log";
     
@@ -13,7 +13,7 @@ class error_logs extends CI_Model {
         parent::__construct();
     }
     
-    public function addNewLog($data){
+    public function addNewPage($data){
         if(!is_array($data))
             return false;
         
@@ -28,7 +28,7 @@ class error_logs extends CI_Model {
             return True;
     }
     
-    public function updateLog($id,$data){
+    public function updatePage($id,$data){
         if(empty($id) || !is_array($data) || !is_numeric($id))
             return FALSE;
         
@@ -44,7 +44,7 @@ class error_logs extends CI_Model {
             return True;
     }
     
-    public function deleteLog($id){
+    public function deletePage($id){
         if(empty($id) || !is_numeric($id))
             return false;
         
@@ -60,7 +60,7 @@ class error_logs extends CI_Model {
             return True;
     }
     
-    public function getLog($id){
+    public function getPage($id){
         if(empty($id) || !is_numeric($id))
             return false;
         
@@ -77,9 +77,15 @@ class error_logs extends CI_Model {
             
     }
     
-    public function getLogs(){
+    public function getPages($parentId = 0){
+        if (empty($parentId))            
+            return FALSE;
         
         $this->db->trans_start();
+        if($parentId <= 0)
+            $this->db->where('parent_id IS NULL');
+        else
+            $this->db->where('parent_id', $id);
         $query = $this->db->get($this->_table);
         $this->db->trans_complete();
         if($this->db->trans_status() === FALSE){
@@ -91,7 +97,21 @@ class error_logs extends CI_Model {
             
     }
     
-    
+    public function getParentThisPage($pageId){
+        if(empty($pageId))
+            return false;
+        
+        if(is_numeric($pageId) && $pageId > 0){
+            $result = $this->getPage($pageId);
+            if($result->parent_id != NULL)
+                return $this->getParentThisPage($result->parent_id).','.serialize($result);
+            else
+                return serialize($result);
+        }
+            
+    }
+
+
     private function error(){
         $query = $this->db->last_query();
         $typeOfError =  $this->db->_error_message();
