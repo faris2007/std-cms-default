@@ -19,14 +19,14 @@ class Logs extends CI_Model {
              *
              */
     function addNewLog($data) {
-        if(empty($data) || !is_array($data))
+        if( !is_array($data))
             return false;
         return $this->db->insert($this->_table,$data);
     }
     
     function updateLog($id , $data) {
         
-        if(empty($id) || is_array($data))
+        if(empty($id) || !is_array($data))
             return FALSE;
         
         $this->db->where('id' , $id);
@@ -48,7 +48,7 @@ class Logs extends CI_Model {
     
     function getLogs($userid) {
    
-         if(empty($userid)) return false;
+         if(empty($userid) ) return false;
         
         if(is_numeric($userid))
         {
@@ -59,6 +59,18 @@ class Logs extends CI_Model {
         return ($query->num_rows() > 0)? $query->result() : false;
     
     }
+    
+    function getLog($id) {
+        if(empty($id) || !is_numeric($id)) return false;
+        
+        $this->db->where('id' , $id);
+        
+        $query=  $this->db->get($this->_table);
+        
+        return( $query->num_rows() > 0) ?$query->row() :FALSE;
+        
+    }
+    
 }
 
 ?>

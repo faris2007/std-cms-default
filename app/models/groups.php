@@ -21,7 +21,7 @@ class groups extends CI_Model {
     
     function addNewGroup($data)
     {
-        if(empty($data) || !is_array($data)) return false;
+        if(!is_array($data)) return false;
         
         return $this->db->insert($this->_table, $data); 
     }
@@ -34,7 +34,7 @@ class groups extends CI_Model {
         if (empty($id)) return FALSE;  //Cheack it's not empty value
         
         // Get the group by id
-        if(is_numeric($id) || !is_numeric($id) ){ 
+        if(is_numeric($id)){ 
         $this->db->where('id',$id);
         
         }
