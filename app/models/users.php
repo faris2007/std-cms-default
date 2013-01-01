@@ -21,6 +21,10 @@ class users extends CI_Model{
         $data = $this->getPermissions($groupId);
         $data['userid'] = $userid;
         $data['group'] = $groupId;
+        $CI =& get_instance();
+        $CI->load->model('groups');
+        $groupInfo = $CI->groups->getGroup($groupId);
+        $data['group_type'] = ($groupInfo->isAdmin == 1)? 'admin' : 'user';
         $this->session->set_userdata($data);
     }
     
@@ -215,6 +219,21 @@ class users extends CI_Model{
     public function isLogin($redirect = FALSE)
     {
         if ($this->session->userdata('userid'))
+        {
+            return TRUE;
+        }else{
+            if ($redirect)
+            {
+                redirect();
+            }else{
+                return FALSE;
+            }
+        }
+    }
+    
+    public function isAdmin($redirect = FALSE)
+    {
+        if ($this->session->userdata('group_type') == 'admin')
         {
             return TRUE;
         }else{
