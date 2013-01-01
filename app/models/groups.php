@@ -21,7 +21,7 @@ class groups extends CI_Model {
     
     function addNewGroup($data)
     {
-        if(!is_array($data)) return false;
+        if(empty($data) || !is_array($data)) return false;
         
         return $this->db->insert($this->_table, $data); 
     }
