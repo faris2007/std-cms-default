@@ -119,22 +119,63 @@ class Core {
         
     }
     
-    public function getServicesName(){
-        $data = array("testament","employee","job","group","post","attendance","notification","work","penalty");
-        return $data;
+    public function getServicesName($service_name = Null){
+        $data = array(
+            "page"      => "ادارة الصفحات" ,
+            "menu"      => "إدارة القوائم",
+            "users"     => "إدارة الأعضاء",
+            "group"     => "إدارة المجموعات",
+            "setting"   => "الإعدادات",
+            "log"       => "السجل"
+            );
+        return ($service_name == Null ) ? $data : $data[$service_name];
     }
     
     public function getFunctionsName($service_name ="all"){
         $data = array(
-            "testament"     => array("all","view","show","add","edit","delete"),
-            "employee"      => array("all","profile","view","add","edit","delete"),
-            "job"           => array("all","view","show","add","edit","delete"),
-            "group"         => array("all","view","show","add","edit","delete"),
-            "post"          => array("all","view","show","add","edit","delete"),
-            "attendance"    => array("all","view","show","add","edit","delete"),
-            "notification"  => array("all","view","show","add","edit","delete"),
-            "work"          => array("all","view","show","add","edit","delete"),
-            "penalty"       => array("all","view","show","add","edit","delete")
+            "page"      => array(
+                    "all"       => "جميع الصلاحيات",
+                    "active"    => "تنشيط",
+                    "show"      => "استعراض البيانات",
+                    "add"       => "أضافة",
+                    "edit"      => "تعديل",
+                    "delete"    => "حذف"
+                    ),
+            "menu"      => array(
+                    "all"       => "جميع الصلاحيات",
+                    "active"    => "تنشيط",
+                    "show"      => "استعراض البيانات",
+                    "add"       => "أضافة",
+                    "edit"      => "تعديل",
+                    "delete"    => "حذف"
+                    ),
+            "users"     => array(
+                    "all"       => "جميع الصلاحيات",
+                    "active"    => "تنشيط",
+                    "show"      => "استعراض البيانات",
+                    "add"       => "أضافة",
+                    "edit"      => "تعديل",
+                    "delete"    => "حذف"
+                    ),
+            "group"     => array(
+                    "all"       => "جميع الصلاحيات",
+                    "active"    => "تنشيط",
+                    "show"      => "استعراض البيانات",
+                    "add"       => "أضافة",
+                    "edit"      => "تعديل",
+                    "delete"    => "حذف"
+                    ),
+            "setting"   => array(
+                    "all"       => "جميع الصلاحيات",
+                    "show"      => "استعراض البيانات",
+                    "add"       => "أضافة",
+                    "edit"      => "تعديل"
+                    ),
+            "log"       => array(
+                    "all"       => "جميع الصلاحيات",
+                    "show"      => "استعراض البيانات",
+                    "delete"    => "حذف"
+                    ),
             );
         return (isset($data[$service_name]))? $data[$service_name] : $data  ;
     }

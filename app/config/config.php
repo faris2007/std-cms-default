@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_folder']	= 'cms';
+$config['base_folder']	= 'cms/';
 
 
 /*
@@ -31,7 +31,7 @@ $config['base_folder']	= 'cms';
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://' . $_SERVER['SERVER_NAME'].'/'.$config['base_folder'].'/';
+$config['base_url']	= 'http://' . $_SERVER['SERVER_NAME'].'/'.$config['base_folder'];
 
 /*
 |--------------------------------------------------------------------------
