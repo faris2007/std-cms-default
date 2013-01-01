@@ -200,6 +200,33 @@ class Core {
             $newString = $string;
         return $newString;
     }
+    
+    public function getPath($pageId){
+        if(empty($pageId))
+            return FALSE;
+        $this->CI->load->model("pages");
+        
+        $parentPage = $this->CI->pages->getParentThisPage($pageId);
+        $result = FALSE;
+        if(!is_bool($parentPage)){
+            $path = explode(',', $parentPage);
+            $result = array(
+                0 => array(
+                    'url'   => base_url(),
+                    'name'  => "الصفحة الرئيسية"
+                )
+            );
+            foreach ($path as $value){
+                $item = unserialize($value);
+                $result[] = array(
+                    'url'   => base_url().'page/'.$item->id,
+                    'name'  => $item->title
+                );
+            }
+                
+        }
+        return $result;
+    }
 }
 
 ?>
