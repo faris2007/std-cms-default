@@ -1,6 +1,6 @@
 <?php
 
-class Menu extends CI_Model {
+class Menus extends CI_Model {
 
         private $_table = "menu";
 

@@ -15,7 +15,7 @@ class install extends CI_Controller
     {
         if($step==1)
         {
-            $data['ERROR'] = (!$this->db)? FALSE : TRUE;
+            $data['ERROR'] = (!$this->load->database())? FALSE : TRUE;
             $data['TITLE']  = "سكربت أدارة المحتوى -- صفحة التركيب";
             $data['CONTENT'] = "install/controller/install";
             $data['STEP'] = "checkdb";
@@ -250,6 +250,11 @@ class install extends CI_Controller
                     'name'      => "email_protocol",
                     'value'     => '',
                     'default'   => ''
+                    ),
+                12 => array(
+                    'name'      => "cms_version",
+                    'value'     => STD_CMS_VER,
+                    'default'   => STD_CMS_VER
                     )
                 );
             foreach ($store as $value)

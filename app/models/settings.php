@@ -1,6 +1,6 @@
 <?php
 
-class setting extends CI_Model {
+class settings extends CI_Model {
 
     private $_table = "setting";
     

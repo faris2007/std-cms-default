@@ -6,7 +6,7 @@
  */
 
 
-class Permission extends CI_Model {
+class Permissions extends CI_Model {
       
     private $_table = "logs";
     

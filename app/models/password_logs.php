@@ -6,7 +6,7 @@
  */
 
 
-class Password_Log extends CI_Model {
+class Password_Logs extends CI_Model {
       
     private $_table = "password_log";
     
