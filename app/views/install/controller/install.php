@@ -1,6 +1,6 @@
 <?php if($STEP == 'init'):?>
 <form method="post" action="<?=base_url()?>install/step/1">
-    <div>
+    <div class="message">
         <span>مرحباً بكم<br />
             صفحة تركيب السكربت
         <br />
@@ -10,6 +10,7 @@
     </div>
 </form>
 <?php elseif ($STEP == "checkdb") : ?>
+<div  class="message">
     <?php if(@$ERROR): ?>
         <form method="post" action="<?=base_url()?>install">
             <span style="color:#FF0000">هناك مشكلة في الاتصال بقاعدة البيانات<br />
@@ -23,9 +24,10 @@
             <input type="submit" value="الخــــطـــوة الـــتـــالـــيـــــة" name="B1" /></span>
         </form>
     <?php endif; ?>
+</div>
 <?php elseif($STEP == 'createtable'): ?>
 <form method="post" action="<?=base_url()?>install/step/3">
-    <div style="text-align:center">
+    <div class="message">
         يتم الآن تركيب الجداول
         <br />
         <ul>
@@ -40,7 +42,7 @@
 </form>
 <?php elseif ($STEP == "addinfo"): ?>
     <form method="post" action="<?=base_url()?>install/step/4">
-        <table>
+        <table class="tbl">
             <tr>
                 <td colspan="2" class="alt1">يتم الآن إدخال البيانات للجداول</td>
             </tr>
@@ -53,7 +55,7 @@
             </tr>
             <tr>
                 <td class="alt2">رابط الموقع :</td>
-                <td class="alt2"><input type="text" name="url" size="20" value="'.$url.'"></td>
+                <td class="alt2"><input type="text" name="url" size="20" value="<?=base_url()?>"></td>
             </tr>
             <tr>
                 <td class="alt1">اسم المستخدم للإدارة : </td>
@@ -74,7 +76,7 @@
     </form>
 <?php elseif($STEP == "insertinfo"): ?>
     <form method="post" action="<?=base_url()?>admin">
-        <div>
+        <div class="message">
             <ul>
                 <li> تم أضافة اعدادات الموقع</li>
                 <li>تم أضافة مجموعة الأدارة</li>

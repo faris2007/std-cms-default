@@ -2,7 +2,7 @@
 
 class settings extends CI_Model {
 
-    private $_table = "setting";
+    private $_table = "settings";
     
     function __construct() {
         
