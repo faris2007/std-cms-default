@@ -99,6 +99,9 @@ class Core {
             // Main Menu
             $data['MENU'] = (isset($temp_data['MENU'])) ? $temp_data['MENU'] : $this->CI->load->view('default/menu',NULL,TRUE);
             
+            // Change style if install
+            $this->site_style = (isset($temp_data['isInstall']))? 'install' : $this->site_style;
+            
             // Content
             $data['CONTENT'] = (isset($temp_data['CONTENT'])) ? $this->CI->load->view($this->site_style.'/controller/'.$temp_data['CONTENT'],$temp_data,TRUE) : '' ;
             

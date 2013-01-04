@@ -293,15 +293,17 @@ class install extends CI_Controller
             );
             $this->users->addNewUser($admin_user);
             $data['TITLE']  = "سكربت أدارة المحتوى -- صفحة التركيب";
-            $data['CONTENT'] = "install/controller/install";
+            $data['CONTENT'] = "install";
             $data['STEP'] = "insertinfo";
+            $data['isInstall'] = 'install';
             
             
         }else if($step == 0 )
         {
             $data['TITLE']  = "سكربت أدارة المحتوى -- صفحة التركيب";
-            $data['CONTENT'] = "install/controller/install";
+            $data['CONTENT'] = "install";
             $data['STEP'] = "init";
+            $data['isInstall'] = 'install';
         }
         $this->core->load_template($data);
     }
