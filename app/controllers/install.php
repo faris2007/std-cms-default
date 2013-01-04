@@ -27,8 +27,8 @@ class install extends CI_Controller
             CREATE  TABLE IF NOT EXISTS `settings` (
                 `id` INT NOT NULL AUTO_INCREMENT,
                 `name` VARCHAR(45) NULL ,
-                `value` VARCHAR(45) NULL ,
-                `default` VARCHAR(45) NULL ,
+                `value` TEXT NULL ,
+                `default` TEXT NULL ,
                 PRIMARY KEY (`id`) )
             ENGINE=MYISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin ;");
             $tables[] = "settings";
@@ -218,8 +218,10 @@ class install extends CI_Controller
                     ),
                 5 => array(
                     'name'      => "disable_msg",
-                    'value'     => 'الموقع مغلق للصيانة\n سوف يتم افتتاحه قريباً',
-                    'default'   => 'الموقع مغلق للصيانة\n سوف يتم افتتاحه قريباً'
+                    'value'     => 'الموقع مغلق للصيانة
+                        سوف يتم افتتاحه قريباً',
+                    'default'   => 'الموقع مغلق للصيانة
+                        سوف يتم افتتاحه قريباً'
                     ),
                 6 => array(
                     'name'      => "disable_except_group",

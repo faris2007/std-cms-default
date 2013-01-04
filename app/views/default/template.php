@@ -3,7 +3,7 @@
 <head>
     <title><?=$HEAD['TITLE']?></title>
     <script type="text/javascript">
-        var Token = '<?=$this->core->token(TRUE)?>';
+        <?=(@$DISABLE)?'' :"var Token = '".$this->core->token(TRUE)."';\n"?>
         var base_url = '<?=base_url()?>';
         var style_dir = base_url + 'style/default';
         var js_files = ["jquery","jquery.dataTables","functions","jquery.popupWindow"];
@@ -50,7 +50,6 @@
             <br />
         </div>
         <div id="footer">
-            <span>Copyright &copy; 2013 Saudi Technical Design.</span>
             <span><?=@$DEVELOPMENT?></span>
         </div>
     </div>

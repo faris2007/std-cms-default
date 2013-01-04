@@ -5,6 +5,7 @@ class Core {
     private $CI;
     private $Token,$Old_Token,$New_Token,$Security_Key,$User_Agent;
     public  $site_language = 'english';
+    public  $site_name;
 
     public function __construct()
     {
@@ -16,6 +17,20 @@ class Core {
     public function load_setting()
     {
             $this->generate_token();
+            $this->CI->load->model('settings');
+            $title = $this->CI->settings->getSettingByName("site_name");
+            $this->site_name = $title->value ;
+            $enable = $this->CI->settings->getSettingByName("site_enable");
+            if($enable->value == 0) {
+                $disable_msg = $this->CI->settings->getSettingByName("disable_msg");
+                exit($this->load_template(array(
+                    'TITLE'     => $this->site_name,
+                    'CONTENT'   => 'default/msg',
+                    'MSG'       => nl2br($disable_msg->value),
+                    'DISABLE'   => TRUE
+                ),true));
+            }
+            
     }
 
     public function generate_token()
@@ -83,7 +98,16 @@ class Core {
 			
             // Content
             $data['CONTENT'] = (isset($temp_data['CONTENT'])) ? $this->CI->load->view($temp_data['CONTENT'],$temp_data,TRUE) : '' ;
-
+            
+            // Navbar for website
+            $data['NAV'] = (isset($temp_data['NAV'])) ? $temp_data['NAV']: false;
+            
+            // Copy Right
+            $data['DEVELOPMENT'] = 'Copyright &copy; 2013 '.  anchor('https://std-hosting.com/', 'Saudi Technical Design') .'.';
+            
+            // Disable Website
+            $data['DISABLE'] = (isset($temp_data['DISABLE'])) ? $temp_data['DISABLE'] : false;
+            
             // Main Template
             $load_only = (is_bool($load_only)) ? $load_only : FALSE;
 

@@ -17,11 +17,15 @@ class Welcome extends CI_Controller {
 	 * map to /index.php/welcome/<method_name>
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
-	public function index()
+        public function __construct() {
+            parent::__construct();
+            
+        }
+        
+        public function index()
 	{
             $data['CONTENT'] = "default/controller/home";
-            $data['TITLE'] = "welcome in cms";
-            print_r($t);
+            $data['TITLE'] = $this->core->site_name . " -- welcome in cms";
             $this->core->load_template($data);
 	}
 }

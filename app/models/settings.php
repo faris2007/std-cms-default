@@ -32,13 +32,8 @@ class settings extends CI_Model {
         return $this->db->delete($this->_table); 
     }
 
-    function getSettings($userid) {
-        if(empty($userid)) return false;
+    function getSettings() {
         
-        if(is_numeric($userid))
-        {
-            $this->db->where('users_id',$userid);
-        }
         $this->db->order_by("id"); 
         $query = $this->db->get($this->_table);
         return ($query->num_rows() > 0)? $query->result() : false;
@@ -50,6 +45,15 @@ class settings extends CI_Model {
         $this->db->where('id',$id);
         $query = $this->db->get($this->_table);
         return ($query->num_rows() > 0)? $query->row() : false; 
+    }
+    
+    function getSettingByName($name){
+        if(empty($name) || !is_string($name))
+            return FALSE;
+        
+        $this->db->where('name',$name);
+        $query = $this->db->get($this->_table);
+        return ($query->num_rows() > 0)? $query->row() : false;
     }
 }
 
