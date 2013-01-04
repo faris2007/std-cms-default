@@ -24,8 +24,8 @@ class Welcome extends CI_Controller {
         
         public function index()
 	{
-            $data['CONTENT'] = "default/controller/home";
-            $data['TITLE'] = $this->core->site_name . " -- welcome in cms";
+            $data['CONTENT'] = "home";
+            $data['TITLE'] = " -- welcome in cms";
             $this->core->load_template($data);
 	}
 }

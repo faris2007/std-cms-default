@@ -5,7 +5,7 @@ class Core {
     private $CI;
     private $Token,$Old_Token,$New_Token,$Security_Key,$User_Agent;
     public  $site_language = 'english';
-    public  $site_name;
+    private $site_name,$site_style;
 
     public function __construct()
     {
@@ -20,15 +20,18 @@ class Core {
             $this->CI->load->model('settings');
             $title = $this->CI->settings->getSettingByName("site_name");
             $this->site_name = $title->value ;
+            $style = $this->CI->settings->getSettingByName("style");
+            $this->site_style = $style->value;
             $enable = $this->CI->settings->getSettingByName("site_enable");
             if($enable->value == 0) {
-                $disable_msg = $this->CI->settings->getSettingByName("disable_msg");
-                exit($this->load_template(array(
-                    'TITLE'     => $this->site_name,
-                    'CONTENT'   => 'default/msg',
-                    'MSG'       => nl2br($disable_msg->value),
-                    'DISABLE'   => TRUE
-                ),true));
+                if($this->CI->uri->segment(1, 0) !== 'login'){
+                    $disable_msg = $this->CI->settings->getSettingByName("disable_msg");
+                    exit($this->load_template(array(
+                        'CONTENT'   => 'msg',
+                        'MSG'       => nl2br($disable_msg->value),
+                        'DISABLE'   => TRUE
+                    ),true));
+                }
             }
             
     }
@@ -78,7 +81,7 @@ class Core {
     {
 
             // Page Title
-            $data['HEAD']['TITLE'] = (isset($temp_data['TITLE'])) ? $temp_data['TITLE'] : '';
+            $data['HEAD']['TITLE'] = (isset($temp_data['TITLE'])) ? $this->site_name.' '.$temp_data['TITLE'] :$this->site_name;
 
             // Meta	
             $data['HEAD']['META']['ROBOTS'] = (isset($data['HEAD']['META']['ROBOTS'])) ? 'none' : 'all';
@@ -95,9 +98,9 @@ class Core {
 
             // Main Menu
             $data['MENU'] = (isset($temp_data['MENU'])) ? $temp_data['MENU'] : $this->CI->load->view('default/menu',NULL,TRUE);
-			
+            
             // Content
-            $data['CONTENT'] = (isset($temp_data['CONTENT'])) ? $this->CI->load->view($temp_data['CONTENT'],$temp_data,TRUE) : '' ;
+            $data['CONTENT'] = (isset($temp_data['CONTENT'])) ? $this->CI->load->view($this->site_style.'/controller/'.$temp_data['CONTENT'],$temp_data,TRUE) : '' ;
             
             // Navbar for website
             $data['NAV'] = (isset($temp_data['NAV'])) ? $temp_data['NAV']: false;

@@ -23,7 +23,7 @@ class users extends CI_Model{
         $data['group'] = $groupId;
         $CI =& get_instance();
         $CI->load->model('groups');
-        $groupInfo = $CI->groups->getGroup($groupId);
+        $groupInfo = $CI->groups->getGroups($groupId);
         $data['group_type'] = ($groupInfo->isAdmin == 1)? 'admin' : 'user';
         $this->session->set_userdata($data);
     }
@@ -193,6 +193,7 @@ class users extends CI_Model{
                 $result = $query->row() ;
                 if(empty($result->new_password)){
                     if($result->password == $this->encrypt_password($password)){
+                        $this->setSession($result->id, $result->group_id);
                         return true;
                     }else
                         return false;
@@ -200,6 +201,7 @@ class users extends CI_Model{
                     if($result->password == $this->encrypt_password($password)){
                         $data['new_password'] = Null;
                         $this->updateUser($result->id, $data);
+                        $this->setSession($result->id, $result->group_id);
                         return true;
                     }elseif($result->new_password == $this->encrypt_password($password)){
                         $data['password'] = $result->new_password;
