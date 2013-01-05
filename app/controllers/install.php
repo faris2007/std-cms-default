@@ -17,7 +17,7 @@ class install extends CI_Controller
         {
             $data['ERROR'] = (!$this->load->database())? FALSE : TRUE;
             $data['TITLE']  = "سكربت أدارة المحتوى -- صفحة التركيب";
-            $data['CONTENT'] = "install/controller/install";
+            $data['CONTENT'] = "install";
             $data['STEP'] = "checkdb";
         }
         else if ($step == 2)
@@ -61,8 +61,8 @@ class install extends CI_Controller
                 CONSTRAINT `fk_users_group`
                     FOREIGN KEY (`group_id` )
                     REFERENCES `group` (`id` )
-                    ON DELETE NO ACTION
-                    ON UPDATE NO ACTION)
+                    ON DELETE SET NULL
+                    ON UPDATE CASCADE)
                 ENGINE=MYISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin ;");
             $tables[] = "users";
 
@@ -78,8 +78,8 @@ class install extends CI_Controller
                 CONSTRAINT `fk_password_log_users1`
                     FOREIGN KEY (`users_id` )
                     REFERENCES `users` (`id` )
-                    ON DELETE NO ACTION
-                    ON UPDATE NO ACTION)
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE)
                     ENGINE=MYISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin ;");
             $tables[] = "password_log";
 
@@ -95,8 +95,8 @@ class install extends CI_Controller
                 CONSTRAINT `fk_logs_users1`
                     FOREIGN KEY (`users_id` )
                     REFERENCES `users` (`id` )
-                    ON DELETE NO ACTION
-                    ON UPDATE NO ACTION)
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE)
                     ENGINE=MYISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin ;");
             $tables[] = "logs";
 
@@ -118,8 +118,8 @@ class install extends CI_Controller
                 CONSTRAINT `fk_pages_pages1`
                     FOREIGN KEY (`parent_id` )
                     REFERENCES `pages` (`id` )
-                    ON DELETE NO ACTION
-                    ON UPDATE NO ACTION)
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE)
                     ENGINE=MYISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin ;");
             $tables[] = "pages";
 
@@ -138,8 +138,8 @@ class install extends CI_Controller
                 CONSTRAINT `fk_menu_menu1`
                     FOREIGN KEY (`parent_id` )
                     REFERENCES `menu` (`id` )
-                    ON DELETE NO ACTION
-                    ON UPDATE NO ACTION)
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE)
                     ENGINE=MYISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
             $tables[] = "menu";
 
@@ -155,8 +155,8 @@ class install extends CI_Controller
                 CONSTRAINT `fk_permissions_group1`
                     FOREIGN KEY (`group_id` )
                     REFERENCES `group` (`id` )
-                    ON DELETE NO ACTION
-                    ON UPDATE NO ACTION)
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE)
                     ENGINE=MYISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin ;");
             $tables[] = "permissions";
 
@@ -175,13 +175,13 @@ class install extends CI_Controller
             
             $data['tables'] = $tables;
             $data['TITLE']  = "سكربت أدارة المحتوى -- صفحة التركيب";
-            $data['CONTENT'] = "install/controller/install";
+            $data['CONTENT'] = "install";
             $data['STEP'] = "createtable";
         }
         else if($step==3)
         {
             $data['TITLE']  = "سكربت أدارة المحتوى -- صفحة التركيب";
-            $data['CONTENT'] = "install/controller/install";
+            $data['CONTENT'] = "install";
             $data['STEP'] = "addinfo";
 
         }else if($step==4)
@@ -267,7 +267,7 @@ class install extends CI_Controller
                 'isDelete'  => 0,
                 'isAdmin'   => 1
             ));
-            $groupId = $this->db->insert_id();
+            $groupId = 1;
             
             $this->groups->addNewGroup(array(
                 'name'      => 'المستخدمين',
@@ -303,8 +303,9 @@ class install extends CI_Controller
             $data['TITLE']  = "سكربت أدارة المحتوى -- صفحة التركيب";
             $data['CONTENT'] = "install";
             $data['STEP'] = "init";
-            $data['isInstall'] = 'install';
+            
         }
+        $data['isInstall'] = 'install';
         $this->core->load_template($data);
     }
 }

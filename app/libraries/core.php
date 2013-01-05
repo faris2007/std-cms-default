@@ -11,26 +11,36 @@ class Core {
     {
             // Load Class CI
             $this->CI =& get_instance();
-            $this->load_setting();
+            if($this->CI->uri->segment(1, 0) !== 'install')
+                $this->load_setting();
     }
 
     public function load_setting()
     {
             $this->generate_token();
-            $this->CI->load->model('settings');
+            $this->CI->load->model('settings');            
             $title = $this->CI->settings->getSettingByName("site_name");
-            $this->site_name = $title->value ;
+            $this->site_name = (!is_bool($title))? $title->value : '' ;
             $style = $this->CI->settings->getSettingByName("style");
-            $this->site_style = $style->value;
+            $this->site_style = (!is_bool($style)) ? $style->value : '';
             $enable = $this->CI->settings->getSettingByName("site_enable");
-            if($enable->value == 0) {
-                if($this->CI->uri->segment(1, 0) !== 'login'){
-                    $disable_msg = $this->CI->settings->getSettingByName("disable_msg");
-                    exit($this->load_template(array(
-                        'CONTENT'   => 'msg',
-                        'MSG'       => nl2br($disable_msg->value),
-                        'DISABLE'   => TRUE
-                    ),true));
+            if(!is_bool($enable)){
+                if($enable->value == 0) {
+                    $disable = TRUE;
+                    $this->CI->load->model('users');
+                    if($this->CI->users->isLogin()){
+                            $enableForGroup = $this->CI->settings->getSettingByName("disable_except_group");
+                            if($this->CI->users->getInfoUser('group') == $enableForGroup->value)
+                                $disable = FALSE;
+                        }
+                    if($this->CI->uri->segment(1, 0) !== 'login' && $disable){
+                        $disable_msg = $this->CI->settings->getSettingByName("disable_msg");
+                        exit($this->load_template(array(
+                            'CONTENT'   => 'msg',
+                            'MSG'       => nl2br($disable_msg->value),
+                            'DISABLE'   => TRUE
+                        ),true));
+                    }
                 }
             }
             
@@ -109,7 +119,7 @@ class Core {
             $data['NAV'] = (isset($temp_data['NAV'])) ? $temp_data['NAV']: false;
             
             // Copy Right
-            $data['DEVELOPMENT'] = 'Copyright &copy; 2013 '.  anchor('https://std-hosting.com/', 'Saudi Technical Design') .'.';
+            $data['DEVELOPMENT'] = 'Development By '.  anchor('https://std-hosting.com/', 'Saudi Technical Design') .'.';
             
             // Disable Website
             $data['DISABLE'] = (isset($temp_data['DISABLE'])) ? $temp_data['DISABLE'] : false;

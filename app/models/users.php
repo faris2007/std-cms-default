@@ -33,6 +33,7 @@ class users extends CI_Model{
         $data['premissions'] = '';
         $data['userid'] = '';
         $data['group'] = '';
+        $data['group_type'] = '';
         $this->session->unset_userdata($data);
     }
     
@@ -287,6 +288,28 @@ class users extends CI_Model{
         $query = $this->db->last_query();
         $typeOfError =  $this->db->_error_message();
         log_message("error", "In This Query -- " . $query . " -- " . $typeOfError);
+    }
+    
+    public function getInfoUser($type ='id'){
+        if(empty($type))
+            return false;
+        
+        
+        switch ($type){
+            
+            case 'id':
+                return $this->session->userdata('userid');
+                break;
+            
+            case 'group':
+                return $this->session->userdata('group');
+                break;
+            
+            default :
+                return false;
+                break;
+        }
+        
     }
     
     

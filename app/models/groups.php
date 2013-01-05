@@ -55,7 +55,7 @@ class groups extends CI_Model {
             $this->error();
             return false;
          }else
-            return ($query->num_row >0)? $query->result() : false;
+            return ($query->num_rows() >0)? $query->result() : false;
 
     }
     
