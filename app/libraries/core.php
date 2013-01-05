@@ -105,9 +105,12 @@ class Core {
 
             // Other Code ( HTML -> HEAD )
             $data['HEAD']['OTHER'] = (isset($temp_data['HEAD'])) ? $temp_data['HEAD'] : '';
-
+            
+            // Main Menu Data
+            $menu['MAINMENU'] = $this->getMenuPyParentID();
+            
             // Main Menu
-            $data['MENU'] = (isset($temp_data['MENU'])) ? $temp_data['MENU'] : $this->CI->load->view('default/menu',NULL,TRUE);
+            $data['MENU'] = (isset($temp_data['MENU'])) ? $temp_data['MENU'] : $this->CI->load->view($this->site_style.'/menu',$menu,TRUE);
             
             // Change style if install
             $this->site_style = (isset($temp_data['isInstall']))? 'install' : $this->site_style;
@@ -220,6 +223,38 @@ class Core {
         return (isset($data[$service_name]))? $data[$service_name] : $data  ;
     }
     
+    public function getMenuPyParentID($parentID = NULL){
+        
+        $this->CI->load->model('menus');
+        $result = $this->CI->menus->getMenuWithChild($parentID);
+        $data = array();
+        if(!is_bool($result['content'])){
+            foreach ($result as $val){
+                $data[] = (!is_bool($this->getSubMenu($val['child'])))? anchor('#',$val['content']->title).' '.$this->getSubMenu($val['child']): anchor($val['content']->url,$val['content']->title);
+            }
+        }
+        return $data;
+    }
+    
+    private function extractSubMenu($content){
+        return unserialize($content); 
+    }
+    
+    private function getSubMenu($content){
+        
+        $content = $this->extractSubMenu($content);
+        $data = array();
+        if(!is_bool($content['content']))
+        {
+            $subMenu  = $this->getSubMenu($content['child']);
+            $data[] = (!is_bool($subMenu))? anchor('#',$content['content']->title).' '.$subMenu : anchor($val['content']->url,$val['content']->title);
+        }else
+            return FALSE;
+        
+        return ul($data, array());
+    }
+
+
     public function perpage($url = '',$total = 0,$cur_page = 0,$per_page = 30)
     {
         $this->CI->load->library('pagination');
