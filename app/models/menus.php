@@ -93,14 +93,17 @@ class Menus extends CI_Model {
             return ($query->num_rows() > 0)? $query->row() : false; 
     }
     
-    public function getMenuWithChild($parentID){
-        if(is_null($parentID) || is_numeric($parentID)){
+    public function getMenuWithChild($parentID,$where = NULL){
+        if((is_null($parentID) || is_numeric($parentID) )){
             $data = array();
+            if(is_array($where))
+                $this->db->where($where);
+            
             $result = $this->getMenus($parentID);
             if(!is_bool($result)){
                 foreach ($result as $val){
                     $data[]['content'] = $val;
-                    $data[]['child'] = serialize($this->getMenuWithChild($val->id));
+                    $data[]['child'] = serialize($this->getMenuWithChild($val->id,$where));
                 }
             }else
                 return array(

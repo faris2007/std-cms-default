@@ -226,7 +226,11 @@ class Core {
     public function getMenuPyParentID($parentID = NULL){
         
         $this->CI->load->model('menus');
-        $result = $this->CI->menus->getMenuWithChild($parentID);
+        $where = array(
+            'isDelete'      => 0,
+            'isHidden'      => 0
+        );
+        $result = $this->CI->menus->getMenuWithChild($parentID,$where);
         $data = array();
         if(!is_bool($result['content'])){
             foreach ($result as $val){
