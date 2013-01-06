@@ -37,6 +37,36 @@
         لهذا الرجاء ابلاغ إدارة الموقع بخصوص هذه المشكلة ان كانت لديك صلاحية
     
 </div>
-
+<?php elseif($STEP ==  'resetpass'): ?>
+<form method="post">
+    <table class="tbl" style="width: 65%;direction:rtl">
+        <thead>
+            <tr>
+                <th colspan="2">أستعادة الباسورد</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>البريد الإلكتروني المسجل :</td>
+                <td><input type="text" name="email" placeholder="E-Mail" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><?=$CAPTCHA?></td>
+            </tr>
+            <tr>
+                <td>أدخل السؤال الأمني</td>
+                <td><input type="text" name="captcha" /></td>
+            </tr>
+            <?php if($ERROR): ?>
+                <tr>
+                    <td colspan="2" class="error"><?=@$ERR_MSG?></td>
+                </tr>
+            <?php endif; ?>
+            <tr>
+                <td colspan="2"><input type="submit" value="طلب أستعادة الباسورد" /></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
 <?php endif; ?>
 

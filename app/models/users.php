@@ -252,14 +252,23 @@ class users extends CI_Model{
     public function change_password($username,$oldPass,$newPass,$admin = false){
         if(empty($username)||(empty($oldPass)&& !$admin)||empty($newPass))
             return false;
+        
+        $CI =& get_instance();
+        $CI->load->model('password_logs');
         if(!$admin){
             $this->db->where("password",  $this->encrypt_password($oldPass));
         }
         $this->db->where("username",$username);
-        $query = $this->db->get($this->_tables['users']);
+        $query = $this->db->get($this->_table);
         if($query->num_rows() == 0)
             return false;
         $result = $query->row();
+        $store = array(
+            'date'      => date("d-m-Y H:i:s"),
+            'password'  => $result->password,
+            'users_id'  => $result->id
+        );
+        $CI->password_logs->addNewLog($store);
         $data['password'] = $this->encrypt_password($newPass);
         if($this->updateUser($result->id, $data)){
             return true;
@@ -271,12 +280,20 @@ class users extends CI_Model{
     public function resetPassword($email,$newPassword){
         if(empty($email) || empty($newPassword))
             return false;
+        $CI =& get_instance();
+        $CI->load->model('password_logs');
         $this->db->where("email",  $email);
-        $query = $this->db->get($this->_tables['users']);
+        $query = $this->db->get($this->_table);
         if($query->num_rows() == 0)
             return false;
         $result = $query->row();
-        $data['password'] = $this->encrypt_password($newPassword);
+        $store = array(
+            'date'      => date("d-m-Y H:i:s"),
+            'password'  => $result->password,
+            'users_id'  => $result->id
+        );
+        $CI->password_logs->addNewLog($store);
+        $data['new_password'] = $this->encrypt_password($newPassword);
         if($this->updateUser($result->id, $data)){
             return true;
         }else
