@@ -257,6 +257,16 @@ class install extends CI_Controller
                     'name'      => "cms_version",
                     'value'     => STD_CMS_VER,
                     'default'   => STD_CMS_VER
+                    ),
+                13 => array(
+                    'name'      => "cms_register_enable",
+                    'value'     => 0,
+                    'default'   => 0
+                    ),
+                14 => array(
+                    'name'      => "cms_register_group",
+                    'value'     => 2,
+                    'default'   => 2
                     )
                 );
             foreach ($store as $value)
@@ -305,6 +315,7 @@ class install extends CI_Controller
             $data['STEP'] = "init";
             
         }
+        $data['MENU'] = '';
         $data['isInstall'] = 'install';
         $this->core->load_template($data);
     }

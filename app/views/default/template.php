@@ -10,6 +10,7 @@
         for (js_x in js_files){document.write('<script type="text/javascript" src="' + style_dir + '/js/' + js_files[js_x] + '.js"></' + 'script>');}
 	document.write('<link type="text/css" rel="stylesheet" href="' + style_dir + '/style.css">');
     </script>
+    <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
     
     <!--[if IE 6]>
     <style>

@@ -182,6 +182,9 @@ class users extends CI_Model{
             return false;
         
         $this->db->trans_start();
+        $this->db->where('isBanned', 0);
+        $this->db->where('isDelete', 0);
+        $this->db->where('isActive', 1);
         $this->db->where('username', $username);
         $query = $this->db->get($this->_table);
         $this->db->trans_complete();
@@ -282,6 +285,9 @@ class users extends CI_Model{
             return false;
         $CI =& get_instance();
         $CI->load->model('password_logs');
+        $this->db->where('isBanned', 0);
+        $this->db->where('isDelete', 0);
+        $this->db->where('isActive', 1);
         $this->db->where("email",  $email);
         $query = $this->db->get($this->_table);
         if($query->num_rows() == 0)

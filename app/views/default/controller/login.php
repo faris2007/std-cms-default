@@ -51,7 +51,8 @@
                 <td><input type="text" name="email" placeholder="E-Mail" /></td>
             </tr>
             <tr>
-                <td colspan="2"><?=$CAPTCHA?></td>
+                <td>الكود الأمني</td>
+                <td><?=$CAPTCHA?></td>
             </tr>
             <tr>
                 <td>أدخل السؤال الأمني</td>

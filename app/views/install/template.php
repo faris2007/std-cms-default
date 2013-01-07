@@ -30,7 +30,7 @@
 	<div id="container">
     	<div id="header"></div>
         <div id="main_menu">
-            <?=$MENU?>
+            
         </div>
         <?php if (@$NAV): ?>
         <div id="nav">

@@ -271,3 +271,32 @@ span.formbutton1 > a:visited {
     color:inherit;
 }
 
+#register input {
+    padding:5px 7px;
+    border:1px solid #d5d9da;
+    box-shadow: 0 0 5px #e8e9eb inset;
+    width:250px;
+    font-size:1em;
+    outline:0;
+}
+ 
+#result{
+    margin-left:5px;
+}
+ 
+.short{
+    color:#FF0000;
+}
+ 
+.weak{
+    color:#E66C2C;
+}
+ 
+.good{
+    color:#2D98F3;
+}
+ 
+.strong{
+    color:#006400;
+}
+

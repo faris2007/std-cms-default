@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class home extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -25,7 +25,7 @@ class Welcome extends CI_Controller {
         public function index()
 	{
             $data['CONTENT'] = "home";
-            $data['TITLE'] = " -- welcome in cms";
+            $data['TITLE'] = "";
             $this->core->load_template($data);
 	}
 }
