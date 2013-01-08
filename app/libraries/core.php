@@ -146,17 +146,22 @@ class Core {
         if(!$this->CI->users->isLogin())
             return false;
         
-        if($this->CI->users->checkifUser())
+        if(!$this->CI->users->isAdmin())
             return FALSE;
         
+        $functions = $this->getFunctionsName();
         if ($service_name == "admin")
         {
-            if(!$this->CI->users->checkifUser())
+            if($this->CI->users->isAdmin()){
+                $action = $functions[$service_name][$function_name];
+                $this->add_log($action);
                 return true;
-            else 
+            }else 
                 return false;
         }else
         {
+            $action = $functions[$service_name][$function_name];
+            $this->add_log($action);
             return $this->CI->users->checkIfHavePremission($service_name,$function_name,$value,$otherValue);
         }
         
@@ -171,7 +176,7 @@ class Core {
             "setting"   => "الإعدادات",
             "log"       => "السجل"
             );
-        return ($service_name == Null ) ? $data : $data[$service_name];
+        return ($service_name == Null ) ? $data : (isset($data[$service_name]))? $data[$service_name]: 'غير معروف';
     }
     
     public function getFunctionsName($service_name ="all"){
@@ -257,7 +262,7 @@ class Core {
         
         return ul($data, array());
     }
-
+    
 
     public function perpage($url = '',$total = 0,$cur_page = 0,$per_page = 30)
     {
@@ -293,21 +298,18 @@ class Core {
         return $data;
     }
     
-    public function add_log($_service = '',$_function = '',$_action = '',$_parem = '')
+    public function add_log($action = Null)
     {
-        /**
-         * SERVICE => Controller Name
-         * FUNCTION => Function Name
-         * ACTION => Num Action ( Get Str from lang )
-         * PAREM => Exp ( 1,ADD,LOGOUT )
-         */        
-        $data = array('USER_ID' => $this->CI->users->get_info_user("id"),
-                      'SERVICE' => $_service,
-                      'FUNCTION' => $_function,
-                      'ACTION' => $_action,
-                      'PAREM' => $_parem,
-                      'TIMESTAMP' => time());
-        $this->db->insert('logs', $data); 
+        $this->CI->load->model('users');
+        $this->CI->load->model('logs');
+        $location = $this->getServicesName($this->CI->uri->segment(1, 0));
+        $data = array(
+            'date'      => time(),
+            'activity'  => (!is_null($action)) ? $action . ' '.$location : $location,
+            'ip'        => $this->CI->input->ip_address(),
+            'users_id'  => $this->CI->users->getInfoUser('id') 
+        );
+        $this->CI->logs->addNewLog($data);
     }
     
     function changeIfWindows($string){

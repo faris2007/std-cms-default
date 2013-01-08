@@ -24,12 +24,12 @@ class settings extends CI_Model {
             return True;
     }
 
-    function updateSetting($id , $data) {
-        if(empty($id) || !is_array($data))
+    function updateSetting($name , $data) {
+        if(empty($name) || !is_array($data))
             return FALSE;
         
         $this->db->trans_start();
-        $this->db->where("id",$id);
+        $this->db->where("name",$name);
         $this->db->update($this->_table,$data);
         $this->db->trans_complete();
         if($this->db->trans_status() === FALSE)

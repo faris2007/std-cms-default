@@ -24,7 +24,7 @@ class users extends CI_Model{
         $CI =& get_instance();
         $CI->load->model('groups');
         $groupInfo = $CI->groups->getGroups($groupId);
-        $data['group_type'] = ($groupInfo->isAdmin == 1)? 'admin' : 'user';
+        $data['group_type'] = ($groupInfo[0]->isAdmin == 1)? 'admin' : 'user';
         $this->session->set_userdata($data);
     }
     
@@ -66,21 +66,19 @@ class users extends CI_Model{
                 );
     }
     
-    public function checkIfHavePremission($service_name = "admin",$function_name = "all",$value = "all",$otherValue = "all")
+    public function checkIfHavePremission($service_name = "admin",$function_name = "all",$value = "all")
     {
-        if(empty($service_name) || empty($function_name) || empty($value) || empty($otherValue))
+        if(empty($service_name) || empty($function_name) || empty($value) )
             return FALSE;
         
         $premission = $this->session->userdata('permissions');
         $accessGrade = (isset($premission[$service_name]))?1:0;
-        $accessAdmin = (isset($premission[$service_name]))?1:4;
+        $accessAdmin = (isset($premission[$service_name]))?1:3;
         
         if($function_name != "all"){
             $accessGrade++;
             if($value != "all") { 
                 $accessGrade++;
-                if($otherValue != "all") 
-                    $accessGrade++;
             }
         } 
         if($accessAdmin == 1){
