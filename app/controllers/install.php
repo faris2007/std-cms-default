@@ -132,7 +132,7 @@ class install extends CI_Controller
                 `isDelete` VARCHAR(1) NULL ,
                 `isHidden` VARCHAR(1) NULL ,
                 `sort_id` INT NULL ,
-                `parent_id` INT NOT NULL ,
+                `parent_id` INT NULL DEFAULT NULL ,
                 PRIMARY KEY (`id`) ,
                 INDEX `fk_menu_menu1` (`parent_id` ASC) ,
                 CONSTRAINT `fk_menu_menu1`

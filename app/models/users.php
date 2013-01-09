@@ -47,7 +47,12 @@ class users extends CI_Model{
             $data = array();
             foreach ($permissions as $row)
             {
-                if($row->function_name == "all")
+                $data['permissions'][] = array(
+                    'service_name'  => $row->service_name,
+                    'function_name' => $row->function_name,
+                    'value'         => $row->value
+                );
+                /*if($row->function_name == "all")
                     $data['permissions'][$row->service_name] =  true;
                 else
                 {
@@ -57,7 +62,7 @@ class users extends CI_Model{
                     {
                         $data['permissions'][$row->service_name][$row->function_name][$row->value] = true;
                     }
-                }
+                }*/
             }
             return $data;
         }else
@@ -72,8 +77,20 @@ class users extends CI_Model{
             return FALSE;
         
         $premission = $this->session->userdata('permissions');
-        $accessGrade = (isset($premission[$service_name]))?1:0;
-        $accessAdmin = (isset($premission[$service_name]))?1:3;
+        if($service_name == 'admin'){
+            return $this->isAdmin();
+        }
+        foreach ($premission as $row){
+            if($row['service_name'] == $service_name)
+                if($row['function_name'] == $function_name || $row['function_name'] == 'all')
+                    if($row['value'] == $value || $row['value'] == 'all'){
+                        $this->setSession($this->session->userdata('userid'),$this->session->userdata('group'));
+                        return true;
+                    }
+        }
+        return false;
+        /*$accessGrade = (isset($premission[$service_name]))?1:0;
+        $accessAdmin = (isset($premission[$service_name]))?0:3;
         
         if($function_name != "all"){
             $accessGrade++;
@@ -90,9 +107,8 @@ class users extends CI_Model{
                         $accessAdmin++;
                 }
             }
-        }
-        $this->setSession($this->session->userdata('userid'),$this->session->userdata('group'));
-        return ($accessGrade >= $accessAdmin)? true:false;
+        }*/
+        //return ($accessGrade >= $accessAdmin)? true:false;
     }
 
 

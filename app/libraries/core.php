@@ -107,7 +107,7 @@ class Core {
             $data['HEAD']['OTHER'] = (isset($temp_data['HEAD'])) ? $temp_data['HEAD'] : '';
             
             // Main Menu Data
-            $menu['MAINMENU'] = $this->getMenuPyParentID();
+            $menu['MAINMENU'] = $this->getMenuPyParentID(NULL);
             
             // Main Menu
             $data['MENU'] = (isset($temp_data['MENU'])) ? $temp_data['MENU'] : $this->CI->load->view($this->site_style.'/menu',$menu,TRUE);
@@ -138,9 +138,9 @@ class Core {
             }
     }
     
-    public function checkPermissions($service_name = "admin",$function_name = "all",$value = "all",$otherValue = "all")
+    public function checkPermissions($service_name = "admin",$function_name = "all",$value = "all")
     {
-        if(empty($service_name) || empty($function_name) || empty($value) || empty($otherValue))
+        if(empty($service_name) || empty($function_name) || empty($value) )
             return false;
         $this->CI->load->model("users");
         if(!$this->CI->users->isLogin())
@@ -160,9 +160,41 @@ class Core {
                 return false;
         }else
         {
-            $action = $functions[$service_name][$function_name];
-            $this->add_log($action);
-            return $this->CI->users->checkIfHavePremission($service_name,$function_name,$value,$otherValue);
+            
+            if($this->CI->users->checkIfHavePremission($service_name,$function_name,$value)){
+                $action = $functions[$service_name][$function_name];
+                $this->add_log($action);
+                return true;
+            }else{
+                if($service_name == 'menu' && $value != 'all'){
+                    $this->CI->load->model('menus');
+                    $parentData = $this->CI->menus->getParentThisMenu($value);
+                    $data = explode(',', $parentData);
+                    foreach ($data as $row){
+                        if($this->CI->users->checkIfHavePremission($service_name,$function_name,$row->id))
+                        {        
+                            $action = $functions[$service_name][$function_name];
+                            $this->add_log($action);
+                            return true;
+                        }
+                    }
+                    return false;
+                }else if($service_name == 'page' && $value != 'all'){
+                    $this->CI->load->model('pages');
+                    $parentData = $this->CI->pages->getParentThisPage($value);
+                    $data = explode(',', $parentData);
+                    foreach ($data as $row){
+                        if($this->CI->users->checkIfHavePremission($service_name,$function_name,$row->id))
+                        {
+                            $action = $functions[$service_name][$function_name];
+                            $this->add_log($action);
+                            return true;
+                        }
+                    }
+                    return false;
+                }else
+                    return false;
+            }
         }
         
     }
@@ -239,7 +271,8 @@ class Core {
         $data = array();
         if(!is_bool($result['content'])){
             foreach ($result as $val){
-                $data[] = (!is_bool($this->getSubMenu($val['child'])))? anchor('#',$val['content']->title).' '.$this->getSubMenu($val['child']): anchor($val['content']->url,$val['content']->title);
+                $child = $this->extractSubMenu($val['child']);
+                $data[] = (!is_bool($child['content']))? anchor('#',$val['content']->title).' '.$this->getSubMenu($val['child']): anchor($val['content']->url,$val['content']->title);
             }
         }
         return $data;
@@ -253,6 +286,7 @@ class Core {
         
         $content = $this->extractSubMenu($content);
         $data = array();
+        print_r($content);exit;
         if(!is_bool($content['content']))
         {
             $subMenu  = $this->getSubMenu($content['child']);

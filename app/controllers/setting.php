@@ -79,7 +79,8 @@ class setting extends CI_Controller {
                         'cms_register_group'    => 'GROUPREGSITER'
                     );
                     foreach ($settings as $value)
-                        $data[$setting[$value->name]] = $value->value;
+                        if(isset($setting[$value->name]))
+                            $data[$setting[$value->name]] = $value->value;
                 }
                 $data['GROUP'] = $this->groups->getGroups('all');
                 $data['CONTENT'] = 'setting';

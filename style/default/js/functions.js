@@ -90,4 +90,50 @@ $(document).ready(function(){
     
 });
 
+function action(url,type,id){
+    if(type == 'enable'){
+        $('#action').load(url);
+        $('#action').css( "display", "block" );
+        url.replace('enable','disable');
+        $('#action').replace('0 -','');
+        $('#action').replace('1 -','');
+        $('#'+id).html('<img src="./style/default/icon/enable.png" onclick="action(\"'+url+'\",\'disable\',\"'+id+'\")" />');
+        $('#action').fadeOut(5000, function(){
+            $(this).css("display","none");
+            $(this).html("");
+        });
+    }else if(type == 'disable'){
+        $('#action').load(url);
+        $('#action').css( "display", "block" );
+        url.replace('disable','enable');
+        $('#action').replace('0 -','');
+        $('#action').replace('1 -','');
+        $('#'+id).html('<img src="./style/default/icon/disable.png" onclick="action(\"'+url+'\",\'enable\',\"'+id+'\")" />');
+        $('#action').fadeOut(5000, function(){
+            $(this).css("display","none");
+            $(this).html("");
+        });
+    }else if(type == 'delete'){
+        var check = $.get(url,function(data){
+            if(data.match(/1/g) != null)
+            {
+                data.replace('1 -','');
+                $('#action').html(data);
+                $('#action').css( "display", "block" );
+                $('#'+id).click(function() {
+                    //change the background color to red before removing
+                    $(this).css("background-color","#FF3700");
+                    $(this).css("color","#FFFFFF");
+                    $(this).fadeOut(1000, function(){
+                        $(this).remove();
+                    });
+                });
 
+                $('#action').fadeOut(5000, function(){
+                    $(this).css("display","none");
+                    $(this).html("");
+                });
+            }
+        });
+    }
+}
