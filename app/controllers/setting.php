@@ -56,7 +56,7 @@ class setting extends CI_Controller {
                     foreach ($store as $value)
                         $this->settings->updateSetting($value['name'],array('value'=> $value['value']));
                     $data['CONTENT'] = 'msg';
-                    $data['TITLE'] = "-- أعدادات الموقعs";
+                    $data['TITLE'] = "-- أعدادات الموقع";
                     $data['MSG'] = 'تم حفظ البيانات بشكل صحيح <br />'.  anchor(base_url().'setting', "للعودة للأعدادات أضغط هنا");
                 }else
                      redirect ('login/permission');
