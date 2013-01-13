@@ -51,7 +51,7 @@ class Permissions extends CI_Model {
     }
 
     
-    private function deletePermission($id = "all") {
+    public function deletePermission($id = "all") {
         
         if(empty($id) || !is_numeric($id))
             return FALSE;
@@ -73,6 +73,27 @@ class Permissions extends CI_Model {
    
          if(empty($groupid) ) return false;
         
+         //$this->db->trans_start();
+         if(is_numeric($groupid))
+         {
+            $this->db->where('group_id',$groupid);
+         }
+         //$this->db->order_by("id"); 
+         $query = $this->db->get($this->_table);
+         //$this->db->trans_complete();
+         /*if($this->db->trans_status() === FALSE)
+         {
+            $this->error();
+            return false;
+         }else*/
+            return ($query->num_rows() > 0)? $query->result() : false;
+    
+    }
+    
+    function getTotalPermissions($groupid) {
+   
+         if(empty($groupid) ) return false;
+        
          $this->db->trans_start();
          if(is_numeric($groupid))
          {
@@ -86,7 +107,7 @@ class Permissions extends CI_Model {
             $this->error();
             return false;
          }else
-            return ($query->num_rows() > 0)? $query->result() : false;
+            return $query->num_rows() ;
     
     }
     

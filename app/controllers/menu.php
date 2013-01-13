@@ -13,16 +13,41 @@ class menu extends CI_Controller {
     }
     
     public function index(){
-        if($this->core->checkPermissions('menu','show','all')){
+        if($this->core->checkPermissions('menu','all','all')){
             $this->show();
         }else
             redirect ('login/permission');
     }
     
     public function show(){
-        if($this->core->checkPermissions('menu','show','all')){
-            $segments = $this->uri->segment_array();
-            $parent_id = isset($segments[3])? $segments[3]:NULL;
+        $segments = $this->uri->segment_array();
+        $parent_id = isset($segments[3])? $segments[3]:NULL;
+        $filter = isset($segments[4])? $segments[4]:'all';
+        $parent_id = ($parent_id == 'all')? null:$parent_id;
+        $value = (is_null($parent_id)) ? 'all' : $parent_id;
+        if($this->core->checkPermissions('menu','show',$value)){
+            switch ($filter){
+                case 'enable':
+                    $this->db->where('isHidden',0);
+                    break;
+                
+                case 'disable':
+                    $this->db->where('isHidden',1);
+                    break;
+                
+                case 'delete':
+                    $this->db->where('isDelete',1);
+                    break;
+                
+                case 'undelete':
+                    $this->db->where('isDelete',0);
+                    break;
+                
+                case 'all':
+                default :
+                    break;
+            }
+            $data['FILTER'] = $filter;
             $data['MENUS'] = $this->menus->getMenus($parent_id);
             $data['TYPEMENU'] = ($parent_id == NULL) ? 'الرئيسية': 'الفرعية';
             $data['PARENTMENU'] = $parent_id;
@@ -52,7 +77,9 @@ class menu extends CI_Controller {
                     if($this->menus->addNewMenu($store)){
                         $data['CONTENT'] = 'msg';
                         $data['TITLE'] = "-- إدارة القوائم";
-                        $data['MSG'] = 'تم حفظ البيانات بشكل صحيح <br />'.  anchor(base_url().'menu'.(!is_null($parent_id))?'/show/'.$parent_id:'', "للعودة للإدارة القوائم أضغط هنا");
+                        $url = base_url().'menu';
+                        $url .= (!is_null($parent_id))?'/show/'.$parent_id:'';
+                        $data['MSG'] = 'تم حفظ البيانات بشكل صحيح <br />'.  anchor($url, "للعودة للإدارة القوائم أضغط هنا");
                     }else{
                         $data['CONTENT'] = "menu";
                         $data['STEP'] = 'add';
@@ -123,7 +150,8 @@ class menu extends CI_Controller {
             $names = array(
                 'enable'    => 'التفعيل',
                 'disable'   => 'التعطيل',
-                'delete'    => 'الحذف'
+                'delete'    => 'الحذف',
+                'restore'   => 'الأستعادة'
             );
             if(is_null($type) || $menuId == 0)
                 die('خطأ - مشكلة في الرابط');
@@ -132,9 +160,9 @@ class menu extends CI_Controller {
             if(is_bool($menu))
                 die('خطأ - عفواً هذا القائمة غير موجود');
             
-            if($type == 'delete')
+            if($type == 'delete' || $type == 'restore')
                 $store = array(
-                    'isDelete' => 1
+                    'isDelete' => ($type == 'delete')? 1:0
                 );
             else if($type == 'enable' || $type == 'disable')
                 $store = array(

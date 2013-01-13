@@ -78,7 +78,7 @@ class groups extends CI_Model {
          
          function updateGroup($id,$data) {
              
-             if(empty($id) || !is_numeric($data))
+             if(empty($id) || !is_array($data))
                  return FALSE;
              
             $this->db->trans_start();

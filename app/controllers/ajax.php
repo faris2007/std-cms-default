@@ -17,43 +17,58 @@ class ajax extends CI_Controller {
     }
     
     private function __dataeditUsers($data,$key = "mobile"){
-        if(!is_array($data))
-            return false;
-        
-        $editimg = img('style/icon/edit.png');
-        $cardsimg = img('style/icon/cards.png');
+
+
         for($i = 0 ; $i<count($data);$i++){
-            $idn = $data[$i]['idn'];
-            $id = $data[$i]['id'];
-            $url = anchor("employee/profile/".$idn,$editimg);
-            $cards = anchor("penalty/add/penalty/".$id,$cardsimg);
-            $data[$i][$key] = $url.$cards;
+            $id = $data[$i]->id;
             $delimgdetail = array(
-                'src'       => 'style/icon/del.png',
-                'alt'       => 'delete users',
-                'onClick'   => 'deleted(\''.  base_url().'employee/users/0/del/'.$id.'\',\'users'.$id.'\',\'Not Found\')'
+                'src'       => 'style/default/icon/del.png',
+                'alt'       => 'حذف',
+                'title'       => 'حذف',
+                'onClick'   => "action('".  base_url()."group/action/deletep/".$id."','deletep','permission".$id."','".$id."')"
             );
             $delimg = img($delimgdetail);
-            $data[$i][$key] .= $delimg; 
+            $data[$i]->$key = $delimg; 
         }
         return $data;
     }
-
-
-    function users(){
+    
+    private function __changeWord(&$data){
         
+        $services = $this->core->getServicesName('all');
+        $functions = $this->core->getFunctionsName('all');
+        for($i = 0 ; $i<count($data);$i++){
+            $data[$i]->value = 'الجميع';
+            $data[$i]->function_name = $functions[$data[$i]->service_name][$data[$i]->function_name];
+            $data[$i]->service_name = $services[$data[$i]->service_name];
+        }
+        
+        
+    }
+
+
+    function permission(){
+        $this->load->model('permissions');
         $columns = array(
-            "id",
-            "idn",
-            "en_name",
-            "mobile"
+            "`permissions`.`service_name`",
+            "`permissions`.`function_name`",
+            "`permissions`.`value`",
+            "`permissions`.`id`"
             );
+        $segments = $this->uri->segment_array();
+        $groupId = (isset($segments[3]))? $segments[3] : 'all';
         $this->datatables->beforeQuery($columns);
-        $query = $this->users->getUsers(NULL,NULL,true);
+        $query = $this->permissions->getPermissions($groupId);
         $totalAfterfiltering = $this->datatables->getNumberOfRowForFilterData();
         $data['iTotalDisplayRecords'] = $totalAfterfiltering;
-        $data['iTotalRecords'] = "".$this->users->get_total_users()."";
-        echo $this->datatables->afterQuery($data,$this->__dataeditUsers($query));
+        $data['iTotalRecords'] = "".$this->permissions->getTotalPermissions($groupId)."";
+        if($totalAfterfiltering >0 && $data['iTotalRecords'] >0){
+            $this->__changeWord(&$query);
+            $query = $this->__dataeditUsers($query,'id');
+        }else{
+            $query = array();
+        }
+        echo $this->datatables->afterQuery($data,$query);
     }
     
     function accepted(){

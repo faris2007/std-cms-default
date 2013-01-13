@@ -106,10 +106,7 @@ class Menus extends CI_Model {
                     $data[$key]['child'] = serialize($this->getMenuWithChild($val->id,$where));
                 }
             }else
-                return array(
-                    'content' => FALSE,
-                    'child'   => FALSE
-                    );
+                return false ;
             return $data;
         }
     }

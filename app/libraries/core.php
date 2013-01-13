@@ -115,8 +115,44 @@ class Core {
             // Change style if install
             $this->site_style = (isset($temp_data['isInstall']))? 'install' : $this->site_style;
             
+            // Check If the file is exist
+            $contentFile = (file_exists($this->site_style.'/controller/'.$temp_data['CONTENT']) && $this->site_style != 'default') ? $this->site_style.'/controller/'.$temp_data['CONTENT'] : 'default/controller/'.$temp_data['CONTENT'];
+            
+            // Load Model Of users
+            $this->CI->load->model('users');
+            
+            // Load User Profile
+            $userInfo = ($this->CI->users->isLogin())? $this->CI->users->getUser($this->CI->users->getInfoUser('id')):FALSE;
+            
+            // Remove Improtant attrabute
+            if($userInfo){
+                
+                // Remove Password
+                unset($userInfo->password);
+                
+                // Remove  new Password
+                unset($userInfo->new_password);
+                
+                // Remove isBanned
+                unset($userInfo->isBanned);
+                
+                // Remove isDelete
+                unset($userInfo->isDelete);
+                
+                // Remove isActive
+                unset($userInfo->isActive);
+                
+                // Remove group_id
+                unset($userInfo->group_id);
+            
+                // Check if the User is Admin
+                $userInfo->isAdmin = $this->CI->users->isAdmin();
+            }
+            // Store Information about user in $temp_data
+            $temp_data['userInfo'] = $userInfo;
+            
             // Content
-            $data['CONTENT'] = (isset($temp_data['CONTENT'])) ? $this->CI->load->view($this->site_style.'/controller/'.$temp_data['CONTENT'],$temp_data,TRUE) : '' ;
+            $data['CONTENT'] = (isset($temp_data['CONTENT'])) ? $this->CI->load->view($contentFile,$temp_data,TRUE) : '' ;
             
             // Navbar for website
             $data['NAV'] = (isset($temp_data['NAV'])) ? $temp_data['NAV']: false;
@@ -199,7 +235,7 @@ class Core {
         
     }
     
-    public function getServicesName($service_name = Null){
+    public function getServicesName($service_name = 'all'){
         $data = array(
             "page"      => "ادارة الصفحات" ,
             "menu"      => "إدارة القوائم",
@@ -208,7 +244,12 @@ class Core {
             "setting"   => "الإعدادات",
             "log"       => "السجل"
             );
-        return ($service_name == Null ) ? $data : (isset($data[$service_name]))? $data[$service_name]: 'غير معروف';
+        if($service_name == 'all' )
+            return $data; 
+        elseif(isset($data[$service_name]))
+            return $data[$service_name];
+        else
+            return 'غير معروف';
     }
     
     public function getFunctionsName($service_name ="all"){
@@ -269,12 +310,13 @@ class Core {
         );
         $result = $this->CI->menus->getMenuWithChild($parentID,$where);
         $data = array();
-        if(!is_bool($result['content'])){
+        if(!is_bool($result)){
             foreach ($result as $val){
                 $child = $this->extractSubMenu($val['child']);
-                $data[] = (!is_bool($child['content']))? anchor('#',$val['content']->title).' '.$this->getSubMenu($val['child']): anchor($val['content']->url,$val['content']->title);
+                $data[] = (!is_bool($child))? anchor('#',$val['content']->title).' '.$this->getSubMenu($val['child']): anchor($val['content']->url,$val['content']->title);
             }
         }
+        
         return $data;
     }
     
@@ -286,13 +328,13 @@ class Core {
         
         $content = $this->extractSubMenu($content);
         $data = array();
-        print_r($content);exit;
-        if(!is_bool($content['content']))
-        {
-            $subMenu  = $this->getSubMenu($content['child']);
-            $data[] = (!is_bool($subMenu))? anchor('#',$content['content']->title).' '.$subMenu : anchor($val['content']->url,$val['content']->title);
+        if(!is_bool($content)){
+            foreach ($content as $val){
+                $subMenu  = $this->getSubMenu($val['child']);
+                $data[] = (!is_bool($subMenu))? anchor('#',$val['content']->title).' '.$subMenu : anchor($val['content']->url,$val['content']->title);
+            }
         }else
-            return FALSE;
+            return false;
         
         return ul($data, array());
     }

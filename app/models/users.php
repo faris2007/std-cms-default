@@ -81,12 +81,31 @@ class users extends CI_Model{
             return $this->isAdmin();
         }
         foreach ($premission as $row){
-            if($row['service_name'] == $service_name)
-                if($row['function_name'] == $function_name || $row['function_name'] == 'all')
+            if($row['service_name'] == $service_name){
+                if($row['function_name'] == $function_name || $row['function_name'] == 'all'){
                     if($row['value'] == $value || $row['value'] == 'all'){
                         $this->setSession($this->session->userdata('userid'),$this->session->userdata('group'));
                         return true;
                     }
+                }elseif($function_name == 'all' && $value == 'all'){
+                    return true;
+                }elseif($function_name == 'show'){
+                    switch ($row['function_name']){
+                        
+                        case 'add':
+                        case 'edit':
+                        case 'delete':
+                        case 'active':
+                            return true;
+                            break;
+                        
+                        default :
+                            break;
+                    }
+                }
+                    
+            }
+            
         }
         return false;
         /*$accessGrade = (isset($premission[$service_name]))?1:0;
