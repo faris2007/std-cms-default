@@ -22,7 +22,7 @@ class Core {
             $title = $this->CI->settings->getSettingByName("site_name");
             $this->site_name = (!is_bool($title))? $title->value : '' ;
             $style = $this->CI->settings->getSettingByName("style");
-            $this->site_style = (!is_bool($style)) ? $style->value : '';
+            $this->site_style = (!is_bool($style)) ? $style->value : 'default';
             $enable = $this->CI->settings->getSettingByName("site_enable");
             if(!is_bool($enable)){
                 if($enable->value == 0) {
@@ -111,13 +111,16 @@ class Core {
             
             // Main Menu
             $data['MENU'] = (isset($temp_data['MENU'])) ? $temp_data['MENU'] : $this->CI->load->view($this->site_style.'/menu',$menu,TRUE);
-            
             // Change style if install
             $this->site_style = (isset($temp_data['isInstall']))? 'install' : $this->site_style;
             
-            // Check If the file is exist
-            $contentFile = (file_exists($this->site_style.'/controller/'.$temp_data['CONTENT']) && $this->site_style != 'default') ? $this->site_style.'/controller/'.$temp_data['CONTENT'] : 'default/controller/'.$temp_data['CONTENT'];
+            // Url for folder of style
+            $data['STYLE_FOLDER'] = base_url().'style/'.  $this->site_style.'/';
             
+            // Url for folder of style for get from content file
+            $temp_data['STYLE_FOLDER'] = base_url().'style/'.  $this->site_style.'/';
+            // Check If the file is exist
+            $contentFile = (file_exists('./app/views/'.$this->site_style.'/controller/'.$temp_data['CONTENT'].'.php') && $this->site_style != 'default') ? $this->site_style.'/controller/'.$temp_data['CONTENT'] : 'default/controller/'.$temp_data['CONTENT'];
             // Load Model Of users
             $this->CI->load->model('users');
             
@@ -158,7 +161,7 @@ class Core {
             $data['NAV'] = (isset($temp_data['NAV'])) ? $temp_data['NAV']: false;
             
             // Copy Right
-            $data['DEVELOPMENT'] = 'Development By '.  anchor('https://std-hosting.com/', 'Saudi Technical Design') .'.';
+            $data['DEVELOPMENT'] = 'تصميم وتطوير '.  anchor('https://std-hosting.com/', 'الشركة السعودية للتصاميم التقنية') .'.';
             
             // Disable Website
             $data['DISABLE'] = (isset($temp_data['DISABLE'])) ? $temp_data['DISABLE'] : false;
@@ -168,9 +171,9 @@ class Core {
 
             if ($load_only)
             {
-                    return $this->CI->load->view('default/template',$data,TRUE);
+                    return $this->CI->load->view($this->site_style.'/template',$data,TRUE);
             }else{
-                    $this->CI->load->view('default/template',$data);
+                    $this->CI->load->view($this->site_style.'/template',$data);
             }
     }
     

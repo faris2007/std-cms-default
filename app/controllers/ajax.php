@@ -63,7 +63,7 @@ class ajax extends CI_Controller {
         $data['iTotalDisplayRecords'] = $totalAfterfiltering;
         $data['iTotalRecords'] = "".$this->permissions->getTotalPermissions($groupId)."";
         if($totalAfterfiltering >0 && $data['iTotalRecords'] >0){
-            $this->__changeWord(&$query);
+            @$this->__changeWord($query);
             $query = $this->__dataeditUsers($query,'id');
         }else{
             $query = array();
