@@ -2,11 +2,12 @@
 <html>
 <head>
     <title><?=$HEAD['TITLE']?></title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
     <script type="text/javascript">
         <?=(@$DISABLE)?'' :"var Token = '".$this->core->token(TRUE)."';\n"?>
         var base_url = '<?=base_url()?>';
         var style_dir = base_url + 'style/default';
-        var js_files = ["jquery","jquery.dataTables","functions","jquery.popupWindow"];
+        var js_files = ["tiny_mce/tiny_mce","jquery","jquery.dataTables","jquery-ui","functions","jquery.popupWindow"];
         for (js_x in js_files){document.write('<script type="text/javascript" src="' + style_dir + '/js/' + js_files[js_x] + '.js"></' + 'script>');}
 	document.write('<link type="text/css" rel="stylesheet" href="' + style_dir + '/style.css">');
     </script>
@@ -36,8 +37,6 @@
         <?php if (@$NAV): ?>
         <div id="nav">
             <ul>
-                <li>&rsaquo;</li>
-                <li><a href="<?=base_url()?>">Home</a></li>
                 <?php foreach($NAV as $key => $value): ?>
                 <li>&rsaquo;</li>
                 <li><a href="<?=$key?>"><?=$value?></a></li>

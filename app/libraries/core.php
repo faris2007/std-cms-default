@@ -411,18 +411,10 @@ class Core {
         $result = FALSE;
         if(!is_bool($parentPage)){
             $path = explode(',', $parentPage);
-            $result = array(
-                0 => array(
-                    'url'   => base_url(),
-                    'name'  => "الصفحة الرئيسية"
-                )
-            );
+            $result["".base_url().""] = "الصفحة الرئيسية";
             foreach ($path as $value){
                 $item = unserialize($value);
-                $result[] = array(
-                    'url'   => base_url().'page/'.$item->id,
-                    'name'  => $item->title
-                );
+                $result[base_url().'page/index/'.$item->id] = $item->title;
             }
                 
         }

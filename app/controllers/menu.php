@@ -109,14 +109,14 @@ class menu extends CI_Controller {
                     $store = array(
                         'title'     => $this->input->post('title',true),
                         'url'       => $this->input->post('url',true),
-                        'sort_id'   => $this->input->post('sort',true),
-                        'isHidden'  => 1,
-                        'isDelete'  => 0
+                        'sort_id'   => $this->input->post('sort',true)
                     );
                     if($this->menus->updateMenu($menuId,$store)){
                         $data['CONTENT'] = 'msg';
                         $data['TITLE'] = "-- إدارة القوائم";
-                        $data['MSG'] = 'تم حفظ البيانات بشكل صحيح <br />'.  anchor(base_url().'menu/show/'.$menuId, "للعودة للإدارة القوائم أضغط هنا");
+                        $url = base_url().'menu';
+                        $url .= (!is_null($menuInfo->parent_id))?'/show/'.$menuInfo->parent_id:'';
+                        $data['MSG'] = 'تم حفظ البيانات بشكل صحيح <br />'.  anchor($url.$menuId, "للعودة للإدارة القوائم أضغط هنا");
                     }else{
                         $data['MENUTITLE'] = $menuInfo->title;
                         $data['MENUURL'] = $menuInfo->url;
@@ -124,7 +124,7 @@ class menu extends CI_Controller {
                         $data['CONTENT'] = "menu";
                         $data['STEP'] = 'edit';
                         $data['ERROR'] = true;
-                        $data['ERR_MSG'] = 'لا تستطيع أضافة قائمة جديده لمشكلة في البيانات';
+                        $data['ERR_MSG'] = 'لا تستطيع تحديث القائمة لمشكلة في البيانات';
                     }
             }else{
                 $data['MENUTITLE'] = $menuInfo->title;

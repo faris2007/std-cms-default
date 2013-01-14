@@ -12,13 +12,12 @@
         <?=(@$DISABLE)?'' :"var Token = '".$this->core->token(TRUE)."';\n"?>
         var base_url = '<?=base_url()?>';
         var style_dir = '<?=$STYLE_FOLDER?>';
-        var js_files = ["jquery","jquery.dataTables","jquery.flexslider-min","functions","jquery.popupWindow"];
+        var js_files = ["jquery","jquery.dataTables","jquery.flexslider-min","jquery-ui","tiny_mce/tiny_mce","functions","jquery.popupWindow"];
         for (js_x in js_files){document.write('<script type="text/javascript" src="' + style_dir + 'js/' + js_files[js_x] + '.js"></' + 'script>');}
 	/*document.write('<link type="text/css" rel="stylesheet" href="' + style_dir + 'css/style_1.css">');*/
         document.write('<link type="text/css" rel="stylesheet" href="' + style_dir + 'css/style.css">');
     </script>
     <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
-    
     <!--[if IE 6]>
     <style>
         body {behavior: url("csshover3.htc");}
@@ -132,8 +131,6 @@
                                     <?php if (@$NAV): ?>
                                     <div id="nav">
                                         <ul>
-                                            <li>&rsaquo;</li>
-                                            <li><a href="<?=base_url()?>">Home</a></li>
                                             <?php foreach($NAV as $key => $value): ?>
                                             <li>&rsaquo;</li>
                                             <li><a href="<?=$key?>"><?=$value?></a></li>

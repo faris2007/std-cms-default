@@ -243,9 +243,27 @@ class user extends CI_Controller{
             else
                 die('خطأ - خطأ في الرابط');
             
-            if($this->users->updateUser($userId,$store))
+            if($this->users->updateUser($userId,$store)){
+                if($type == 'enable'){
+                    $site_name = $this->settings->getSettingByName("site_name");
+                    $site_email = $this->settings->getSettingByName("site_email");
+
+                    $this->email->from($site_email->value, 'CMS ('.$site_name->value.'):');
+                    $this->email->to($user->email);
+
+                    $this->email->subject('CMS ('.$site_name->value.'): تسجيل جديد');
+                    $message = '
+                        <p>شكراً لأختيارك موقعنا نتمنى لك التوفيق</p>
+                        <p>تم تفعيل حسابك لدى موقعنا </p>
+                        <p>اسم المستخدم  :'.$user->username.'</p>
+                    ';
+                    $this->email->message($message);
+
+                    $this->email->send();
+                }
+                
                 die('1 - نجحت عملية '.$names[$type]);
-            else
+            }else
                 die('خطأ - لم تنجح عملية '.$names[$type]);
             
         }else

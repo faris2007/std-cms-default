@@ -7,7 +7,7 @@
  */
 class pages extends CI_Model{
     
-    private $_table = "error_log";
+    private $_table = "pages";
     
     public function __construct() {
         parent::__construct();
@@ -77,15 +77,15 @@ class pages extends CI_Model{
             
     }
     
-    public function getPages($parentId = 0){
+    public function getPages($parentId = 'all'){
         if (empty($parentId))            
             return FALSE;
         
         $this->db->trans_start();
-        if($parentId <= 0)
+        if($parentId == 'all')
             $this->db->where('parent_id IS NULL');
         else
-            $this->db->where('parent_id', $id);
+            $this->db->where('parent_id', $parentId);
         $query = $this->db->get($this->_table);
         $this->db->trans_complete();
         if($this->db->trans_status() === FALSE){
