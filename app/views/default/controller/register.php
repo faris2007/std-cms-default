@@ -184,7 +184,7 @@
                 </tr>
                 <tr>
                     <td>أدخل السؤال الأمني</td>
-                    <td colspan="2"><input type="text" name="captcha" /></td>
+                    <td colspan="2"><input type="text" required name="captcha" /></td>
                 </tr>
                 <?php if($ERROR): ?>
                     <tr>
@@ -192,7 +192,7 @@
                     </tr>
                 <?php endif; ?>
                 <tr>
-                    <td colspan="3"><input type="submit" value="submit" /></td>
+                    <td colspan="3"><input type="submit" value="تسجيل" /></td>
                 </tr>
             </tbody>
         </table>

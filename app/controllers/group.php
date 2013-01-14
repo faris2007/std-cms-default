@@ -38,6 +38,7 @@ class group extends CI_Controller{
                 default :
                     break;
             }
+            $data['FILTER'] = $filter;
             $data['GROUPS'] = $this->groups->getGroups('all');
             $data['CONTENT'] = "group";
             $data['STEP'] = 'show';

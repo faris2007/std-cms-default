@@ -285,6 +285,19 @@ class users extends CI_Model{
         }
     }
     
+    public function isActive(){
+        $id = $this->session->userdata('userid');
+        $userInfo = $this->getUser($id);
+        if(!is_bool($userInfo)){
+            if($userInfo->isActive == 1)
+                return true;
+            else
+                return FALSE;
+        }else
+            return false;
+    }
+
+
     public function change_password($username,$oldPass,$newPass,$admin = false){
         if(empty($username)||(empty($oldPass)&& !$admin)||empty($newPass))
             return false;

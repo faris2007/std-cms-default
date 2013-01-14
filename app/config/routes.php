@@ -41,6 +41,9 @@
 $route['default_controller'] = "home";
 $route['404_override'] = '';
 
+// change url for edit profile
+$route['myprofile'] = 'user/edit';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
