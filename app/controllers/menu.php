@@ -104,7 +104,7 @@ class menu extends CI_Controller {
         if($this->core->checkPermissions('menu','edit',$menuId)){
             $menuInfo = $this->menus->getMenu($menuId);
             if(is_bool($menuInfo))
-                show_404 ();
+                redirect("page/error_page");
             if($_POST){
                     $store = array(
                         'title'     => $this->input->post('title',true),
@@ -176,7 +176,7 @@ class menu extends CI_Controller {
                 die('خطأ - لم تنجح عملية '.$names[$type]);
             
         }else
-            show_404 ();
+            redirect("page/error_page");
     }
 }
 

@@ -39,7 +39,7 @@
 */
 
 $route['default_controller'] = "home";
-$route['404_override'] = '';
+$route['404_override'] = 'page/error_page';
 
 // change url for edit profile
 $route['myprofile'] = 'user/edit';

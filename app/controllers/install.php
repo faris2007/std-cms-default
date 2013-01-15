@@ -267,6 +267,11 @@ class install extends CI_Controller
                     'name'      => "cms_register_group",
                     'value'     => 2,
                     'default'   => 2
+                    ),
+                15 => array(
+                    'name'      => "cms_register_active",
+                    'value'     => 0,
+                    'default'   => 0
                     )
                 );
             foreach ($store as $value)

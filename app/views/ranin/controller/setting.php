@@ -74,6 +74,10 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>تنشيط العضوية تلقائي ؟</td>
+                    <td><input type="radio" name="registeractive"<?=($REGISTERACTIVE == 1)?' checked="checked"':''?> value="1" />نعم <input type="radio" name="registeractive"<?=($REGISTERACTIVE == 0)?' checked="checked"':''?> value="0" />لا</td>
+                </tr>
+                <tr>
                     <td colspan="2"><input type="submit" value="حفظ" /></td>
                 </tr>
             </tbody>

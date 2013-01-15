@@ -13,18 +13,26 @@ class page extends CI_Controller{
     }
     
     public function index(){
+        if($this->core->checkPermissions('page','show','all')){
+            $this->show();
+        }else
+            redirect ('login/permission');
+    }
+
+
+    public function view(){
         $segments = $this->uri->segment_array();
         $pageId = isset($segments[3])? $segments[3]:NULL;
         if(is_null($pageId))
-            show_404 ();
+            redirect("page/error_page");
         
         if(!$this->core->checkPermissions('page','show','all')){
-            /*$this->db->where('isHidden',0);
-            $this->db->where('isDelete',0);*/
+            $this->db->where('isHidden',0);
+            $this->db->where('isDelete',0);
         }
         $pageInfo = $this->pages->getPage($pageId);
         if(is_bool($pageInfo))
-            show_404 ();
+            redirect("page/error_page");
         
         $data['NAV'] = $this->core->getPath($pageId);
         $data['CONTENTPAGE'] = $pageInfo->content;
@@ -120,9 +128,10 @@ class page extends CI_Controller{
         $segments = $this->uri->segment_array();
         $pageId = isset($segments[3])? $segments[3]:NULL;
         if($this->core->checkPermissions('page','edit',$pageId)){
-            $pageInfo = $this->pages->getMenu($pageId);
+            $pageInfo = $this->pages->getPage($pageId);
             if(is_bool($pageInfo))
-                show_404 ();
+                redirect("page/error_page");
+            
             if($_POST){
                     $store = array(
                         'title'     => $this->input->post('title',true),
@@ -197,7 +206,15 @@ class page extends CI_Controller{
                 die('خطأ - لم تنجح عملية '.$names[$type]);
             
         }else
-            show_404 ();
+            redirect("page/error_page");
+    }
+    
+    public function error_page(){
+        
+        $data['CONTENT'] = "page";
+        $data['STEP'] = 'error';
+        $data['TITLE'] = "-- خطأ صفحة غير موجودة";
+        $this->core->load_template($data);
     }
 }
 

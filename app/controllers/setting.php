@@ -51,6 +51,10 @@ class setting extends CI_Controller {
                             8 => array(
                                 'name'      => "cms_register_group",
                                 'value'     => $this->input->post('register_group',true)
+                                ),
+                            9 => array(
+                                'name'      => "cms_register_active",
+                                'value'     => $this->input->post('registeractive',true)
                                 )
                             );
                     foreach ($store as $value)
@@ -76,7 +80,8 @@ class setting extends CI_Controller {
                         'disable_msg'           => 'DISABLE_MSG',
                         'disable_except_group'  => 'GROUPDISABLE',
                         'cms_register_enable'   => 'REGISTERENABLE',
-                        'cms_register_group'    => 'GROUPREGSITER'
+                        'cms_register_group'    => 'GROUPREGSITER',
+                        'cms_register_active'   => 'REGISTERACTIVE'
                     );
                     foreach ($settings as $value)
                         if(isset($setting[$value->name]))

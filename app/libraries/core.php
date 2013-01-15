@@ -414,7 +414,7 @@ class Core {
             $result["".base_url().""] = "الصفحة الرئيسية";
             foreach ($path as $value){
                 $item = unserialize($value);
-                $result[base_url().'page/index/'.$item->id] = $item->title;
+                $result[base_url().'page/view/'.$item->id] = $item->title;
             }
                 
         }

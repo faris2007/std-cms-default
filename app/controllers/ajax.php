@@ -13,7 +13,7 @@ class ajax extends CI_Controller {
     }
     
     function index(){
-        show_404();
+        redirect("page/error_page");
     }
     
     private function __dataeditUsers($data,$key = "mobile"){

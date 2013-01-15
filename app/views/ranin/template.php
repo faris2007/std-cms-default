@@ -45,11 +45,13 @@
 						</div>
                                                 <?php else: ?>
                                                 <div style="text-align:center">
-                                                    مرحبا بك يا <?=$userInfo->username?>
                                                     <?php if($userInfo->isAdmin): ?>
                                                         <a href="<?=base_url()?>admin">لوحة التحكم</a> |
                                                     <?php endif; ?>
-                                                        <a href="<?=base_url()?>login/logout">تسجيل الخروج</a>
+                                                        <a href="<?=base_url()?>myprofile">بياناتي</a> |
+                                                        <a href="<?=base_url()?>login/logout">تسجيل الخروج</a> |
+                                                    مرحبا بك يا <?=$userInfo->full_name?>
+                                                    
                                                 </div>
                                                 <?php endif; ?>
 					</div>

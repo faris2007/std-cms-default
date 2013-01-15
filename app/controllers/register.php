@@ -47,6 +47,8 @@ class register extends CI_Controller {
                     $repassword = $this->input->post('repassword',true);
                     if($password == $repassword){
                         if($this->__check('username', $this->input->post('username',true)) && $this->__check('email', $this->input->post('email',true))){
+                            
+                            $active_register = $this->settings->getSettingByName("cms_register_active");
                             $store = array(
                                 'username'      => $this->input->post('username',true),
                                 'full_name'     => $this->input->post('fullName',true),
@@ -55,7 +57,7 @@ class register extends CI_Controller {
                                 'mobile'        => $this->input->post('mobile',true),
                                 'isBanned'      => 0,
                                 'isDelete'      => 0,
-                                'isActive'      => 0,
+                                'isActive'      => $active_register->value,
                                 'group_id'      => ($group_register)? $group_register->value : 2
                             );
                             $this->users->addNewUser($store);
@@ -76,8 +78,10 @@ class register extends CI_Controller {
 
                             $this->email->send();
                             $data['CONTENT'] = "msg";
-                            $data['MSG'] = ' شكراً لتسجيلك في موقعنا سيصلك ايميل عند التفعيل <br/> تنبيه: قد يصل الأيميل للبريد المهمل الرجاء التأكد منه';
-
+                            if($active_register->value == 0)
+                                $data['MSG'] = ' شكراً لتسجيلك في موقعنا سيصلك ايميل عند التفعيل <br/> تنبيه: قد يصل الأيميل للبريد المهمل الرجاء التأكد منه';
+                            else
+                                $data['MSG'] = ' شكراً لتسجيلك في موقعنا و تم تفعيل حسابك تلقائياً <br/> تنبيه: قد يصل الأيميل للبريد المهمل الرجاء التأكد منه';
                         }else{
                             $vals = array(
                                     'img_path' => './captcha/',
@@ -174,7 +178,7 @@ class register extends CI_Controller {
             else
                 die('3');
         }else
-            show_404 ();
+            redirect("page/error_page");
     }
 }
 

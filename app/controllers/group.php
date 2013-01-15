@@ -82,7 +82,7 @@ class group extends CI_Controller{
         $groupId = isset($segments[3])? $segments[3]:NULL;
         $group = $this->groups->getGroups($groupId);
         if(is_bool($group))
-            show_404 ('');
+            redirect("page/error_page");
         if($this->core->checkPermissions('group','edit','all')){
             if($_POST){
                     $store = array(
@@ -121,7 +121,7 @@ class group extends CI_Controller{
             $groupId = isset($segments[3])? $segments[3]:NULL;
             $group = $this->groups->getGroups($groupId);
             if(is_bool($group))
-                show_404 ('');
+                redirect("page/error_page");
             $data['GROUPID'] = $groupId;
             $data['GROUPNAME'] = $group[0]->name;
             $data['SERVICES'] = $this->core->getServicesName('all');
@@ -187,7 +187,7 @@ class group extends CI_Controller{
             }else
                 redirect ('login/permission');
         }else
-            show_404 ();
+            redirect("page/error_page");
     }
     
     public function getData(){
@@ -208,7 +208,7 @@ class group extends CI_Controller{
             }else
                 die($this->__makeOptions ('', 'عفوا هذا النوع غير مسجل'));
         }else
-            show_404 ();
+            redirect("page/error_page");
     }
     
     private function __makeOptions($value,$title){

@@ -150,7 +150,7 @@ class user extends CI_Controller{
             }
             $userInfo = $this->users->getUser($userId);
             if(is_bool($userInfo))
-                show_404 ();
+                redirect("page/error_page");
             
             if($_POST){
                 $password = $this->input->post('password',true);
@@ -267,7 +267,7 @@ class user extends CI_Controller{
                 die('خطأ - لم تنجح عملية '.$names[$type]);
             
         }else
-            show_404 ();
+            redirect("page/error_page");
     }
 }
 
