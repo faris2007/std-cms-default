@@ -110,9 +110,10 @@ class Core {
             $menu['MAINMENU'] = $this->getMenuPyParentID(NULL);
             
             // Main Menu
-            $data['MENU'] = (isset($temp_data['MENU'])) ? $temp_data['MENU'] : $this->CI->load->view($this->site_style.'/menu',$menu,TRUE);
+            if(!isset($temp_data['isInstall']))
+                $data['MENU'] = (isset($temp_data['MENU'])) ? $temp_data['MENU'] : $this->CI->load->view($this->site_style.'/menu',$menu,TRUE);
             // Change style if install
-            $this->site_style = (isset($temp_data['isInstall']))? 'install' : $this->site_style;
+            $this->site_style = (isset($temp_data['isInstall']))? $temp_data['isInstall'] : $this->site_style;
             
             // Url for folder of style
             $data['STYLE_FOLDER'] = base_url().'style/'.  $this->site_style.'/';

@@ -59,7 +59,7 @@
                 </tr>
                 <tr>
                     <td>تفعيل التسجيل</td>
-                    <td><input type="radio" name="registerenable"<?=($REGISTERENABLE == 1)?' checked="checked"':''?> value="1" />نعم <input type="radio" name="siteenable"<?=($REGISTERENABLE == 0)?' checked="checked"':''?> value="0" />لا</td>
+                    <td><input type="radio" name="registerenable"<?=($REGISTERENABLE == 1)?' checked="checked"':''?> value="1" />نعم <input type="radio" name="registerenable"<?=($REGISTERENABLE == 0)?' checked="checked"':''?> value="0" />لا</td>
                 </tr>
                 <tr>
                     <td>المجموعة الخاصة بالأعضاء الجدد</td>

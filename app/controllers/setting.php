@@ -66,6 +66,7 @@ class setting extends CI_Controller {
                      redirect ('login/permission');
             }else{
                 $folder = get_dir_file_info('./app/views/', $top_level_only = TRUE);
+                unset($folder['install']);
                 $data['STYLE'] = array_keys($folder);
                 $this->load->model('settings');
                 $this->load->model('groups');
