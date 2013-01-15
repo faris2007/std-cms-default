@@ -381,6 +381,16 @@ class users extends CI_Model{
         
     }
     
+    public function getUsername($id){
+        if(empty($id))
+            return false;
+        
+        $query = $this->getUser($id);
+        
+        
+        return (!is_bool($query))? $query->username : false;
+    }
+    
     
 }
 

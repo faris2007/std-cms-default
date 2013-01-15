@@ -68,7 +68,7 @@ class Logs extends CI_Model {
             
     }
     
-    function getLogs($userid) {
+    function getLogs($userid = 'all') {
    
          if(empty($userid) ) return false;
         

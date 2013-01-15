@@ -377,14 +377,14 @@ class Core {
         return $data;
     }
     
-    public function add_log($action = Null)
+    public function add_log($action = Null,$location = NULL)
     {
         $this->CI->load->model('users');
         $this->CI->load->model('logs');
-        $location = $this->getServicesName($this->CI->uri->segment(1, 0));
+        $location = (is_null($location))? $this->getServicesName($this->CI->uri->segment(1, 0)) : $location;
         $data = array(
             'date'      => time(),
-            'activity'  => (!is_null($action)) ? $action . ' '.$location : $location,
+            'activity'  => (!is_null($action)) ? $action . ' -- '.$location : $location,
             'ip'        => $this->CI->input->ip_address(),
             'users_id'  => $this->CI->users->getInfoUser('id') 
         );

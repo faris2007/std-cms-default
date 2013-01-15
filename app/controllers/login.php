@@ -18,6 +18,7 @@ class login extends CI_Controller{
                 $username = $this->input->post('username',true);
                 $password = $this->input->post('password',true);
                 if($this->users->login($username,$password)){
+                    $this->core->add_log('تسجيل الدخول','الموقع');
                     $data['CONTENT'] = 'msg';
                     $data['TITLE'] = "-- تسجيل الدخول";
                     $data['MSG'] = 'تم تسجيل الدخول بنجاح, سوف يتم تحويلك تلقائيا<br />'.  anchor(base_url(), "أذا لم يتم تحويلك بشكل تلقائي يمكن الضغط على هذا الرابط للأنتقال للصفحة الرئيسية");
@@ -41,6 +42,7 @@ class login extends CI_Controller{
     
     public function logout(){
         if($this->users->isLogin()){
+            $this->core->add_log('تسجيل الخروج','الموقع');
             $this->users->logout();
         }
         $data['CONTENT'] = "login";
@@ -52,6 +54,7 @@ class login extends CI_Controller{
     
     public function permission(){
         if($this->users->isLogin()){
+            $this->core->add_log('محاولة دخول لمنطقة غير مصرح بها','الموقع');
             $data['CONTENT'] = "login";
             $data['TITLE'] = "-- تسجيل الدخول";
             $data['STEP'] = 'permission';
