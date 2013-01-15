@@ -123,6 +123,16 @@ $(document).ready(function(){
         });
     });
     
+    $('#type_url').change(function(){
+        if($(this).val() != 'page'){
+            $('#select_page').css("display",'none');
+            $('#select_url').css("display",'block');
+        }else{
+            $('#select_page').css("display",'block');
+            $('#select_url').css("display",'none');
+        }
+    });
+    
     $(".styleDate").datepicker();
     
     tinyMCE.init({

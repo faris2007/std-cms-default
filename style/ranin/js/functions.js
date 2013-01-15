@@ -110,7 +110,7 @@ $(document).ready(function(){
     });
     
     $('#addButton').click(function (){
-        $.post(base_url+"group/action/addp/"+$('#groupId').val(), { service_name: $('#service_name').val(), functions: $('#functions').val(),value:$('#value').val() },
+        $.post(base_url+"group/action/addp/"+$('#groupId').val(), {service_name: $('#service_name').val(), functions: $('#functions').val(),value:$('#value').val()},
             function(data) {
                 
                 $('#action').html(data);
@@ -121,6 +121,16 @@ $(document).ready(function(){
                     $(this).html("");
                 });
         });
+    });
+    
+    $('#type_url').change(function(){
+        if($(this).val() != 'page'){
+            $('#select_page').css("display",'none');
+            $('#select_url').css("display",'block');
+        }else{
+            $('#select_page').css("display",'block');
+            $('#select_url').css("display",'none');
+        }
     });
     
     $(".styleDate").datepicker();

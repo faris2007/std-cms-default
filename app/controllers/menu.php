@@ -10,6 +10,7 @@ class menu extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('menus');
+        $this->load->model('pages');
     }
     
     public function index(){
@@ -68,7 +69,7 @@ class menu extends CI_Controller {
             if($_POST){
                     $store = array(
                         'title'     => $this->input->post('title',true),
-                        'url'       => $this->input->post('url',true),
+                        'url'       => ($this->input->post('type_url',true) == 'page')? base_url().'page/view/'.$this->input->post('page_num',true) :$this->input->post('url',true),
                         'sort_id'   => $this->input->post('sort',true),
                         'parent_id' => $parent_id,
                         'isHidden'  => 1,
@@ -82,12 +83,24 @@ class menu extends CI_Controller {
                         $data['MSG'] = 'تم حفظ البيانات بشكل صحيح <br />'.  anchor($url, "للعودة للإدارة القوائم أضغط هنا");
                     }else{
                         $data['CONTENT'] = "menu";
+                        $where = array(
+                            'isDelete'  => 0,
+                            'isHidden'  => 0
+                        );
+                        $this->db->where($where);
+                        $data['PAGES'] = $this->pages->getPages('all');
                         $data['STEP'] = 'add';
                         $data['ERROR'] = true;
                         $data['ERR_MSG'] = 'لا تستطيع أضافة قائمة جديده لمشكلة في البيانات';
                     }
             }else{
                 $data['CONTENT'] = "menu";
+                $where = array(
+                    'isDelete'  => 0,
+                    'isHidden'  => 0
+                );
+                $this->db->where($where);
+                $data['PAGES'] = $this->pages->getPages('all');
                 $data['STEP'] = 'add';
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
@@ -108,7 +121,7 @@ class menu extends CI_Controller {
             if($_POST){
                     $store = array(
                         'title'     => $this->input->post('title',true),
-                        'url'       => $this->input->post('url',true),
+                        'url'       => ($this->input->post('type_url',true) == 'page')? base_url().'page/view/'.$this->input->post('page_num',true) :$this->input->post('url',true),
                         'sort_id'   => $this->input->post('sort',true)
                     );
                     if($this->menus->updateMenu($menuId,$store)){
@@ -122,6 +135,12 @@ class menu extends CI_Controller {
                         $data['MENUURL'] = $menuInfo->url;
                         $data['MENUSORT'] = $menuInfo->sort_id;
                         $data['CONTENT'] = "menu";
+                        $where = array(
+                            'isDelete'  => 0,
+                            'isHidden'  => 0
+                        );
+                        $this->db->where($where);
+                        $data['PAGES'] = $this->pages->getPages('all');
                         $data['STEP'] = 'edit';
                         $data['ERROR'] = true;
                         $data['ERR_MSG'] = 'لا تستطيع تحديث القائمة لمشكلة في البيانات';
@@ -131,6 +150,12 @@ class menu extends CI_Controller {
                 $data['MENUURL'] = $menuInfo->url;
                 $data['MENUSORT'] = $menuInfo->sort_id;
                 $data['CONTENT'] = "menu";
+                $where = array(
+                    'isDelete'  => 0,
+                    'isHidden'  => 0
+                );
+                $this->db->where($where);
+                $data['PAGES'] = $this->pages->getPages('all');
                 $data['STEP'] = 'edit';
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';

@@ -60,8 +60,30 @@
                 <td><input type="text" name="title" /></td>
             </tr>
             <tr>
+                <td>نوع الرابط</td>
+                <td>
+                    <select name="type_url" id="type_url">
+                        <option value="external">رابط خارجي</option>
+                        <option value="page">صفحة داخلية</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id="select_page" style="display:none">
+                <td>أختر الصفحة</td>
+                <td>
+                    <select name="page_num">
+                        <option selected="selected" value="" disabled="disabled">أختر الصفحة المطلوبة ...</option>
+                        <?php if(isset($PAGES)): ?>
+                            <?php foreach($PAGES as $row): ?>
+                                <option value="<?=$row->id?>"><?=$row->title?></option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </select>
+                </td>
+            </tr>
+            <tr>
                 <td>الرابط</td>
-                <td><input type="text" name="url" /></td>
+                <td><input type="text" name="url" id="url" /></td>
             </tr>
             <tr>
                 <td>الترتيب</td>
@@ -92,8 +114,30 @@
                 <td><input type="text" name="title" value="<?=$MENUTITLE?>" /></td>
             </tr>
             <tr>
+                <td>نوع الرابط</td>
+                <td>
+                    <select name="type_url" id="type_url">
+                        <option value="external">رابط خارجي</option>
+                        <option value="page">صفحة داخلية</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id="select_page" style="display:none">
+                <td>أختر الصفحة</td>
+                <td>
+                    <select name="page_num">
+                        <option selected="selected" value="" disabled="disabled">أختر الصفحة المطلوبة ...</option>
+                        <?php if(isset($PAGES)): ?>
+                            <?php foreach($PAGES as $row): ?>
+                                <option value="<?=$row->id?>"><?=$row->title?></option>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </select>
+                </td>
+            </tr>
+            <tr id="select_url">
                 <td>الرابط</td>
-                <td><input type="text" name="url" value="<?=$MENUURL?>" /></td>
+                <td><input type="text" name="url" id="url" value="<?=$MENUURL?>" /></td>
             </tr>
             <tr>
                 <td>الترتيب</td>
