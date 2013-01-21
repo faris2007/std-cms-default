@@ -173,6 +173,58 @@ class install extends CI_Controller
                 ENGINE=MYISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
             $tables[] = "error_log";
             
+            $this->dbforge->drop_database('slider');
+            $this->db->query("CREATE  TABLE IF NOT EXISTS `slider` (
+                `id` INT NOT NULL AUTO_INCREMENT,
+                `slider_name` VARCHAR(45) NULL ,
+                `url` TEXT NULL ,
+                `picture` TEXT NULL ,
+                `desc` TEXT NULL ,
+                `isDelete` VARCHAR(1) NULL ,
+                `isHidden` VARCHAR(1) NULL ,
+                `sort_id` INT NULL ,
+                PRIMARY KEY (`id`) )
+                ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
+            $tables[] = "slider";
+            
+            $this->dbforge->drop_database('course');
+            $this->db->query("CREATE  TABLE IF NOT EXISTS `course` (
+                `id` INT NOT NULL AUTO_INCREMENT ,
+                `course_name` TEXT NULL ,
+                `price` INT UNSIGNED NULL ,
+                `course_start` TIMESTAMP NULL ,
+                `course_length` INT NULL ,
+                `course_location` TEXT NULL ,
+                `course_register_end` TIMESTAMP NULL ,
+                `course_capacity` INT UNSIGNED NULL ,
+                `isDelete` VARCHAR(1) NULL ,
+                `isHidden` VARCHAR(1) NULL ,
+                PRIMARY KEY (`id`) )
+                ENGINE = InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
+            $tables[] = "course";
+            
+            $this->dbforge->drop_database('order');
+            $this->db->query("CREATE  TABLE IF NOT EXISTS `order` (
+                `id` INT NOT NULL AUTO_INCREMENT ,
+                `isAccept` VARCHAR(1) NULL DEFAULT 0 ,
+                `users_id` INT NOT NULL ,
+                `course_id` INT NOT NULL ,
+                PRIMARY KEY (`id`) ,
+                INDEX `fk_order_users1` (`users_id` ASC) ,
+                INDEX `fk_order_course1` (`course_id` ASC) ,
+                CONSTRAINT `fk_order_users1`
+                    FOREIGN KEY (`users_id` )
+                    REFERENCES `users` (`id` )
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE,
+                CONSTRAINT `fk_order_course1`
+                    FOREIGN KEY (`course_id` )
+                    REFERENCES `course` (`id` )
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE)
+                ENGINE = InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
+            $tables[] = "order";
+            
             $data['tables'] = $tables;
             $data['TITLE']  = "سكربت أدارة المحتوى -- صفحة التركيب";
             $data['CONTENT'] = "install";
