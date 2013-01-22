@@ -185,8 +185,6 @@ function action(url,type,id,i){
         $('#action').load(url);
         $('#action').css( "display", "block" );
         url = url.replace('enable','disable');
-        $('#action').replace('0 -','');
-        $('#action').replace('1 -','');
         disableImg = $('#'+id).attr('src').replace('disable.png','enable.png');
         $('#'+id).attr('src',disableImg);
         $('#'+id).attr('onclick',"action('"+url+"','disable','"+id+"','"+i+"')");
@@ -200,8 +198,6 @@ function action(url,type,id,i){
         $('#action').load(url);
         $('#action').css( "display", "block" );
         url = url.replace('disable','enable');
-        $('#action').replace('0 -','');
-        $('#action').replace('1 -','');
         enableImg = $('#'+id).attr('src').replace('enable.png','disable.png');
         $('#'+id).attr('src',enableImg);
         $('#'+id).attr('onclick',"action('"+url+"','disable','"+id+"','"+i+"')");

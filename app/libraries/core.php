@@ -6,6 +6,7 @@ class Core {
     private $Token,$Old_Token,$New_Token,$Security_Key,$User_Agent;
     public  $site_language = 'english';
     private $site_name,$site_style;
+    private $site_style_default = "default";
 
     public function __construct()
     {
@@ -22,7 +23,7 @@ class Core {
             $title = $this->CI->settings->getSettingByName("site_name");
             $this->site_name = (!is_bool($title))? $title->value : '' ;
             $style = $this->CI->settings->getSettingByName("style");
-            $this->site_style = (!is_bool($style)) ? $style->value : 'default';
+            $this->site_style = (!is_bool($style)) ? $style->value : $this->site_style_default;
             $enable = $this->CI->settings->getSettingByName("site_enable");
             if(!is_bool($enable)){
                 if($enable->value == 0) {
@@ -109,17 +110,39 @@ class Core {
             // Main Menu Data
             $menu['MAINMENU'] = $this->getMenuPyParentID(NULL);
             
+            // Main Menu file
+            $menuFile = (file_exists('./app/views/'.$this->site_style.'/menu.php'))? $this->site_style.'/menu' : $this->site_style_default.'/menu';
+            
             // Main Menu
             if(!isset($temp_data['isInstall']))
-                $data['MENU'] = (isset($temp_data['MENU'])) ? $temp_data['MENU'] : $this->CI->load->view($this->site_style.'/menu',$menu,TRUE);
+                $data['MENU'] = (isset($temp_data['MENU'])) ? $temp_data['MENU'] : $this->CI->load->view($menuFile,$menu,TRUE);
+            
+            // Load Model Of sliders
+            $this->CI->load->model("sliders");
+            //condition for sliders
+            
+            $whereSlider = array(
+                'isHidden' => 0,
+                'isDelete' => 0
+            );
+            $this->CI->db->where($whereSlider);
+            // data of slider
+            $sliderData['SLIDERS'] = $this->CI->sliders->getSlider("all");
+            // Slider file
+            $sliderFile = (file_exists('./app/views/'.$this->site_style.'/slider.php'))? $this->site_style.'/slider' : $this->site_style_default.'/slider';
+            
+            // Slider
+            if(!isset($temp_data['isInstall']))
+                $data['SLIDERS_SHOW'] =  $this->CI->load->view($sliderFile,$sliderData,TRUE);
+            
             // Change style if install
             $this->site_style = (isset($temp_data['isInstall']))? $temp_data['isInstall'] : $this->site_style;
             
             // Url for folder of style
-            $data['STYLE_FOLDER'] = base_url().'style/'.  $this->site_style.'/';
+            $data['STYLE_FOLDER'] = (is_dir("./style/".$this->site_style)) ? base_url().'style/'.  $this->site_style.'/': base_url().'style/'.  $this->site_style_default.'/';
             
             // Url for folder of style for get from content file
-            $temp_data['STYLE_FOLDER'] = base_url().'style/'.  $this->site_style.'/';
+            $temp_data['STYLE_FOLDER'] = (is_dir("./style/".$this->site_style)) ? base_url().'style/'.  $this->site_style.'/': base_url().'style/'.  $this->site_style_default.'/';
             // Check If the file is exist
             $contentFile = (file_exists('./app/views/'.$this->site_style.'/controller/'.$temp_data['CONTENT'].'.php') && $this->site_style != 'default') ? $this->site_style.'/controller/'.$temp_data['CONTENT'] : 'default/controller/'.$temp_data['CONTENT'];
             // Load Model Of users
@@ -246,7 +269,10 @@ class Core {
             "users"     => "إدارة الأعضاء",
             "group"     => "إدارة المجموعات",
             "setting"   => "الإعدادات",
-            "log"       => "السجل"
+            "log"       => "السجل",
+            "slider"    => "إدارة واجهة العرض",
+            "course"    => "إدارة الدورات",
+            "order"     => "إدارة الطلبات"
             );
         if($service_name == 'all' )
             return $data; 
@@ -301,6 +327,29 @@ class Core {
                     "show"      => "استعراض البيانات",
                     "delete"    => "حذف"
                     ),
+            "slider"     => array(
+                    "all"       => "جميع الصلاحيات",
+                    "show"      => "استعراض البيانات",
+                    "add"       => "أضافة",
+                    "edit"      => "تعديل",
+                    "delete"    => "حذف"
+                    ),
+            "course"     => array(
+                    "all"       => "جميع الصلاحيات",
+                    "show"      => "استعراض البيانات",
+                    "add"       => "أضافة",
+                    "edit"      => "تعديل",
+                    "delete"    => "حذف"
+                    ),
+            "order"     => array(
+                    "all"       => "جميع الصلاحيات",
+                    "active"    => "تنشيط",
+                    "show"      => "استعراض البيانات",
+                    "add"       => "أضافة",
+                    "edit"      => "تعديل",
+                    "delete"    => "حذف"
+                    )
+            
             );
         return (isset($data[$service_name]))? $data[$service_name] : $data  ;
     }

@@ -1,6 +1,6 @@
 <?php
 
-Class slider extends CI_Model{
+Class sliders extends CI_Model{
     
     private $_table = "slider";
 
