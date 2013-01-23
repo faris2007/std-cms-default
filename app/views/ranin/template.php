@@ -80,54 +80,7 @@
                                     <?=$MENU?>
                                 </div>
                                 <!-- end of navigation -->
-                                <!-- slider -->
-				<div class="m-slider">
-					<div class="slider-holder">
-						<span class="slider-shadow"></span>
-						<span class="slider-b"></span>
-						<div class="slider flexslider">
-							<ul class="slides">
-								<li>
-									<div class="img-holder">
-										<img src="<?=$STYLE_FOLDER?>css/images/slide-img2.png" alt="" />
-									</div>
-									<div class="slide-cnt">
-										<h2>ريادة الأعمال التجارية</h2>
-										<div class="box-cnt">
-											<p>يقدم مركز رنين الليل خدمة ريادة الأعمال التجارية</p>
-										</div>
-										<a href="#" class="grey-btn">التفاصيل</a>
-									</div>
-								</li>
-								<li>
-									<div class="img-holder">
-										<img src="<?=$STYLE_FOLDER?>css/images/slide-img2.png" alt="" />
-									</div>
-									<div class="slide-cnt">
-										<h2>ريادة الأعمال التجارية</h2>
-										<div class="box-cnt">
-											<p>يقدم مركز رنين الليل خدمة ريادة الأعمال التجارية</p>
-										</div>
-										<a href="#" class="grey-btn">التفاصيل</a>
-									</div>
-								</li>
-								<li>
-									<div class="img-holder">
-										<img src="<?=$STYLE_FOLDER?>css/images/slide-img2.png" alt="" />
-									</div>	
-									<div class="slide-cnt">
-										<h2>ريادة الأعمال التجارية</h2>
-										<div class="box-cnt">
-											<p>يقدم مركز رنين الليل خدمة ريادة الأعمال التجارية</p>
-										</div>
-										<a href="#" class="grey-btn">التفاصيل</a>
-									</div>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>		
-				<!-- end of slider -->
+                                <?=$SLIDERS_SHOW?>
                                 <!-- main -->
 				<div class="main">
                                     <?php if (@$NAV): ?>

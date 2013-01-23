@@ -1,3 +1,3 @@
 RewriteEngine on
-RewriteCond $1 !^(index\.php|style|captcha)
+RewriteCond $1 !^(index\.php|style|captcha|uploads)
 RewriteRule ^(.*)$ /cms/index.php/$1 [L]

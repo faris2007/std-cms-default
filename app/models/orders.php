@@ -1,15 +1,15 @@
 <?php
 
-Class department extends CI_Model{
+Class orders extends CI_Model{
     
-    private $_table = "slider";
+    private $_table = "order";
 
     function __construct() {
         parent::__construct();
     }
         
     
-    function addNewDepartment($data) {
+    function addNewOrder($data) {
         if(!is_array($data)) return FALSE; 
         $this->db->trans_start();
         $this->db->insert($this->_table,$data);
@@ -22,7 +22,7 @@ Class department extends CI_Model{
             return True;
     }
   
-    function getDepartment ($id="all"){
+    function getOrder ($id="all"){
         
         if (empty($id)) return FALSE;  
         
@@ -42,7 +42,7 @@ Class department extends CI_Model{
             return ($query->num_rows() >0)? $query->result() : false;
          }
          
-         function deleteDepartment($id="all") {
+         function deleteOrder($id="all") {
              
              if(empty($id) || !is_numeric($id)) 
                  return FALSE;
@@ -58,7 +58,7 @@ Class department extends CI_Model{
                 return True;
          }
          
-           function updateDepartment($id,$data) {
+           function updateOrder($id,$data) {
              
              if(empty($id) || !is_array($data))
                  return FALSE;

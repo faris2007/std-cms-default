@@ -36,7 +36,7 @@
         </tr>
         <tr>
             <td>
-                <a href="<?=base_url()?>"><img src="<?=$STYLE_FOLDER?>icon/slides.png" alt="إدارة واجهة العرض" /><br />
+                <a href="<?=base_url()?>slider"><img src="<?=$STYLE_FOLDER?>icon/slides.png" alt="إدارة واجهة العرض" /><br />
                     <span>إدارة واجهة العرض</span>
                 </a>
             </td>

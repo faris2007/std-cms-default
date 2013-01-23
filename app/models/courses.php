@@ -1,15 +1,15 @@
 <?php
 
-Class order extends CI_Model{
+Class courses extends CI_Model{
     
-    private $_table = "slider";
+    private $_table = "course";
 
     function __construct() {
         parent::__construct();
     }
         
     
-    function addNewOrder($data) {
+    function addNewCourse($data) {
         if(!is_array($data)) return FALSE; 
         $this->db->trans_start();
         $this->db->insert($this->_table,$data);
@@ -22,7 +22,7 @@ Class order extends CI_Model{
             return True;
     }
   
-    function getOrder ($id="all"){
+    function getCourse($id="all"){
         
         if (empty($id)) return FALSE;  
         
@@ -42,7 +42,7 @@ Class order extends CI_Model{
             return ($query->num_rows() >0)? $query->result() : false;
          }
          
-         function deleteOrder($id="all") {
+         function deleteCourse($id="all") {
              
              if(empty($id) || !is_numeric($id)) 
                  return FALSE;
@@ -58,7 +58,7 @@ Class order extends CI_Model{
                 return True;
          }
          
-           function updateOrder($id,$data) {
+           function updateCourse($id,$data) {
              
              if(empty($id) || !is_array($data))
                  return FALSE;
