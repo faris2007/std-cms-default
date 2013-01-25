@@ -133,7 +133,10 @@ $(document).ready(function(){
         }
     });
     
-    $(".styleDate").datepicker();
+    $(".styleDate").datepicker( { 
+                                appendText: "(yyyy-mm-dd)" ,
+                                dateFormat: "yy-mm-dd" 
+                            });
     
     tinyMCE.init({
 		// General options

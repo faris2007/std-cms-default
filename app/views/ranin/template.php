@@ -49,7 +49,7 @@
                                                         <a href="<?=base_url()?>admin">لوحة التحكم</a> |
                                                     <?php endif; ?>
                                                         <a href="<?=base_url()?>myprofile">بياناتي</a> |
-                                                        <a href="<?=base_url()?>login/logout">تسجيل الخروج</a> |
+                                                        <a href="<?=base_url()?>logout">تسجيل الخروج</a> |
                                                     مرحبا بك يا <?=$userInfo->full_name?>
                                                     
                                                 </div>
@@ -94,6 +94,7 @@
                                     </div>
                                     <?php endif; ?>
                                     <?=$CONTENT?>
+                                    <div style="text-align:center">الوقت المستغرق : {elapsed_time}</div>
                                 </div>
 				<!-- end of main -->
                                 <br />

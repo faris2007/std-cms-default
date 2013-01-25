@@ -178,6 +178,7 @@ class Core {
             // Store Information about user in $temp_data
             $temp_data['userInfo'] = $userInfo;
             
+            $data['userInfo'] = $userInfo;
             // Content
             $data['CONTENT'] = (isset($temp_data['CONTENT'])) ? $this->CI->load->view($contentFile,$temp_data,TRUE) : '' ;
             
