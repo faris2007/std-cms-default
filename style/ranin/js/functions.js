@@ -180,6 +180,14 @@ $(document).ready(function(){
 			staffid : "991234"
 		}
 	});
+        
+        // for course
+        $(".contentCol").hide();
+        //toggle the componenet with class msg_body
+        $(".heading").click(function()
+        {
+            $(this).next(".contentCol").slideToggle(500);
+        });
 });
 
 function action(url,type,id,i){
@@ -209,6 +217,23 @@ function action(url,type,id,i){
         $('#action').fadeOut(5000, function(){
             $(this).css("display","none");
             $(this).html("");
+        });
+    }else if(type == 'order'){
+        check = $.get(url,function(data){
+            if(data.match(/1/g) != null)
+            {
+                data.replace('1 -','');
+                $('#action').html(data);
+                $('#action').css( "display", "block" );
+                $('#'+id).fadeOut(5000, function(){
+                    $(this).css("background-color","red");
+                    $(this).remove();
+                });
+                $('#action').fadeOut(5000, function(){
+                    $(this).css("display","none");
+                    $(this).html("");
+                });
+            }
         });
     }else if(type == 'delete'){
         check = $.get(url,function(data){

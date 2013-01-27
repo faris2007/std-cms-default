@@ -44,6 +44,12 @@
             </tr>
         </tfoot>
     </table>
+    <div class="message">
+        <img src="<?=base_url()?>style/default/icon/enable.png" /> تظهر عندما تكون الدورة مفعله
+        | <img src="<?=base_url()?>style/default/icon/disable.png" /> تظهر عندما تكون الدورة غير مفعله
+        <br />
+        طريقة التفعيل/التعطيل بالضغط على الصورة
+    </div>
 </div>
 <?php elseif ($STEP == 'add') : ?>
 <form method="post">
@@ -147,5 +153,39 @@
         </tbody>
     </table>
 </form>
+<?php elseif($STEP == 'available'): ?>
+<div id="action" class="message" style="display:none"></div>
+    <?php if(!$this->users->isLogin()): ?>
+        <div class="message">
+            تنبيه : يجب عليك
+            <a href="<?=base_url()?>register">التسجيل</a>
+            في موقعنا لطلب احدى هذه الدورات
+            <br />
+            أذا كان لديك حساب سابق لدينا يمكنك 
+            <a href="<?=base_url()?>login">تسجيل الدخول</a>
+        </div>
+    <?php endif; ?>
+    <div class="layer1">
+    <?php if($COURSES): ?>
+        <?php foreach ($COURSES as $row): ?>
+        <div id="course_<?=$row->id?>">
+            <p class="heading"><?=$row->course_name?></p>
+            <div class="contentCol">
+                <ul>
+                    <li>مكان الدورة : <?=$row->course_location?></li>
+                    <li>مدة الدورة : <?=$row->course_length?></li>
+                    <li>تاريخ بداية الدورة : <?=date('d-m-Y',$row->course_start)?></li>
+                    <li>السعة المسموح بها في هذه الدورة : <?=$COURSE_CAPACITY?></li>
+                    <li>تاريخ أنتهاء التسجيل : <?=date('d-m-Y',$row->course_register_end)?></li>
+                    <li>سعر الدورة : <?=$COURSE_PRICE?></li>
+                </ul>
+                <?php if($this->users->isLogin()): ?>
+                    <button onclick="action('<?=base_url()?>order/action/order/<?=$row->id?>','order','course_<?=$row->id?>','<?=$row->id?>')">التسجيل</button>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
 <?php endif; ?>
 

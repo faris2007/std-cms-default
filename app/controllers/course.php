@@ -17,7 +17,7 @@ class course extends CI_Controller {
         if($this->core->checkPermissions('course','all','all')){
             $this->show();
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     public function show(){
@@ -52,10 +52,21 @@ class course extends CI_Controller {
             $data['TITLE'] = "-- إدارة الدورات";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
         
     }
     
+    public function available(){
+        
+        $userId = ($this->users->isLogin())? $this->users->getInfoUser('id') : '';
+        $data['COURSES'] = $this->courses->getAvailableCourse($userId);
+        $data['CONTENT'] = "course";
+        $data['STEP'] = 'available';
+        $data['TITLE'] = "-- الدورات المتاحة";
+        $this->core->load_template($data);
+    }
+
+
     public function add(){
         if($this->core->checkPermissions('course','add','all')){
             if($_POST){
@@ -93,7 +104,7 @@ class course extends CI_Controller {
             $data['TITLE'] = "-- إدارة الدورات -- أضافة دورة جديد";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     public function edit(){
@@ -102,7 +113,7 @@ class course extends CI_Controller {
         if($this->core->checkPermissions('course','edit',$courseId)){
             $courseInfo = $this->courses->getCourse($courseId);
             if(is_bool($courseInfo))
-                redirect("page/error_page");
+                redirect(STD_CMS_ERROR_PAGE);
             if($_POST){
                 $start_date = $this->input->post('start_date',true);
                 $register_end = $this->input->post('register_end',true);
@@ -148,10 +159,10 @@ class course extends CI_Controller {
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
             }
-            $data['TITLE'] = "-- إدارة القوائم -- تعديل القائمة ";
+            $data['TITLE'] = "-- إدارة الدورات -- تعديل الدورة ";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
 
 
@@ -189,7 +200,7 @@ class course extends CI_Controller {
                 die('خطأ - لم تنجح عملية '.$names[$type]);
             
         }else
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
     }
     
     

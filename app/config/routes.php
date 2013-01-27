@@ -43,6 +43,7 @@ $route['404_override'] = 'page/error_page';
 
 // change url for edit profile
 $route['myprofile'] = 'user/edit';
+$route['myorder'] = 'order/user';
 $route['logout'] = 'login/logout';
 
 /* End of file routes.php */

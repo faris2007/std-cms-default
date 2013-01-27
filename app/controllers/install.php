@@ -25,7 +25,7 @@ class install extends CI_Controller
             $this->dbforge->drop_database('settings');
             $this->db->query("
             CREATE  TABLE IF NOT EXISTS `settings` (
-                `id` INT NOT NULL AUTO_INCREMENT,
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `name` VARCHAR(45) NULL ,
                 `value` TEXT NULL ,
                 `default` TEXT NULL ,
@@ -35,7 +35,7 @@ class install extends CI_Controller
 
             $this->dbforge->drop_database('group');
             $this->db->query("CREATE  TABLE IF NOT EXISTS `group` (
-                `id` INT NOT NULL AUTO_INCREMENT,
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `name` VARCHAR(45) NULL ,
                 `isDelete` VARCHAR(1) NOT NULL DEFAULT 0 ,
                 `isAdmin` VARCHAR(1) NOT NULL DEFAULT 0 ,
@@ -45,7 +45,7 @@ class install extends CI_Controller
 
             $this->dbforge->drop_database('users');
             $this->db->query("CREATE  TABLE IF NOT EXISTS `users` (
-                `id` INT NOT NULL AUTO_INCREMENT,
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `username` VARCHAR(45) NULL ,
                 `full_name` VARCHAR(45) NULL ,
                 `email` VARCHAR(45) NULL ,
@@ -69,7 +69,7 @@ class install extends CI_Controller
 
             $this->dbforge->drop_database('password_log');
             $this->db->query("CREATE  TABLE IF NOT EXISTS `password_log` (
-                `id` INT NOT NULL AUTO_INCREMENT,
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `date` VARCHAR(45) NULL ,
                 `password` VARCHAR(45) NULL ,
                 `users_id` INT NOT NULL ,
@@ -85,7 +85,7 @@ class install extends CI_Controller
 
             $this->dbforge->drop_database('logs');
             $this->db->query("CREATE  TABLE IF NOT EXISTS `logs` (
-                `id` INT NOT NULL AUTO_INCREMENT,
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `date` VARCHAR(45) NULL ,
                 `activity` VARCHAR(45) NULL ,
                 `ip` VARCHAR(15) NULL ,
@@ -102,7 +102,7 @@ class install extends CI_Controller
 
             $this->dbforge->drop_database('pages');
             $this->db->query("CREATE  TABLE IF NOT EXISTS `pages` (
-                `id` INT NOT NULL AUTO_INCREMENT,
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(45) NULL ,
                 `content` VARCHAR(45) NULL ,
                 `isDelete` VARCHAR(1) NOT NULL DEFAULT 0 ,
@@ -126,7 +126,7 @@ class install extends CI_Controller
 
             $this->dbforge->drop_database('menu');
             $this->db->query("CREATE  TABLE IF NOT EXISTS `menu` (
-                `id` INT NOT NULL AUTO_INCREMENT,
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(45) NULL ,
                 `url` TEXT NULL ,
                 `isDelete` VARCHAR(1) NULL ,
@@ -145,7 +145,7 @@ class install extends CI_Controller
 
             $this->dbforge->drop_database('permissions');
             $this->db->query("CREATE  TABLE IF NOT EXISTS `permissions` (
-                `id` INT NOT NULL AUTO_INCREMENT,
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `service_name` VARCHAR(45) NULL ,
                 `function_name` VARCHAR(45) NULL ,
                 `value` VARCHAR(45) NULL ,
@@ -162,7 +162,7 @@ class install extends CI_Controller
 
             $this->dbforge->drop_database('error_log');
             $this->db->query("CREATE  TABLE IF NOT EXISTS `error_log` (
-                `id` INT NOT NULL AUTO_INCREMENT,
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `date` VARCHAR(45) NULL ,
                 `ip` VARCHAR(45) NULL ,
                 `url` VARCHAR(45) NULL ,
@@ -175,7 +175,7 @@ class install extends CI_Controller
             
             $this->dbforge->drop_database('slider');
             $this->db->query("CREATE  TABLE IF NOT EXISTS `slider` (
-                `id` INT NOT NULL AUTO_INCREMENT,
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
                 `slider_name` VARCHAR(45) NULL ,
                 `url` TEXT NULL ,
                 `picture` TEXT NULL ,
@@ -184,12 +184,12 @@ class install extends CI_Controller
                 `isHidden` VARCHAR(1) NULL ,
                 `sort_id` INT NULL ,
                 PRIMARY KEY (`id`) )
-                ENGINE = InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
+                ENGINE = MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
             $tables[] = "slider";
             
             $this->dbforge->drop_database('course');
             $this->db->query("CREATE  TABLE IF NOT EXISTS `course` (
-                `id` INT NOT NULL AUTO_INCREMENT ,
+                `id` INT UNSIGNED  NOT NULL AUTO_INCREMENT ,
                 `course_name` TEXT NULL ,
                 `price` INT UNSIGNED NULL ,
                 `course_start` VARCHAR(45) NULL ,
@@ -200,15 +200,15 @@ class install extends CI_Controller
                 `isDelete` VARCHAR(1) NULL ,
                 `isHidden` VARCHAR(1) NULL ,
                 PRIMARY KEY (`id`) )
-                ENGINE = InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
+                ENGINE = MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
             $tables[] = "course";
             
             $this->dbforge->drop_database('order');
             $this->db->query("CREATE  TABLE IF NOT EXISTS `order` (
-                `id` INT NOT NULL AUTO_INCREMENT ,
+                `id` INT UNSIGNED  NOT NULL AUTO_INCREMENT ,
                 `isAccept` VARCHAR(1) NULL DEFAULT 0 ,
-                `users_id` INT NOT NULL ,
-                `course_id` INT NOT NULL ,
+                `users_id` INT UNSIGNED  NOT NULL ,
+                `course_id` INT UNSIGNED  NOT NULL ,
                 PRIMARY KEY (`id`) ,
                 INDEX `fk_order_users1` (`users_id` ASC) ,
                 INDEX `fk_order_course1` (`course_id` ASC) ,
@@ -222,7 +222,7 @@ class install extends CI_Controller
                     REFERENCES `course` (`id` )
                     ON DELETE CASCADE
                     ON UPDATE CASCADE)
-                ENGINE = InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
+                ENGINE = MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
             $tables[] = "order";
             
             $data['tables'] = $tables;

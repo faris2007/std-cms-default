@@ -19,7 +19,7 @@ body {
 }
  
 .header-right { float: right; width: 264px; position: relative; margin-right: -10px;  }
-.subscribe { position: absolute; width: 400px; height: 48.9px; background: url(images/subscribe.png) no-repeat 0 0; font-family: 'museo', arial, helvetica, serif; line-height: 43px; margin: -20px 0px 10px 510px; padding: 0px 45px;  }
+.subscribe { position: absolute; font-size:14px; width: 390px; height: 48.9px; background: url(images/subscribe.png) no-repeat 0 0; font-family: 'museo', arial, helvetica, serif; line-height: 43px; margin: -20px 0px 10px 510px; padding: 0px 45px;  }
 .subscribe a { color: #fff; /*font-size: 16px;*/ position: relative; /*padding-left: 40px;*/ }
 .subscribe a span { background: url(images/sbubscribe-ico.png) no-repeat 0px 0px; width: 34px; height: 34px; position: absolute; display: block;  top: -5px; left: 0; }
 .subscribe a:hover { color: #f6c387; text-decoration: none; }
@@ -33,7 +33,7 @@ a:hover { text-decoration: none; }
 a img { border: 0; }
 a.more { color: #2b9208; text-decoration: none; padding-left: 11px; }
 a.more:hover { text-decoration: none;  }
-input, textarea, select { font-size: 12px; font-family: arial, sans-serif; }
+input, textarea, select { font-size: 15px; font-family: arial, sans-serif; }
 textarea { overflow: auto; }
 
 .cl { display: block; height: 0; font-size: 0; line-height: 0; text-indent: -4000px; clear: both; }
@@ -319,9 +319,11 @@ article, aside, details, footer, header, menu, nav, section { display: block; }
 
 .message {
     width: 75%;
+    color:black;
+    font-size: 17px;
     margin: 25px auto 15px auto;
-    background-color: #ffffcc;
-    border: 1px solid gold;
+    background-color: #DDFCD5;
+    border: 1px solid #2b9208;
     padding: 5px 5px 5px 5px;
     text-align: center;
     -webkit-border-radius: 5px;
@@ -352,3 +354,155 @@ article, aside, details, footer, header, menu, nav, section { display: block; }
     border-top-left-radius: 5px;
 }
 
+/*
+from faris2007
+*/
+img[onclick]{
+    cursor:pointer;
+}
+
+.layer1 {
+margin: 0;
+padding: 0;
+margin-right:25%;
+margin-left:25%;
+width: 50%;
+text-align:center;
+}
+ 
+.heading {
+margin: 1px;
+color: #fff;
+padding: 3px 10px;
+cursor: pointer;
+position: relative;
+background-color:#c30;
+}
+.contentCol{
+padding: 5px 10px;
+margin-right:25%;
+margin-left:25%;
+background-color:#fafafa;
+width:50%;
+alignment-adjust:central;
+}
+p { padding: 5px 0; }
+
+
+/*
+This part of code is applying on ( "admin.php" ). 
+Written by: aqodev 
+*/
+
+.main-tbl
+{   
+    border: 1px #CCC solid;
+    margin: 3px auto 3px auto;
+    background-color: #FFF;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    -moz-box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    text-align: center;
+}
+.main-tbl tr :hover 
+{
+    background-color: #DDFCD5;
+}
+.main-tbl span {
+    font-size:14px
+}
+
+/*
+This part of code is applying on ("setting.php" & "add page" & "edit page" ). 
+Written by: aqodev 
+*/
+
+.setting-tbl
+{
+    font-size:15px;
+    color:black;
+    border: 1px #CCC solid;
+    margin: 3px auto 3px auto;
+    background-color: #FFF;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    -moz-box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+}
+
+.setting-tbl tr {
+    height: 30px;
+}
+
+/*
+This part of code is applying on ( "log.php" ). 
+Written by: aqodev 
+*/
+
+
+.log-tbl {
+    
+    font-size:15px;
+    color:black;
+    border: 1px #CCC solid;
+    margin: 3px auto 3px auto;
+    background-color: #FFF;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    -moz-box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    text-align: center;
+}
+
+.log-tbl tr {
+    height: 40px;
+}
+.log-tbl td {
+    border-bottom: 1px solid #ccc;
+}
+
+
+/*
+This part of code is applying on ( "user.php" & "add user" & "edit user" & "add group" & "edit group"). 
+Written by: aqodev 
+*/
+
+.profile-tbl {
+    font-size: 15px;
+    color: black;
+    border: 1px #CCC solid;
+    margin: 3px auto 3px auto;
+    background-color: #FFF;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    -moz-box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+
+}
+
+.profile-tbl tr {
+    height: 30px;
+}
+
+/*
+This part of code is applying inside tables
+Written by: aqodev 
+*/
+
+#list {
+    color: black;
+    font-size: 15px;
+}
+
+.main{
+    direction:rtl;
+}

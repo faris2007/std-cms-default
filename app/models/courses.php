@@ -80,5 +80,36 @@ Class courses extends CI_Model{
             $typeOfError =  $this->db->_error_message();
             log_message("error", "In This Query -- " . $query . " -- " . $typeOfError);
         }
+        
+        public function getNameOfCourse($id){
+            if(empty($id) || !is_numeric($id))
+                return false;
+            
+            $query = $this->getCourse($id);
+            if(is_bool($query))
+                return false;
+            else 
+                return $query[0]->course_name;
+        }
+        
+        public function getAvailableCourse($userId){
+            if(!empty($userId) && !is_numeric($userId))
+                $checkUser = "AND course.id = (SELECT course_id FROM `order` where `order`.users_id != '".$userId."')";
+            else
+                $checkUser = "";
+            
+            $where = "course.`course_capacity` > (SELECT count(*) FROM `order` where `order`.course_id = course.id) ".$checkUser;
+            $this->db->where($where);
+            $anotherWhere = array(
+                'isHidden'              => 0,
+                'isDelete'              => 0,
+                'course_register_end >'   => time()
+            );
+            $this->db->where($anotherWhere);
+            $result = $this->getCourse('all');
+            
+            return $result;
+        }
+        
 }// end class
 ?>
