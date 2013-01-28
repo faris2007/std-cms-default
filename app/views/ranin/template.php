@@ -49,6 +49,7 @@
                                                         <a href="<?=base_url()?>admin">لوحة التحكم</a> |
                                                     <?php endif; ?>
                                                         <a href="<?=base_url()?>myprofile">بياناتي</a> |
+                                                        <a href="<?=base_url()?>myorder">طلباتي</a> |
                                                         <a href="<?=base_url()?>logout">تسجيل الخروج</a> |
                                                     مرحبا بك يا <?=$userInfo->full_name?>
                                                     
@@ -117,38 +118,34 @@
 						<div class="col">
 							<h2>خدماتنا</h2>
 							<ul>
-								<li><a href="#">خدمات إقتصادية</a></li>
-								<li><a href="#">خدمات تجارية</a></li>
-								<li><a href="#">خدمات إدارية</a></li>
-								<li><a href="#">خدمات مالية</a></li>
+							    <?php foreach ($this->core->getExtraMenu(4) as $row): ?>
+                                                                <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
+                                                            <?php endforeach; ?>
 							</ul>
 						</div>
 						<div class="col">
 							<h2>المشاريع</h2>
 							<ul>
-								<li><a href="#">المشروع الأول</a></li>
-								<li><a href="#">المشروع الثاني</a></li>
-								<li><a href="#">المشروع الثالث </a></li>
-								<li><a href="#">المشروع الرابع</a></li>
+							    <?php foreach ($this->core->getExtraMenu(3) as $row): ?>
+                                                                <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
+                                                            <?php endforeach; ?>
 							</ul>
 						</div>
 						<div class="col">
 							<h2>الحلول واﻻستشارات</h2>
 							<ul>
-								<li><a href="#">استشارات مالية</a></li>
-								<li><a href="#">استشارات فانونية</a></li>
-								<li><a href="#">استشارات تجارية</a></li>
-								<li><a href="#">استشارات تجارية</a></li>
+							    <?php foreach ($this->core->getExtraMenu(2) as $row): ?>
+                                                                <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
+                                                            <?php endforeach; ?>
 							</ul>
 						</div>
 						<div class="col">
 							<h2>شركاؤنا</h2>
-							<ul>
-								<li><a href="#">الشركة الأولى</a></li>
-								<li><a href="#">الشركة الثانية</a></li>
-								<li><a href="#">الشركة الثالثة</a></li>
-								<li><a href="#">الشركة الرابعة</a></li>
-							</ul>
+                                                        <ul>
+                                                            <?php foreach ($this->core->getExtraMenu(1) as $row): ?>
+                                                                <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
+                                                            <?php endforeach; ?>
+                                                        </ul>
 						</div>
 						<div class="cl">&nbsp;</div>
 					</div>
@@ -156,13 +153,9 @@
 					<div class="footer-bottom">
 						<nav class="footer-nav">
 							<ul>
-								<li class="active"><a href="#">الصفحة الرئيسية</a></li>
-								<li><a href="#">الخدمات</a></li>
-								<li><a href="#">المشاريع</a></li>
-								<li><a href="#">الحلول واﻻستشارات</a></li>
-								<li><a href="#">الوظائف</a></li>
-								<li><a href="#">المدونة</a></li>
-								<li><a href="#">اتصل بنا</a></li>
+                                                            <?php foreach ($this->core->getExtraMenu(5) as $row): ?>
+                                                                <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
+                                                            <?php endforeach; ?>
 							</ul>
 						</nav>
 						<p class="copy"> جميع الحقوق محفوظة 2012 مركز رنين الليل لريادة الأعمال &copy; <span>|</span> <strong><?=@$DEVELOPMENT?></strong></p>

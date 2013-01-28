@@ -506,3 +506,7 @@ Written by: aqodev
 .main{
     direction:rtl;
 }
+
+#nav ul li{
+    display:inline;
+}

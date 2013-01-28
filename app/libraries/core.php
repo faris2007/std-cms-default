@@ -393,6 +393,18 @@ class Core {
         return ul($data, array());
     }
     
+    public function getExtraMenu($parentId = NULL){
+        $this->CI->load->model('menus');
+        $where = array(
+            'isDelete'      => 0,
+            'isHidden'      => 0
+        );
+        $this->CI->db->where($where);
+        $result = $this->CI->menus->getMenus($parentId);
+        return $result;
+    }
+
+
 
     public function perpage($url = '',$total = 0,$cur_page = 0,$per_page = 30)
     {

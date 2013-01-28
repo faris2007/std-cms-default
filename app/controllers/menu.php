@@ -54,6 +54,20 @@ class menu extends CI_Controller {
             $data['PARENTMENU'] = $parent_id;
             $data['CONTENT'] = "menu";
             $data['STEP'] = 'show';
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'menu'   => "إدارة القوائم",
+            );
+            if(!is_null($parent_id))
+            {
+                $menuArray = $this->menus->getParentThisMenu($parent_id);
+                $menus = explode(',', $menuArray);
+                foreach ($menus as $val){
+                    $menuOne = unserialize($val);
+                    $data['NAV'][base_url().'menu/show/'.$menuOne->id] = $menuOne->title;
+                }
+            }
             $data['TITLE'] = "-- إدارة القوائم";
             $this->core->load_template($data);
         }else
@@ -105,6 +119,21 @@ class menu extends CI_Controller {
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
             }
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'menu'   => "إدارة القوائم",
+            );
+            if(!is_null($parent_id))
+            {
+                $menuArray = $this->menus->getParentThisMenu($parent_id);
+                $menus = explode(',', $menuArray);
+                foreach ($menus as $val){
+                    $menuOne = unserialize($val);
+                    $data['NAV'][base_url().'menu/show/'.$menuOne->id] = $menuOne->title;
+                }
+            }
+            
             $data['TITLE'] = "-- إدارة القوائم -- أضافة قائمة جديده";
             $this->core->load_template($data);
         }else
@@ -159,6 +188,20 @@ class menu extends CI_Controller {
                 $data['STEP'] = 'edit';
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
+            }
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'menu'   => "إدارة القوائم",
+            );
+            if(!is_null($parent_id))
+            {
+                $menuArray = $this->menus->getParentThisMenu($parent_id);
+                $menus = explode(',', $menuArray);
+                foreach ($menus as $val){
+                    $menuOne = unserialize($val);
+                    $data['NAV'][base_url().'menu/show/'.$menuOne->id] = $menuOne->title;
+                }
             }
             $data['TITLE'] = "-- إدارة القوائم -- تعديل القائمة ";
             $this->core->load_template($data);

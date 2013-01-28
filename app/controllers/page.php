@@ -92,7 +92,7 @@ class page extends CI_Controller{
             if($_POST){
                     $store = array(
                         'title'         => $this->input->post('title',true),
-                        'content'       => $this->input->post('content',true),
+                        'content'       => $this->input->post('content'),
                         'keyword'       => $this->input->post('keyword',true),
                         'desc'          => $this->input->post('desc',true),
                         'parent_id'     => $parent_id,
@@ -135,7 +135,7 @@ class page extends CI_Controller{
             if($_POST){
                     $store = array(
                         'title'     => $this->input->post('title',true),
-                        'content'   => $this->input->post('content',true),
+                        'content'   => $this->input->post('content'),
                         'keyword'   => $this->input->post('keyword',true),
                         'desc'      => $this->input->post('desc',true)
                     );

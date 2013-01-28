@@ -41,12 +41,12 @@
                 </a>
             </td>
             <td>
-                <a href="<?=base_url()?>"><img src="<?=$STYLE_FOLDER?>icon/course.png" alt="إدارة الدورات" /><br />
+                <a href="<?=base_url()?>course"><img src="<?=$STYLE_FOLDER?>icon/course.png" alt="إدارة الدورات" /><br />
                     <span>إدارة الدورات</span>
                 </a>
             </td>
             <td>
-                <a href="<?=base_url()?>"><img src="<?=$STYLE_FOLDER?>icon/order.png" alt="إدارة الطلبات" /><br />
+                <a href="<?=base_url()?>order"><img src="<?=$STYLE_FOLDER?>icon/order.png" alt="إدارة الطلبات" /><br />
                     <span>إدارة الطلبات</span>
                 </a>
             </td>

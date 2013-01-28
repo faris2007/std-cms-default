@@ -26,6 +26,7 @@
                         <td><?=($row->isDelete == 1)? "<strike>".$row->title."</strike>":$row->title?></td>
                         <td><img id="enable<?=$row->id?>" src="<?=base_url()?>style/default/icon/<?=($row->isHidden == 0)? 'en':'dis'?>able.png" onclick="action('<?=base_url()?>page/action/<?=($row->isHidden == 1)? 'enable':'disable'?>/<?=$row->id?>','<?=($row->isHidden == 1)? 'enable':'disable'?>','enable<?=$row->id?>','<?=$row->id?>')" alt="<?=($row->isHidden == 1)? 'تفعيل':'تعطيل'?>" title="<?=($row->isHidden == 1)? 'تفعيل':'تعطيل'?>" /></td>
                         <td>
+                            <a href="<?=base_url()?>page/view/<?=$row->id?>" target="_blank"><img src="<?=base_url()?>style/default/icon/view.png" alt="" title="مشاهدة الصفحة"/></a>
                             <a href="<?=base_url()?>page/edit/<?=$row->id?>"><img src="<?=base_url()?>style/default/icon/edit.png" alt="تعديل" title="تعديل" /></a>
                             <a href="<?=base_url()?>page/show/<?=$row->id?>"><img src="<?=base_url()?>style/default/icon/show.png" alt="مشاهدة محتوى الصفحة" title="مشاهدة محتوى الصفحة" /></a>
                             <img id="deleteimg<?=$row->id?>" src="<?=base_url()?>style/default/icon/<?=($row->isDelete == 1)? 'restore':'del'?>.png" onclick="action('<?=base_url()?>page/action/<?=($row->isDelete == 1)? 'restore':'delete'?>/<?=$row->id?>','<?=($row->isDelete == 1)? 'restore':'delete'?>','page<?=$row->id?>','<?=$row->id?>')" alt="<?=($row->isDelete == 1)? 'أسترجاع':'حذف'?>" title="<?=($row->isDelete == 1)? 'أسترجاع':'حذف'?>" />

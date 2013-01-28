@@ -104,7 +104,7 @@ class install extends CI_Controller
             $this->db->query("CREATE  TABLE IF NOT EXISTS `pages` (
                 `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
                 `title` VARCHAR(45) NULL ,
-                `content` VARCHAR(45) NULL ,
+                `content` TEXT NULL ,
                 `isDelete` VARCHAR(1) NOT NULL DEFAULT 0 ,
                 `isHidden` VARCHAR(1) NOT NULL DEFAULT 0 ,
                 `refresh` INT NULL ,
