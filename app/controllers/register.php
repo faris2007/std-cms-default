@@ -31,6 +31,9 @@ class register extends CI_Controller {
 
 
     public function index(){
+        if($this->users->isLogin())
+            redirect ();
+        
         $this->load->helper('captcha');
         $this->load->model('settings');
         $enable_register = $this->settings->getSettingByName("cms_register_enable");

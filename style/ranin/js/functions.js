@@ -39,21 +39,21 @@ $(document).ready(function(){
                                 "sSortDescending": " - click/return to sort descending"
                             },
                             "oPaginate": {
-                                "sFirst": "First",
-                                "sLast": "Last",
-                                "sNext": "Next",
-                                "sPrevious": "Previous"
+                                "sFirst": "الاول",
+                                "sLast": "الأخير",
+                                "sNext": "التالي",
+                                "sPrevious": "السابق"
                             },
-                            "sLengthMenu": "Display _MENU_ records per page",
-                            "sZeroRecords": "Nothing found - sorry",
-                            "sInfo": "Showing _START_ to _END_ of _TOTAL_ records",
+                            "sLengthMenu": "أعرض _MENU_ نتائج في كل صفحة",
+                            "sZeroRecords": "عذراً لاتوجد بيانات لعرضها",
+                            "sInfo": "عرض البيانات من _START_ إلى _END_ من مجموع _TOTAL_",
                             "sInfoEmpty": "Showing 0 to 0 of 0 records",
-                            "sInfoFiltered": "(filtered from _MAX_ total records)",
-                            "sEmptyTable": "No data available in table",
+                            "sInfoFiltered": "(تم تصفيته من _MAX_ كامل البيانات)",
+                            "sEmptyTable": "لا توجد بيانات في هذا الجدول حالياً",
                             "sInfoThousands": ",",
-                            "sLoadingRecords": "Please wait - loading...",
-                            "sProcessing": "DataTables is currently busy",
-                            "sSearch": "Search:"
+                            "sLoadingRecords": "انتظر قليلا - جاري التحميل...",
+                            "sProcessing": "جاري العمل",
+                            "sSearch": "بحث:"
                     }
             });
     }else{
@@ -67,21 +67,21 @@ $(document).ready(function(){
                                 "sSortDescending": " - click/return to sort descending"
                             },
                             "oPaginate": {
-                                "sFirst": "First",
-                                "sLast": "Last",
-                                "sNext": "Next",
-                                "sPrevious": "Previous"
+                                "sFirst": "الاول",
+                                "sLast": "الأخير",
+                                "sNext": "التالي",
+                                "sPrevious": "السابق"
                             },
-                            "sLengthMenu": "Display _MENU_ records per page",
-                            "sZeroRecords": "Nothing found - sorry",
-                            "sInfo": "Showing _START_ to _END_ of _TOTAL_ records",
+                            "sLengthMenu": "أعرض _MENU_ نتائج في كل صفحة",
+                            "sZeroRecords": "عذراً لاتوجد بيانات لعرضها",
+                            "sInfo": "عرض البيانات من _START_ إلى _END_ من مجموع _TOTAL_",
                             "sInfoEmpty": "Showing 0 to 0 of 0 records",
-                            "sInfoFiltered": "(filtered from _MAX_ total records)",
-                            "sEmptyTable": "No data available in table",
+                            "sInfoFiltered": "(تم تصفيته من _MAX_ كامل البيانات)",
+                            "sEmptyTable": "لا توجد بيانات في هذا الجدول حالياً",
                             "sInfoThousands": ",",
-                            "sLoadingRecords": "Please wait - loading...",
-                            "sProcessing": "DataTables is currently busy",
-                            "sSearch": "Search:"
+                            "sLoadingRecords": "انتظر قليلا - جاري التحميل...",
+                            "sProcessing": "جاري العمل",
+                            "sSearch": "بحث:"
                     }
             });
 

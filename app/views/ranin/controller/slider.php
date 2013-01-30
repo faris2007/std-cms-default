@@ -1,50 +1,58 @@
 <?php if($STEP == 'show'): ?>
 <div id="action" class="message" style="display:none"></div>
-<div class="demo_jui">
-    <table id="list" class="tbl" style="width:100%;direction:rtl">
-        <thead>
-            <tr>
-                <th colspan="3">عرض عناصر واجهة العرض</th>
-                <th><a href="<?=base_url()?>slider/add"><img src="<?=base_url()?>style/default/icon/add.png" alt="أضافة عنصر جديد" title="أضافة عنصر جديد" /></a></th>
-            </tr>
-            <tr>
-                <th>#</th>
-                <th>الإسم</th>
-                <th>مفعل ؟</th>
-                <th>التحكم</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if(isset($SLIDERS)): ?>
-                <?php foreach ($SLIDERS as $row): ?>
-                    <tr id="slider<?=$row->id?>">
-                        <td><?=$row->id?></td>
-                        <td><?=($row->isDelete == 1)? "<strike>".$row->slider_name."</strike>":$row->slider_name?></td>
-                        <td><img id='enable<?=$row->id?>' src="<?=base_url()?>style/default/icon/<?=($row->isHidden == 0)? 'en':'dis'?>able.png" onclick="action('<?=base_url()?>slider/action/<?=($row->isHidden == 1)? 'enable':'disable'?>/<?=$row->id?>','<?=($row->isHidden == 1)? 'enable':'disable'?>','enable<?=$row->id?>','<?=$row->id?>')" alt="<?=($row->isHidden == 1)? 'تفعيل':'تعطيل'?>" title="<?=($row->isHidden == 1)? 'تفعيل':'تعطيل'?>" /></td>
-                        <td>
-                            <a href="<?=base_url()?>slider/edit/<?=$row->id?>"><img src="<?=base_url()?>style/default/icon/edit.png" alt="تعديل" title="تعديل" /></a>
-                            <img id="deleteimg<?=$row->id?>" src="<?=base_url()?>style/default/icon/<?=($row->isDelete == 1)? 'restore':'del'?>.png" onclick="action('<?=base_url()?>slider/action/<?=($row->isDelete == 1)? 'restore':'delete'?>/<?=$row->id?>','<?=($row->isDelete == 1)? 'restore':'delete'?>','slider<?=$row->id?>','<?=$row->id?>')" alt="<?=($row->isDelete == 1)? 'أسترجاع':'حذف'?>" title="<?=($row->isDelete == 1)? 'أسترجاع':'حذف'?>" />
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="4">يمكن أظهار النتائج بناء على
-                    <select id="available">
-                        <option<?=($FILTER == 'all')? ' selected="selected"':''?> value="all">الجميع</option>
-                        <option<?=($FILTER == 'enable')? ' selected="selected"':''?> value="enable">العناصر المفعله</option>
-                        <option<?=($FILTER == 'disable')? ' selected="selected"':''?> value="disable">العناصر الغير مفعله</option>
-                        <option<?=($FILTER == 'delete')? ' selected="selected"':''?> value="delete">العناصر المحذوفة</option>
-                        <option<?=($FILTER == 'undelete')? ' selected="selected"':''?> value="undelete">العناصر الغير محذوفة</option>
-                    </select>
-                    <button onclick="window.location.assign('<?=base_url()?>slider/show/'+$('#available').val())">أذهب</button>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-</div>
+<form method="post">
+    <div class="demo_jui">
+        <table id="list" class="tbl" style="width:100%;direction:rtl">
+            <thead>
+                <tr>
+                    <th colspan="4">عرض عناصر واجهة العرض</th>
+                    <th><a href="<?=base_url()?>slider/add"><img src="<?=base_url()?>style/default/icon/add.png" alt="أضافة عنصر جديد" title="أضافة عنصر جديد" /></a></th>
+                </tr>
+                <tr>
+                    <th>#</th>
+                    <th>الإسم</th>
+                    <th>الترتيب</th>
+                    <th>مفعل ؟</th>
+                    <th>التحكم</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if(isset($SLIDERS)): ?>
+                    <?php foreach ($SLIDERS as $row): ?>
+                        <tr id="slider<?=$row->id?>">
+                            <td><?=$row->id?></td>
+                            <td><?=($row->isDelete == 1)? "<strike>".$row->slider_name."</strike>":$row->slider_name?></td>
+                            <td><input type="text" style="width:30px;" name="slider_<?=$row->id?>" value="<?=$row->sort_id?>" /></td>
+                            <td><img id='enable<?=$row->id?>' src="<?=base_url()?>style/default/icon/<?=($row->isHidden == 0)? 'en':'dis'?>able.png" onclick="action('<?=base_url()?>slider/action/<?=($row->isHidden == 1)? 'enable':'disable'?>/<?=$row->id?>','<?=($row->isHidden == 1)? 'enable':'disable'?>','enable<?=$row->id?>','<?=$row->id?>')" alt="<?=($row->isHidden == 1)? 'تفعيل':'تعطيل'?>" title="<?=($row->isHidden == 1)? 'تفعيل':'تعطيل'?>" /></td>
+                            <td>
+                                <a href="<?=base_url()?>slider/edit/<?=$row->id?>"><img src="<?=base_url()?>style/default/icon/edit.png" alt="تعديل" title="تعديل" /></a>
+                                <img id="deleteimg<?=$row->id?>" src="<?=base_url()?>style/default/icon/<?=($row->isDelete == 1)? 'restore':'del'?>.png" onclick="action('<?=base_url()?>slider/action/<?=($row->isDelete == 1)? 'restore':'delete'?>/<?=$row->id?>','<?=($row->isDelete == 1)? 'restore':'delete'?>','slider<?=$row->id?>','<?=$row->id?>')" alt="<?=($row->isDelete == 1)? 'أسترجاع':'حذف'?>" title="<?=($row->isDelete == 1)? 'أسترجاع':'حذف'?>" />
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2"></td>
+                    <td><input type="submit" value="حفظ" /></td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td colspan="5">يمكن أظهار النتائج بناء على
+                        <select onchange="window.location.assign('<?=base_url()?>slider/show/'+$('#available').val())" id="available">
+                            <option<?=($FILTER == 'all')? ' selected="selected"':''?> value="all">الجميع</option>
+                            <option<?=($FILTER == 'enable')? ' selected="selected"':''?> value="enable">العناصر المفعله</option>
+                            <option<?=($FILTER == 'disable')? ' selected="selected"':''?> value="disable">العناصر الغير مفعله</option>
+                            <option<?=($FILTER == 'delete')? ' selected="selected"':''?> value="delete">العناصر المحذوفة</option>
+                            <option<?=($FILTER == 'undelete')? ' selected="selected"':''?> value="undelete">العناصر الغير محذوفة</option>
+                        </select>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</form>
 <?php elseif ($STEP == 'add') : ?>
 <form method="post" enctype="multipart/form-data">
     <table class="tbl" style="width:90%;direction:rtl">

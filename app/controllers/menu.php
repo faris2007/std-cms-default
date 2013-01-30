@@ -27,6 +27,18 @@ class menu extends CI_Controller {
         $parent_id = ($parent_id == 'all')? null:$parent_id;
         $value = (is_null($parent_id)) ? 'all' : $parent_id;
         if($this->core->checkPermissions('menu','show',$value)){
+            if($_POST){
+                foreach ($_POST as $key => $value)
+                {
+                    if(@ereg('menu_', $key)){
+                        $keyArr = explode('_', $key);
+                        $store = array(
+                            'sort_id'   => $this->input->post($key,true)
+                        );
+                        $this->menus->updateMenu($keyArr[1],$store);
+                    }
+                }
+            }
             switch ($filter){
                 case 'enable':
                     $this->db->where('isHidden',0);

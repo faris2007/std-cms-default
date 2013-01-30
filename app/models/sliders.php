@@ -31,7 +31,7 @@ Class sliders extends CI_Model{
         $this->db->where('id',$id);
         
         }
-         $this->db->order_by("id");
+         $this->db->order_by("sort_id");
          $query = $this->db->get($this->_table);
          $this->db->trans_complete();
          if($this->db->trans_status() === FALSE)

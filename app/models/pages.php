@@ -82,10 +82,9 @@ class pages extends CI_Model{
             return FALSE;
         
         $this->db->trans_start();
-        if($parentId == 'all')
-            $this->db->where('parent_id IS NULL');
-        else
+        if(is_numeric($parentId))
             $this->db->where('parent_id', $parentId);
+        
         $query = $this->db->get($this->_table);
         $this->db->trans_complete();
         if($this->db->trans_status() === FALSE){

@@ -35,6 +35,19 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>الصفحة الرئيسية للموقع</td>
+                    <td>
+                        <select name="homepage">
+                            <option<?=($HOMEPAGE == 'home')? ' selected="selected"':''?> value="home">الافتراضي</option>
+                            <?php if($PAGES): ?>
+                                <?php foreach ($PAGES as $value): ?>
+                                    <option<?=($HOMEPAGE == $value->id)? ' selected="selected"':''?> value="<?=$value->id?>"><?=$value->title?></option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td>تفعيل الموقع</td>
                     <td><input type="radio" name="siteenable"<?=($SITEENABLE == 1)?' checked="checked"':''?> value="1" />نعم <input type="radio" name="siteenable"<?=($SITEENABLE == 0)?' checked="checked"':''?> value="0" />لا</td>
                 </tr>

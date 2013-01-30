@@ -38,7 +38,7 @@ class setting extends CI_Controller {
                                 ),
                             5 => array(
                                 'name'      => "disable_msg",
-                                'value'     => $this->input->post('disable_msg',true)
+                                'value'     => $this->input->post('disable_msg')
                                 ),
                             6 => array(
                                 'name'      => "disable_except_group",
@@ -55,7 +55,11 @@ class setting extends CI_Controller {
                             9 => array(
                                 'name'      => "cms_register_active",
                                 'value'     => $this->input->post('registeractive',true)
-                                )
+                                ),
+                            10 => array(
+                                'name'      => "cms_home_page",
+                                'value'     => $this->input->post('homepage',true)
+                                ),
                             );
                     foreach ($store as $value)
                         $this->settings->updateSetting($value['name'],array('value'=> $value['value']));
@@ -70,6 +74,7 @@ class setting extends CI_Controller {
                 $data['STYLE'] = array_keys($folder);
                 $this->load->model('settings');
                 $this->load->model('groups');
+                $this->load->model('pages');
                 $settings = $this->settings->getSettings();
                 if($settings){
                     $setting = array(
@@ -82,13 +87,19 @@ class setting extends CI_Controller {
                         'disable_except_group'  => 'GROUPDISABLE',
                         'cms_register_enable'   => 'REGISTERENABLE',
                         'cms_register_group'    => 'GROUPREGSITER',
-                        'cms_register_active'   => 'REGISTERACTIVE'
+                        'cms_register_active'   => 'REGISTERACTIVE',
+                        'cms_home_page'         => 'HOMEPAGE'
                     );
                     foreach ($settings as $value)
                         if(isset($setting[$value->name]))
                             $data[$setting[$value->name]] = $value->value;
                 }
                 $data['GROUP'] = $this->groups->getGroups('all');
+                $this->db->where(array(
+                    'isDelete'  => 0,
+                    'isHidden'  => 0
+                ));
+                $data['PAGES'] = $this->pages->getPages('all');
                 $data['CONTENT'] = 'setting';
             }
         }else

@@ -29,6 +29,18 @@ class slider extends CI_Controller {
         $segments = $this->uri->segment_array();
         $filter = isset($segments[3])? $segments[3]:'all';
         if($this->core->checkPermissions('slider','show','all')){
+            if($_POST){
+                foreach ($_POST as $key => $value)
+                {
+                    if(@ereg('slider_', $key)){
+                        $keyArr = explode('_', $key);
+                        $store = array(
+                            'sort_id'   => $this->input->post($key,true)
+                        );
+                        $this->sliders->updateSlider($keyArr[1],$store);
+                    }
+                }
+            }
             switch ($filter){
                 case 'enable':
                     $this->db->where('isHidden',0);

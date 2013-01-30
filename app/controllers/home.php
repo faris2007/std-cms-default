@@ -24,8 +24,26 @@ class home extends CI_Controller {
         
         public function index()
 	{
-            $data['CONTENT'] = "home";
-            $data['TITLE'] = "";
+            $this->load->model('settings');
+            $homepage = $this->settings->getSettingByName('cms_home_page');
+            if(!$homepage || $homepage->value == 'home'){
+                $data['CONTENT'] = "home";
+                $data['TITLE'] = "";
+            }else{
+                $this->load->model('pages');
+                $pageId = $homepage->value;
+                $pageInfo = $this->pages->getPage($pageId);
+                if(is_bool($pageInfo))
+                {
+                    $data['CONTENT'] = "home";
+                    $data['TITLE'] = "";
+                }else{
+                    $data['CONTENTPAGE'] = $pageInfo->content;
+                    $data['CONTENT'] = "page";
+                    $data['STEP'] = 'view';
+                    $data['TITLE'] = "-- " .$pageInfo->title;
+                }
+            }
             $this->core->load_template($data);
 	}
 }
