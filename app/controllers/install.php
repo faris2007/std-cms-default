@@ -225,6 +225,50 @@ class install extends CI_Controller
                 ENGINE = MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
             $tables[] = "order";
             
+            
+            $this->dbforge->drop_database('cat');
+            $this->db->query("CREATE  TABLE IF NOT EXISTS `cat` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+                `name` VARCHAR(45) NULL ,
+                `desc` TEXT NULL ,
+                `isHidden` VARCHAR(1) NULL ,
+                `isDelete` VARCHAR(1) NULL ,
+                PRIMARY KEY (`id`) )
+                ENGINE = MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
+            $tables[] = "cat";
+            
+            $this->dbforge->drop_database('communication');
+            $this->db->query("CREATE  TABLE IF NOT EXISTS `communication` (
+                `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+                `title` VARCHAR(100) NULL ,
+                `content` TEXT NULL ,
+                `date` VARCHAR(45) NULL ,
+                `isDelete` VARCHAR(1) NULL ,
+                `cat_id` INT UNSIGNED NOT NULL ,
+                `parent_id` INT UNSIGNED NULL ,
+                `users_id` INT NOT NULL ,
+                PRIMARY KEY (`id`) ,
+                INDEX `fk_communication_cat1` (`cat_id` ASC) ,
+                INDEX `fk_communication_communication1` (`parent_id` ASC) ,
+                INDEX `fk_communication_users1` (`users_id` ASC) ,
+                CONSTRAINT `fk_communication_cat1`
+                    FOREIGN KEY (`cat_id` )
+                    REFERENCES `cat` (`id` )
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE,
+                CONSTRAINT `fk_communication_communication1`
+                    FOREIGN KEY (`parent_id` )
+                    REFERENCES `communication` (`id` )
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE,
+                CONSTRAINT `fk_communication_users1`
+                    FOREIGN KEY (`users_id` )
+                    REFERENCES `users` (`id` )
+                    ON DELETE CASCADE
+                    ON UPDATE CASCADE)
+                ENGINE = MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin;");
+            $tables[] = "communication";
+            
             $data['tables'] = $tables;
             $data['TITLE']  = "سكربت أدارة المحتوى -- صفحة التركيب";
             $data['CONTENT'] = "install";
