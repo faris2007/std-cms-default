@@ -19,8 +19,8 @@ body {
 }
  
 .header-right { float: right; width: 264px; position: relative; margin-right: -10px;  }
-.subscribe { position: absolute; font-size:14px; width: 390px; height: 48.9px; background: url(images/subscribe.png) no-repeat 0 0; font-family: 'museo', arial, helvetica, serif; line-height: 43px; margin: -20px 0px 10px 510px; padding: 0px 45px;  }
-.subscribe a { color: #fff; /*font-size: 16px;*/ position: relative; /*padding-left: 40px;*/ }
+.subscribe { position: absolute; font-size:14px; width: 345px; height: 48.9px; background: url(images/subscribe.png) no-repeat 0 0; font-family: 'museo', arial, helvetica, serif; line-height: 43px; margin: -20px 0px 10px 510px; padding: 0px 45px;  }
+.subscribe a { color: rgb(254, 255, 219); /*font-size: 16px;*/ position: relative; /*padding-left: 40px;*/ ; font-weight: bold;}
 .subscribe a span { background: url(images/sbubscribe-ico.png) no-repeat 0px 0px; width: 34px; height: 34px; position: absolute; display: block;  top: -5px; left: 0; }
 .subscribe a:hover { color: #f6c387; text-decoration: none; }
 
@@ -55,7 +55,7 @@ article, aside, details, footer, header, menu, nav, section { display: block; }
 
 .login { float: left; }
 .login input.field {text-align:right; border: 1px solid #d6d6d6; width: 136px; height: 24px; line-height: 22px;  padding: 2px 14px; font-size: 11px; font-family: verdana, arial, helvetica, serif;  color: #bebebe;  border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; -o-border-radius: 5px;}
-.login input.submit-btn { width: 32px; height: 35px; margin-left: -34px; /*margin-top: -37px;*/ border: 0; cursor: pointer; background: url(images/submit-btn.png) no-repeat 0 0; float: left; font-size: 0; line-height: 0; text-indent: -4000px;  }
+.login input.submit-btn { width: 32px; height: 35px; margin-left: -34px; margin-top: -34px; border: 0; cursor: pointer; background: url(images/submit-btn.png) no-repeat 0 0; float: left; font-size: 0; line-height: 0;   }
 
 
 
@@ -92,7 +92,7 @@ article, aside, details, footer, header, menu, nav, section { display: block; }
 .main h3 { font-size: 18px; color: #5e5e5e; line-height: 22px; padding-bottom: 8px; font-family: 'Ubuntu', sans-serif; font-weight: 500;  }
 .main section { clear: both;  padding: 0 20px 60px; }
 .main ul { list-style: none; list-style-position: outside; }
-.main ul li { padding-bottom: 6px; padding-left: 10px; background: url(images/arr-ico.png) no-repeat 0 8px; }
+.main ul li { padding-bottom: 6px; padding-left: 10px; font-weight: bold; font-size: 17px; background: url(images/arr-ico.png) no-repeat right 8px; }
 .main ul li a { color: #2b9208; text-decoration: none; } 
 .main ul li a:hover { text-decoration: none; } 
 
@@ -321,6 +321,7 @@ article, aside, details, footer, header, menu, nav, section { display: block; }
     width: 75%;
     color:black;
     font-size: 17px;
+	font-weight:bold;
     margin: 25px auto 15px auto;
     background-color: #DDFCD5;
     border: 1px solid #2b9208;
@@ -371,7 +372,14 @@ text-align:center;
 }
  
 .heading {
+	font-size:20px;
 margin: 1px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    -moz-box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
+    box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
 color: #fff;
 padding: 3px 10px;
 cursor: pointer;
@@ -379,6 +387,8 @@ position: relative;
 background-color:#c30;
 }
 .contentCol{
+	color:black;
+	font-size:13px;
 padding: 5px 10px;
 margin-right:25%;
 margin-left:25%;
@@ -407,14 +417,41 @@ Written by: aqodev
     box-shadow: 0px 0px 5px rgba(50,50,50,0.20);
     text-align: center;
 }
-.main-tbl tr :hover 
+
+.main-tbl tr :hover , .main-tbl td :hover 
 {
-    background-color: #DDFCD5;
+    background-color: rgb(232, 245, 229);
+    color: rgb(55, 99, 8);
 }
 .main-tbl span {
-    font-size:14px
+    font-size:14px;
+    font-weight: bold;
+    color: rgb(116, 122, 122);
 }
 
+input[type="submit"] {
+    background: rgb(50, 150, 9);
+       -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    border-color:white;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.contentCol button{
+    background: rgb(50, 150, 9);
+      -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    border-color:white;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
 /*
 This part of code is applying on ("setting.php" & "add page" & "edit page" ). 
 Written by: aqodev 

@@ -51,6 +51,12 @@
                 </tr>
             </tfoot>
         </table>
+        <div class="message">
+            <img src="<?=base_url()?>style/default/icon/enable.png" /> تظهر عندما يكون العنصر مفعل
+            | <img src="<?=base_url()?>style/default/icon/disable.png" /> تظهر عندما يكون العنصر غير مفعل
+            <br />
+            طريقة التفعيل/التعطيل بالضغط على الصورة
+        </div>
     </div>
 </form>
 <?php elseif ($STEP == 'add') : ?>

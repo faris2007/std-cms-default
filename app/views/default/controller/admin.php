@@ -51,6 +51,19 @@
                 </a>
             </td>
         </tr>
+        <tr>
+            <td>
+                <a href="<?=base_url()?>cat"><img src="<?=$STYLE_FOLDER?>icon/cats.png" alt="إدارة واجهة العرض" /><br />
+                    <span>إدارة أقسام التواصل</span>
+                </a>
+            </td>
+            <td>
+                <a href="<?=base_url()?>communication"><img src="<?=$STYLE_FOLDER?>icon/communication.png" alt="إدارة واجهة العرض" /><br />
+                    <span>التواصل مع المستخدمين</span>
+                </a>
+            </td>
+            <td></td>
+        </tr>
     </tbody>
 </table>
 
