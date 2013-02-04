@@ -245,6 +245,8 @@ class user extends CI_Controller{
             
             if($this->users->updateUser($userId,$store)){
                 if($type == 'enable'){
+                    $this->load->model('settings');
+                    $this->load->library('email');
                     $site_name = $this->settings->getSettingByName("site_name");
                     $site_email = $this->settings->getSettingByName("site_email");
 

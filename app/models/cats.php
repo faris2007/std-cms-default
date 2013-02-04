@@ -84,6 +84,17 @@ class cats extends CI_Model {
         $typeOfError =  $this->db->_error_message();
         log_message("error", "In This Query -- " . $query . " -- " . $typeOfError);
     }
+    
+    public function getNameOfCat($catId){
+        if(empty($catId) || !is_numeric($catId))
+            return false;
+        
+        $result = $this->getCat($catId);
+        if($result)
+            return $result[0]->name;
+        else
+            return false;
+    }
 
 }
 
