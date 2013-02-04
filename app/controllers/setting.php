@@ -67,7 +67,7 @@ class setting extends CI_Controller {
                     $data['TITLE'] = "-- أعدادات الموقع";
                     $data['MSG'] = 'تم حفظ البيانات بشكل صحيح <br />'.  anchor(base_url().'setting', "للعودة للأعدادات أضغط هنا");
                 }else
-                     redirect ('login/permission');
+                     redirect (STD_CMS_PERMISSION_PAGE);
             }else{
                 $folder = get_dir_file_info('./app/views/', $top_level_only = TRUE);
                 unset($folder['install']);
@@ -103,7 +103,12 @@ class setting extends CI_Controller {
                 $data['CONTENT'] = 'setting';
             }
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
+        $data['NAV'] = array(
+            base_url()          => "الصفحة الرئيسية",
+            base_url().'admin'  => "لوحة التحكم",
+            base_url().'setting'   => "إعدادات الموقع",
+        );
         $this->core->load_template($data);
     }
 }

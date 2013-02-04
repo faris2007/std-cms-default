@@ -16,7 +16,7 @@ class page extends CI_Controller{
         if($this->core->checkPermissions('page','show','all')){
             $this->show();
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
 
 
@@ -24,7 +24,7 @@ class page extends CI_Controller{
         $segments = $this->uri->segment_array();
         $pageId = isset($segments[3])? $segments[3]:NULL;
         if(is_null($pageId))
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
         
         if(!$this->core->checkPermissions('page','show','all')){
             $this->db->where('isHidden',0);
@@ -32,7 +32,7 @@ class page extends CI_Controller{
         }
         $pageInfo = $this->pages->getPage($pageId);
         if(is_bool($pageInfo))
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
         
         $data['NAV'] = $this->core->getPath($pageId);
         $data['CONTENTPAGE'] = $pageInfo->content;
@@ -72,6 +72,14 @@ class page extends CI_Controller{
                     break;
             }
             $data['FILTER'] = $filter;
+            if(!is_null($parent_id))
+                $data['NAV'] = $this->core->getPath($pageId,true);
+            else
+                $data['NAV'] = array(
+                    base_url()          => "الصفحة الرئيسية",
+                    base_url().'admin'  => "لوحة التحكم",
+                    base_url().'page'   => "إدارة الصفحات",
+                );    
             $parentId = (is_null($parent_id)) ? 'all' : $parent_id;
             $data['PAGES'] = $this->pages->getPages($parentId);
             $data['PARENTPAGE'] = $parent_id;
@@ -80,7 +88,7 @@ class page extends CI_Controller{
             $data['TITLE'] = "-- إدارة الصفحات";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
         
     }
     
@@ -118,10 +126,15 @@ class page extends CI_Controller{
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
             }
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'page'   => "إدارة الصفحات",
+            );
             $data['TITLE'] = "-- إدارة الصفحات -- أضافة صفحة جديده";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     public function edit(){
@@ -130,7 +143,7 @@ class page extends CI_Controller{
         if($this->core->checkPermissions('page','edit',$pageId)){
             $pageInfo = $this->pages->getPage($pageId);
             if(is_bool($pageInfo))
-                redirect("page/error_page");
+                redirect(STD_CMS_ERROR_PAGE);
             
             if($_POST){
                     $store = array(
@@ -165,10 +178,15 @@ class page extends CI_Controller{
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
             }
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'page'   => "إدارة الصفحات",
+            );
             $data['TITLE'] = "-- إدارة الصفحات -- تعديل الصفحة ";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     
@@ -191,13 +209,19 @@ class page extends CI_Controller{
                 die('خطأ - عفواً هذا الصفحة غير موجود');
             
             if($type == 'delete' || $type == 'restore')
-                $store = array(
-                    'isDelete' => ($type == 'delete')? 1:0
-                );
+                if($this->core->checkPermissions('page','delete','all')){
+                    $store = array(
+                        'isDelete' => ($type == 'delete')? 1:0
+                    );
+                }else
+                    die('ليس لديك صلاحية الحذف');
             else if($type == 'enable' || $type == 'disable')
-                $store = array(
-                    'isHidden' => ($type == 'enable')? 0 : 1
-                );
+                if($this->core->checkPermissions('page','active','all')){
+                    $store = array(
+                        'isHidden' => ($type == 'enable')? 0 : 1
+                    );
+                }else
+                    die('ليس لديك صلاحية التفعيل');
             else
                 die('خطأ - خطأ في الرابط');
             if($this->pages->updatePage($pageId,$store))
@@ -206,7 +230,7 @@ class page extends CI_Controller{
                 die('خطأ - لم تنجح عملية '.$names[$type]);
             
         }else
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
     }
     
     public function error_page(){

@@ -197,13 +197,12 @@ class communication extends CI_Controller {
                 die('خطأ - عفواً هذا القائمة غير موجود');
             
             if($type == 'delete' || $type == 'restore')
-                $store = array(
-                    'isDelete' => ($type == 'delete')? 1:0
-                );
-            else if($type == 'enable' || $type == 'disable')
-                $store = array(
-                    'isHidden' => ($type == 'enable')? 0 : 1
-                );
+                if($this->core->checkPermissions('communication','delete','all')){
+                    $store = array(
+                        'isDelete' => ($type == 'delete')? 1:0
+                    );
+                }else
+                    die('ليس لديك صلاحية الحذف');
             else
                 die('خطأ - خطأ في الرابط');
             if($this->communications->updateCommunication($commId,$store))

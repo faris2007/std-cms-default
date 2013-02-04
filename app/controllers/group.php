@@ -17,7 +17,7 @@ class group extends CI_Controller{
         if($this->core->checkPermissions('group','all','all')){
             $this->show();
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     public function show(){
@@ -42,10 +42,15 @@ class group extends CI_Controller{
             $data['GROUPS'] = $this->groups->getGroups('all');
             $data['CONTENT'] = "group";
             $data['STEP'] = 'show';
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'group'   => "إدارة المجموعات",
+            );
             $data['TITLE'] = "-- إدارة المجموعات";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     public function add(){
@@ -71,10 +76,15 @@ class group extends CI_Controller{
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
             }
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'group'   => "إدارة المجموعات",
+            );
             $data['TITLE'] = "-- إدارة المجموعات - أضافة مجموعة جديدة";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
 
     public function edit(){
@@ -82,7 +92,7 @@ class group extends CI_Controller{
         $groupId = isset($segments[3])? $segments[3]:NULL;
         $group = $this->groups->getGroups($groupId);
         if(is_bool($group))
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
         if($this->core->checkPermissions('group','edit','all')){
             if($_POST){
                     $store = array(
@@ -109,10 +119,15 @@ class group extends CI_Controller{
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
             }
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'group'   => "إدارة المجموعات",
+            );
             $data['TITLE'] = "-- إدارة المجموعات - أضافة مجموعة جديدة";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     public function permission(){
@@ -121,7 +136,8 @@ class group extends CI_Controller{
             $groupId = isset($segments[3])? $segments[3]:NULL;
             $group = $this->groups->getGroups($groupId);
             if(is_bool($group))
-                redirect("page/error_page");
+                redirect(STD_CMS_ERROR_PAGE);
+            
             $data['GROUPID'] = $groupId;
             $data['GROUPNAME'] = $group[0]->name;
             $data['SERVICES'] = $this->core->getServicesName('all');
@@ -129,10 +145,16 @@ class group extends CI_Controller{
             $data['CONTENT'] = "group";
             $data['ERROR'] = false;
             $data['ERR_MSG'] = '';
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'group'   => "إدارة المجموعات",
+                base_url().'group/permission/'.$groupId   => "إستعراض الصلاحيات"
+            );
             $data['TITLE'] = '-- إدارة المجموعات - إستعراض الصلاحيات';
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
 
 
@@ -185,9 +207,9 @@ class group extends CI_Controller{
                 else
                     die('خطأ - لم تنجح عملية '.$names[$type]);
             }else
-                redirect ('login/permission');
+                redirect (STD_CMS_PERMISSION_PAGE);
         }else
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
     }
     
     public function getData(){
@@ -208,7 +230,7 @@ class group extends CI_Controller{
             }else
                 die($this->__makeOptions ('', 'عفوا هذا النوع غير مسجل'));
         }else
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
     }
     
     private function __makeOptions($value,$title){

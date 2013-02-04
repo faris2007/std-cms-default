@@ -5,7 +5,7 @@
         <thead>
             <tr>
                 <th colspan="3">عرض الأقسام</th>
-                <th><a href="<?=base_url()?>cat/add"><img src="<?=base_url()?>style/default/icon/add.png" alt="أضافة قسم جديدة" title="أضافة قسم جديدة" /></a></th>
+                <th><a href="<?=base_url()?>cat/add"><img src="<?=$STYLE_FOLDER?>icon/add.png" alt="أضافة قسم جديدة" title="أضافة قسم جديدة" /></a></th>
             </tr>
             <tr>
                 <th>#</th>
@@ -20,10 +20,10 @@
                     <tr id="cat<?=$row->id?>">
                         <td><?=$row->id?></td>
                         <td><?=($row->isDelete == 1)? "<strike>".$row->name."</strike>":$row->name?></td>
-                        <td><img id='enable<?=$row->id?>' src="<?=base_url()?>style/default/icon/<?=($row->isHidden == 0)? 'en':'dis'?>able.png" onclick="action('<?=base_url()?>cat/action/<?=($row->isHidden == 1)? 'enable':'disable'?>/<?=$row->id?>','<?=($row->isHidden == 1)? 'enable':'disable'?>','enable<?=$row->id?>','<?=$row->id?>')" alt="<?=($row->isHidden == 1)? 'تفعيل':'تعطيل'?>" title="<?=($row->isHidden == 1)? 'تفعيل':'تعطيل'?>" /></td>
+                        <td><img id='enable<?=$row->id?>' src="<?=$STYLE_FOLDER?>icon/<?=($row->isHidden == 0)? 'en':'dis'?>able.png" onclick="action('<?=base_url()?>cat/action/<?=($row->isHidden == 1)? 'enable':'disable'?>/<?=$row->id?>','<?=($row->isHidden == 1)? 'enable':'disable'?>','enable<?=$row->id?>','<?=$row->id?>')" alt="<?=($row->isHidden == 1)? 'تفعيل':'تعطيل'?>" title="<?=($row->isHidden == 1)? 'تفعيل':'تعطيل'?>" /></td>
                         <td>
-                            <a href="<?=base_url()?>cat/edit/<?=$row->id?>"><img src="<?=base_url()?>style/default/icon/edit.png" alt="تعديل" title="تعديل" /></a>
-                            <img id="deleteimg<?=$row->id?>" src="<?=base_url()?>style/default/icon/<?=($row->isDelete == 1)? 'restore':'del'?>.png" onclick="action('<?=base_url()?>cat/action/<?=($row->isDelete == 1)? 'restore':'delete'?>/<?=$row->id?>','<?=($row->isDelete == 1)? 'restore':'delete'?>','cat<?=$row->id?>','<?=$row->id?>')" alt="<?=($row->isDelete == 1)? 'أسترجاع':'حذف'?>" title="<?=($row->isDelete == 1)? 'أسترجاع':'حذف'?>" />
+                            <a href="<?=base_url()?>cat/edit/<?=$row->id?>"><img src="<?=$STYLE_FOLDER?>icon/edit.png" alt="تعديل" title="تعديل" /></a>
+                            <img id="deleteimg<?=$row->id?>" src="<?=$STYLE_FOLDER?>icon/<?=($row->isDelete == 1)? 'restore':'del'?>.png" onclick="action('<?=base_url()?>cat/action/<?=($row->isDelete == 1)? 'restore':'delete'?>/<?=$row->id?>','<?=($row->isDelete == 1)? 'restore':'delete'?>','cat<?=$row->id?>','<?=$row->id?>')" alt="<?=($row->isDelete == 1)? 'أسترجاع':'حذف'?>" title="<?=($row->isDelete == 1)? 'أسترجاع':'حذف'?>" />
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -44,8 +44,8 @@
         </tfoot>
     </table>
     <div class="message">
-        <img src="<?=base_url()?>style/default/icon/enable.png" /> تظهر عندما يكون القسم مفعل
-        | <img src="<?=base_url()?>style/default/icon/disable.png" /> تظهر عندما يكون القسم غير مفعل
+        <img src="<?=$STYLE_FOLDER?>icon/enable.png" /> تظهر عندما يكون القسم مفعل
+        | <img src="<?=$STYLE_FOLDER?>icon/disable.png" /> تظهر عندما يكون القسم غير مفعل
         <br />
         طريقة التفعيل/التعطيل بالضغط على الصورة
     </div>

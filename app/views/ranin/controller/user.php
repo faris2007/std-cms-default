@@ -46,11 +46,17 @@
             </tr>
         </tfoot>
     </table>
+    <div class="message">
+        <img src="<?=base_url()?>style/default/icon/enable.png" /> تظهر عندما يكون المستخدم مفعل
+        | <img src="<?=base_url()?>style/default/icon/disable.png" /> تظهر عندما يكون المستخدم غير مفعل
+        <br />
+        طريقة التفعيل/التعطيل بالضغط على الصورة
+    </div>
 </div>
 <?php elseif($STEP == 'add'): ?>
 <form method="post" id="register">
     <div>
-        <table class="tbl" style="width:90%;direction:rtl">
+        <table class="tbl" style="width:90%">
             <thead>
                 <tr>
                     <th colspan="2">أضافة عضو جديد</th>
@@ -108,7 +114,7 @@
 <?php elseif($STEP == 'edit'): ?>
 <form method="post" id="register">
     <div>
-        <table class="tbl" style="width:90%;direction:rtl">
+        <table class="tbl" style="width:90%">
             <thead>
                 <tr>
                     <th colspan="3">تعديل بيانات العضو <?=$fullname?></th>

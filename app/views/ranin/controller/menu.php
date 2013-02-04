@@ -52,6 +52,12 @@
                 </tr>
             </tfoot>
         </table>
+        <div class="message">
+            <img src="<?=base_url()?>style/default/icon/enable.png" /> تظهر عندما تكون القائمة مفعله
+            | <img src="<?=base_url()?>style/default/icon/disable.png" /> تظهر عندما تكون القائمة غير مفعله
+            <br />
+            طريقة التفعيل/التعطيل بالضغط على الصورة
+        </div>
     </div>
 </form>
 <?php elseif ($STEP == 'add') : ?>

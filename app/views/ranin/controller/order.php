@@ -46,6 +46,11 @@
     </div>
 </div>
 <?php elseif($STEP == 'course'): ?>
+    <?php if($SENDMSG): ?>
+        <div class="message">
+            تم أرسال الرسالة بنجاح
+        </div>
+    <?php endif; ?>
 <div class="layer1">
     <p class="heading">معلومات عن الدورة</p>
     <div class="contentCol">
@@ -108,7 +113,37 @@
         طريقة التفعيل/التعطيل بالضغط على الصورة
     </div>
 </div>
+<br />
+<form method="post">
+    <table class="tbl" style="width:80%;margin-top: 20px;">
+        <thead>
+            <tr>
+                <td colspan="2">ارسال رسالة ل<?php if($FILTER == 'all'):?>جميع المستخدمين في هذا الدورة<?php elseif($FILTER == 'enable'): ?>لمفعلين في هذا الدورة<?php else: ?>غير المفعلين في هذه الدورة<?php endif; ?></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background-color: palegoldenrod;">
+                <td>العنوان</td>
+                <td><input type="text" name="title" style="width: 95%;" id="title" required="required" /></td>
+            </tr>
+            <tr>
+                <td>المحتوى</td>
+                <td>
+                    <textarea id="content" name="content" rows="10" style="width: 95%"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="أرسال"/></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
 <?php elseif($STEP == 'user'): ?>
+<?php if($SENDMSG): ?>
+        <div class="message">
+            تم أرسال الرسالة بنجاح
+        </div>
+    <?php endif; ?>
 <div class="layer1">
     <p class="heading">معلومات عن العضو</p>
     <ul class="contentCol">
@@ -165,5 +200,30 @@
         <?endif; ?>
     </div>
 </div>
+<br />
+<form method="post">
+    <table class="tbl" style="width:80%;margin-top: 20px;">
+        <thead>
+            <tr>
+                <td colspan="2">ارسال رسالة ل<?=$USER_NAME?></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="background-color: palegoldenrod;">
+                <td>العنوان</td>
+                <td><input type="text" name="title" style="width: 95%;" id="title" required="required" /></td>
+            </tr>
+            <tr>
+                <td>المحتوى</td>
+                <td>
+                    <textarea id="content" name="content" rows="10" style="width: 95%"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="أرسال"/></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
 <?php endif; ?>
 

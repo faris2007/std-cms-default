@@ -49,6 +49,11 @@ class course extends CI_Controller {
             $data['COURSES'] = $this->courses->getCourse("all");
             $data['CONTENT'] = "course";
             $data['STEP'] = 'show';
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'course'   => "إدارة الدورات",
+            );
             $data['TITLE'] = "-- إدارة الدورات";
             $this->core->load_template($data);
         }else
@@ -62,6 +67,10 @@ class course extends CI_Controller {
         $data['COURSES'] = $this->courses->getAvailableCourse($userId);
         $data['CONTENT'] = "course";
         $data['STEP'] = 'available';
+        $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'course/available'   => "الدورات المتاحة",
+            );
         $data['TITLE'] = "-- الدورات المتاحة";
         $this->core->load_template($data);
     }
@@ -101,6 +110,11 @@ class course extends CI_Controller {
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
             }
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'course'   => "إدارة الدورات",
+            );
             $data['TITLE'] = "-- إدارة الدورات -- أضافة دورة جديد";
             $this->core->load_template($data);
         }else
@@ -159,6 +173,11 @@ class course extends CI_Controller {
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
             }
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'course'   => "إدارة الدورات",
+            );
             $data['TITLE'] = "-- إدارة الدورات -- تعديل الدورة ";
             $this->core->load_template($data);
         }else
@@ -185,13 +204,19 @@ class course extends CI_Controller {
                 die('خطأ - عفواً هذا القائمة غير موجود');
             
             if($type == 'delete' || $type == 'restore')
-                $store = array(
-                    'isDelete' => ($type == 'delete')? 1:0
-                );
+                if($this->core->checkPermissions('course','delete','all')){
+                    $store = array(
+                        'isDelete' => ($type == 'delete')? 1:0
+                    );
+                }else
+                    die('ليس لديك صلاحية الحذف');
             else if($type == 'enable' || $type == 'disable')
-                $store = array(
-                    'isHidden' => ($type == 'enable')? 0 : 1
-                );
+                if($this->core->checkPermissions('course','active','all')){
+                    $store = array(
+                        'isHidden' => ($type == 'enable')? 0 : 1
+                    );
+                }else
+                    die('ليس لديك صلاحية التفعيل');
             else
                 die('خطأ - خطأ في الرابط');
             if($this->courses->updateCourse($courseId,$store))

@@ -22,7 +22,7 @@ class slider extends CI_Controller {
         if($this->core->checkPermissions('slider','all','all')){
             $this->show();
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     public function show(){
@@ -66,10 +66,15 @@ class slider extends CI_Controller {
             $data['SLIDERS'] = $this->sliders->getSlider("all");
             $data['CONTENT'] = "slider";
             $data['STEP'] = 'show';
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'slider'   => "إدارة واجهة العرض",
+            );
             $data['TITLE'] = "-- إدارة واجهة العرض";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
         
     }
     
@@ -118,10 +123,15 @@ class slider extends CI_Controller {
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
             }
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'slider'   => "إدارة واجهة العرض",
+            );
             $data['TITLE'] = "-- إدارة واجهة العرض -- أضافة عنصر جديد";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     public function edit(){
@@ -130,7 +140,7 @@ class slider extends CI_Controller {
         if($this->core->checkPermissions('slider','edit',$sliderId)){
             $sliderInfo = $this->sliders->getSlider($sliderId);
             if(is_bool($sliderInfo))
-                redirect("page/error_page");
+                redirect(STD_CMS_ERROR_PAGE);
             if($_POST){
                 if($this->input->post("update",true) == 1){
                     
@@ -180,10 +190,15 @@ class slider extends CI_Controller {
                 $data['ERROR'] = false;
                 $data['ERR_MSG'] = '';
             }
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'slider'   => "إدارة واجهة العرض",
+            );
             $data['TITLE'] = "-- إدارة القوائم -- تعديل القائمة ";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
 
 
@@ -206,13 +221,19 @@ class slider extends CI_Controller {
                 die('خطأ - عفواً هذا القائمة غير موجود');
             
             if($type == 'delete' || $type == 'restore')
-                $store = array(
-                    'isDelete' => ($type == 'delete')? 1:0
-                );
+                if($this->core->checkPermissions('slider','delete','all')){
+                    $store = array(
+                        'isDelete' => ($type == 'delete')? 1:0
+                    );
+                }else
+                    die('ليس لديك صلاحية الحذف');
             else if($type == 'enable' || $type == 'disable')
-                $store = array(
-                    'isHidden' => ($type == 'enable')? 0 : 1
-                );
+                if($this->core->checkPermissions('slider','active','all')){
+                    $store = array(
+                        'isHidden' => ($type == 'enable')? 0 : 1
+                    );
+                }else
+                    die('ليس لديك صلاحية التفعيل');
             else
                 die('خطأ - خطأ في الرابط');
             if($this->sliders->updateSlider($sliderId,$store))
@@ -221,7 +242,7 @@ class slider extends CI_Controller {
                 die('خطأ - لم تنجح عملية '.$names[$type]);
             
         }else
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
     }
 }
 

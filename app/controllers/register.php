@@ -181,7 +181,7 @@ class register extends CI_Controller {
             else
                 die('3');
         }else
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
     }
 }
 

@@ -339,6 +339,7 @@ class Core {
                     ),
             "course"     => array(
                     "all"       => "جميع الصلاحيات",
+                    "active"    => "تنشيط",
                     "show"      => "استعراض البيانات",
                     "add"       => "أضافة",
                     "edit"      => "تعديل",
@@ -482,7 +483,7 @@ class Core {
         return $newString;
     }
     
-    public function getPath($pageId){
+    public function getPath($pageId,$isAdmin = false){
         if(empty($pageId))
             return FALSE;
         $this->CI->load->model("pages");
@@ -492,9 +493,18 @@ class Core {
         if(!is_bool($parentPage)){
             $path = explode(',', $parentPage);
             $result["".base_url().""] = "الصفحة الرئيسية";
-            foreach ($path as $value){
-                $item = unserialize($value);
-                $result[base_url().'page/view/'.$item->id] = $item->title;
+            if($isAdmin){
+                $result["".base_url()."admin"] = 'لوحة التحكم';
+                $result["".base_url()."page"] = "إدارة الصفحات";
+                foreach ($path as $value){
+                    $item = unserialize($value);
+                    $result[base_url().'page/show/'.$item->id] = $item->title;
+                }
+            }else{
+                foreach ($path as $value){
+                    $item = unserialize($value);
+                    $result[base_url().'page/view/'.$item->id] = $item->title;
+                }
             }
                 
         }

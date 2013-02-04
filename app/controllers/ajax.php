@@ -13,7 +13,7 @@ class ajax extends CI_Controller {
     }
     
     function index(){
-        redirect("page/error_page");
+        redirect(STD_CMS_ERROR_PAGE);
     }
     
     private function __dataeditUsers($data,$key = "mobile"){
@@ -71,23 +71,6 @@ class ajax extends CI_Controller {
         echo $this->datatables->afterQuery($data,$query);
     }
     
-    function accepted(){
-        
-        $columns = array(
-            "`Employee`.`contract_id`",
-            "`users`.`idn`",
-            "`users`.`en_name`",
-            "`jobs`.`name`",
-            "`users`.`mobile`",
-            "`users`.`id`"
-            );
-        $this->datatables->beforeQuery($columns);
-        $query = $this->users->getAllInfoUser(NULL,NULL,true);
-        $totalAfterfiltering = $this->datatables->getNumberOfRowForFilterData();
-        $data['iTotalDisplayRecords'] = $totalAfterfiltering;
-        $data['iTotalRecords'] = "".$this->users->get_total_info_users()."";
-        echo $this->datatables->afterQuery($data,$this->__dataeditUsers($query,'id'));
-    }
 }
 
 ?>

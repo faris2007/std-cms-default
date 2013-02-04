@@ -42,6 +42,11 @@ class order extends CI_Controller {
             $data['ORDERS'] = $this->orders->getOrder("all");
             $data['CONTENT'] = "order";
             $data['STEP'] = 'show';
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'order'   => "إدارة الدورات",
+            );
             $data['TITLE'] = "-- إدارة الدورات";
             $this->core->load_template($data);
         }else
@@ -74,8 +79,34 @@ class order extends CI_Controller {
             $this->db->where('course_id',$courseId);
             $data['FILTER'] = $filter;
             $data['ORDERS'] = $this->orders->getOrder("all");
+            if($_POST){
+                $this->load->library('email');
+                $this->load->model('settings');
+                $site_name = $this->settings->getSettingByName("site_name");
+                $site_email = $this->settings->getSettingByName("site_email");
+                $list = $data['ORDERS'];
+                $this->email->set_mailtype("html");
+                foreach ($list as  $address)
+                {
+                    $this->email->clear();
+
+                    $this->email->to($this->users->getEmail($address->users_id));
+                    $this->email->from($site_email->value, '('.$site_name->value.'):');
+                    $this->email->subject('('.$site_name->value.'):',$this->input->post('title',true));
+                    $this->email->message($this->input->post('content'));
+                    $this->email->send();
+                }
+                $data['SENDMSG'] = true;
+            }else
+                $data['SENDMSG'] = false;
             $data['CONTENT'] = "order";
             $data['STEP'] = 'course';
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'order'   => "إدارة الدورات",
+                base_url().'order/course/'.$courseId   => $courseInfo[0]->course_name,
+            );
             $data['TITLE'] = "-- إدارة الدورات";
             $data['COURSE_NAME'] = $courseInfo[0]->course_name;
             $data['COURSE_PRICE'] = $courseInfo[0]->price;
@@ -102,6 +133,20 @@ class order extends CI_Controller {
             if(is_bool($userInfo))
                 redirect(STD_CMS_ERROR_PAGE);
             
+            if($_POST){
+                $this->load->library('email');
+                $this->load->model('settings');
+                $site_name = $this->settings->getSettingByName("site_name");
+                $site_email = $this->settings->getSettingByName("site_email");
+                $this->email->set_mailtype("html");
+                $this->email->to($userInfo->email);
+                $this->email->from($site_email->value, '('.$site_name->value.'):');
+                $this->email->subject('('.$site_name->value.'):',$this->input->post('title',true));
+                $this->email->message($this->input->post('content'));
+                $this->email->send();
+                $data['SENDMSG'] = true;
+            }else
+                $data['SENDMSG'] = false;
             switch ($filter){
                 case 'enable':
                     $this->db->where('isAccept',1);
@@ -120,6 +165,12 @@ class order extends CI_Controller {
             $data['ORDERS'] = $this->orders->getOrder("all");
             $data['CONTENT'] = "order";
             $data['STEP'] = 'user';
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'order'   => "إدارة الدورات",
+                base_url().'order/user/'.$userId   => $userInfo->full_name,
+            );
             $data['TITLE'] = "-- إدارة الدورات";
             $data['USER_NAME'] = $userInfo->full_name;
             $data['USER_EMAIL'] = $userInfo->email;
@@ -145,7 +196,8 @@ class order extends CI_Controller {
             if(is_null($type) || $orderId == 0)
                 die('خطأ - مشكلة في الرابط');
             if($type != 'order')
-            $order = $this->orders->getOrder($orderId);
+                $order = $this->orders->getOrder($orderId);
+            
             if(is_bool($order))
                 die('خطأ - عفواً هذا القائمة غير موجود');
             
@@ -167,9 +219,12 @@ class order extends CI_Controller {
                         die('خطأ - لم تنجح عملية '.$names[$type]);
                 }
             }else if($type == 'enable' || $type == 'disable')
-                $store = array(
-                    'isAccept' => ($type == 'enable')? 1 : 0
-                );
+                if($this->core->checkPermissions('order','active','all')){
+                    $store = array(
+                        'isHidden' => ($type == 'enable')? 0 : 1
+                    );
+                }else
+                    die('ليس لديك صلاحية التفعيل');
             else
                 die('خطأ - خطأ في الرابط');
             if($this->orders->updateOrder($orderId,$store))
@@ -178,7 +233,7 @@ class order extends CI_Controller {
                 die('خطأ - لم تنجح عملية '.$names[$type]);
             
         }else
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
     }
     
     

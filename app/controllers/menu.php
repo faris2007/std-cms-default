@@ -17,7 +17,7 @@ class menu extends CI_Controller {
         if($this->core->checkPermissions('menu','all','all')){
             $this->show();
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     public function show(){
@@ -83,7 +83,7 @@ class menu extends CI_Controller {
             $data['TITLE'] = "-- إدارة القوائم";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
         
     }
     
@@ -149,7 +149,7 @@ class menu extends CI_Controller {
             $data['TITLE'] = "-- إدارة القوائم -- أضافة قائمة جديده";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     public function edit(){
@@ -158,7 +158,7 @@ class menu extends CI_Controller {
         if($this->core->checkPermissions('menu','edit',$menuId)){
             $menuInfo = $this->menus->getMenu($menuId);
             if(is_bool($menuInfo))
-                redirect("page/error_page");
+                redirect(STD_CMS_ERROR_PAGE);
             if($_POST){
                     $store = array(
                         'title'     => $this->input->post('title',true),
@@ -218,7 +218,7 @@ class menu extends CI_Controller {
             $data['TITLE'] = "-- إدارة القوائم -- تعديل القائمة ";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
 
 
@@ -241,13 +241,19 @@ class menu extends CI_Controller {
                 die('خطأ - عفواً هذا القائمة غير موجود');
             
             if($type == 'delete' || $type == 'restore')
-                $store = array(
-                    'isDelete' => ($type == 'delete')? 1:0
-                );
+                if($this->core->checkPermissions('menu','delete','all')){
+                    $store = array(
+                        'isDelete' => ($type == 'delete')? 1:0
+                    );
+                }else
+                    die('ليس لديك صلاحية الحذف');
             else if($type == 'enable' || $type == 'disable')
-                $store = array(
-                    'isHidden' => ($type == 'enable')? 0 : 1
-                );
+                if($this->core->checkPermissions('menu','active','all')){
+                    $store = array(
+                        'isHidden' => ($type == 'enable')? 0 : 1
+                    );
+                }else
+                    die('ليس لديك صلاحية التفعيل');
             else
                 die('خطأ - خطأ في الرابط');
             if($this->menus->updateMenu($menuId,$store))
@@ -256,7 +262,7 @@ class menu extends CI_Controller {
                 die('خطأ - لم تنجح عملية '.$names[$type]);
             
         }else
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
     }
 }
 

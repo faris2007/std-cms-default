@@ -15,7 +15,7 @@ class user extends CI_Controller{
         if($this->core->checkPermissions('users','show','all')){
             $this->show();
         }else 
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
     
     public function show(){
@@ -48,9 +48,14 @@ class user extends CI_Controller{
             $data['USERS'] = $this->users->getUsers();
             $data['CONTENT'] = "user";
             $data['STEP'] = 'show';
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'user'   => "إدارة الأعضاء",
+            );
             $data['TITLE'] = "-- إدارة الإعضاء";
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
         $this->core->load_template($data);
     }
     
@@ -133,7 +138,12 @@ class user extends CI_Controller{
                 $data['STEP'] = 'add';
             }
         }else 
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
+        $data['NAV'] = array(
+            base_url()          => "الصفحة الرئيسية",
+            base_url().'admin'  => "لوحة التحكم",
+            base_url().'user'   => "إدارة الأعضاء",
+        );
         $this->core->load_template($data);
     }
     
@@ -150,7 +160,7 @@ class user extends CI_Controller{
             }
             $userInfo = $this->users->getUser($userId);
             if(is_bool($userInfo))
-                redirect("page/error_page");
+                redirect(STD_CMS_ERROR_PAGE);
             
             if($_POST){
                 $password = $this->input->post('password',true);
@@ -209,7 +219,16 @@ class user extends CI_Controller{
                 $data['STEP'] = 'edit';
             }
         }else 
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
+        $data['NAV'] = array(
+            base_url()          => "الصفحة الرئيسية",
+        );
+        if($this->users->isAdmin())
+        {
+            $data['NAV'][base_url().'admin'] = "لوحة التحكم";
+            $data['NAV'][base_url().'user'] = "إدارة الأعضاء";
+        }else
+             $data['NAV'][base_url().'myprofile'] = "بياناتي";
         $this->core->load_template($data);
     }
 
@@ -233,13 +252,19 @@ class user extends CI_Controller{
                 die('خطأ - عفواً هذا القائمة غير موجود');
             
             if($type == 'delete' || $type == 'restore')
-                $store = array(
-                    'isDelete' => ($type == 'delete')? 1:0
-                );
+                if($this->core->checkPermissions('user','delete','all')){
+                    $store = array(
+                        'isDelete' => ($type == 'delete')? 1:0
+                    );
+                }else
+                    die('ليس لديك صلاحية الحذف');
             else if($type == 'enable' || $type == 'disable')
-                $store = array(
-                    'isActive' => ($type == 'enable')? 1 : 0
-                );
+                if($this->core->checkPermissions('user','active','all')){
+                    $store = array(
+                        'isActive' => ($type == 'enable')? 1 : 0
+                    );
+                }else
+                    die('ليس لديك صلاحية التفعيل');
             else
                 die('خطأ - خطأ في الرابط');
             
@@ -269,7 +294,7 @@ class user extends CI_Controller{
                 die('خطأ - لم تنجح عملية '.$names[$type]);
             
         }else
-            redirect("page/error_page");
+            redirect(STD_CMS_ERROR_PAGE);
     }
 }
 

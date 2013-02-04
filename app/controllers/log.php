@@ -49,10 +49,15 @@ class log extends CI_Controller{
                 $data['STEP'] = 'init';
                 $data['USERS'] = $this->users->getUsers();
             }
+            $data['NAV'] = array(
+                base_url()          => "الصفحة الرئيسية",
+                base_url().'admin'  => "لوحة التحكم",
+                base_url().'log'   => "إدارة السجلات",
+            );
             $data['TITLE'] = "-- السجلات";
             $this->core->load_template($data);
         }else
-            redirect ('login/permission');
+            redirect (STD_CMS_PERMISSION_PAGE);
     }
 }
 
