@@ -252,14 +252,14 @@ class user extends CI_Controller{
                 die('خطأ - عفواً هذا القائمة غير موجود');
             
             if($type == 'delete' || $type == 'restore')
-                if($this->core->checkPermissions('user','delete','all')){
+                if($this->core->checkPermissions('users','delete','all')){
                     $store = array(
                         'isDelete' => ($type == 'delete')? 1:0
                     );
                 }else
                     die('ليس لديك صلاحية الحذف');
             else if($type == 'enable' || $type == 'disable')
-                if($this->core->checkPermissions('user','active','all')){
+                if($this->core->checkPermissions('users','active','all')){
                     $store = array(
                         'isActive' => ($type == 'enable')? 1 : 0
                     );

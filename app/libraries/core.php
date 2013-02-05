@@ -278,7 +278,11 @@ class Core {
             "communication"     => "التواصل مع المستخدمين"
             );
         if($service_name == 'all' )
-            return $data; 
+            return $data;
+        elseif($service_name == 'myprofile' || $service_name == 'user')
+            return $data['users'];
+        elseif($service_name == 'myorder')
+            return $data['order'];
         elseif(isset($data[$service_name]))
             return $data[$service_name];
         else

@@ -88,6 +88,7 @@ class users extends CI_Model{
                         return true;
                     }
                 }elseif($function_name == 'all' && $value == 'all'){
+                    $this->setSession($this->session->userdata('userid'),$this->session->userdata('group'));
                     return true;
                 }elseif($function_name == 'show'){
                     switch ($row['function_name']){
@@ -96,6 +97,7 @@ class users extends CI_Model{
                         case 'edit':
                         case 'delete':
                         case 'active':
+                            $this->setSession($this->session->userdata('userid'),$this->session->userdata('group'));
                             return true;
                             break;
                         

@@ -47,6 +47,8 @@
                                                 <div style="text-align:center">
                                                     <?php if($userInfo->isAdmin): ?>
                                                         <a href="<?=base_url()?>admin">لوحة التحكم</a> |
+                                                    <?php else: ?>
+                                                        <a href="<?=base_url()?>communication">التواصل مع الإدارة</a> |
                                                     <?php endif; ?>
                                                         <a href="<?=base_url()?>myprofile">بياناتي</a> |
                                                         <a href="<?=base_url()?>myorder">طلباتي</a> |

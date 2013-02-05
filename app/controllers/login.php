@@ -14,6 +14,8 @@ class login extends CI_Controller{
     public function index(){
         if(!$this->users->isLogin())
         {
+            $this->load->model('settings');
+            $enable_register = $this->settings->getSettingByName("cms_register_enable");
             if($_POST){
                 $username = $this->input->post('username',true);
                 $password = $this->input->post('password',true);
@@ -27,12 +29,14 @@ class login extends CI_Controller{
                     $data['CONTENT'] = "login";
                     $data['TITLE'] = "-- تسجيل الدخول";
                     $data['STEP'] = 'login';
+                    $data['REGISTER'] = ($enable_register->value == 0)? false:true;
                     $data['ERROR'] = true;
                 }
             }else{
                 $data['CONTENT'] = "login";
                 $data['TITLE'] = "-- تسجيل الدخول";
                 $data['STEP'] = 'login';
+                $data['REGISTER'] = ($enable_register->value == 0)? false:true;
                 $data['ERROR'] = FALSE;
             }
             $this->core->load_template($data);
@@ -80,10 +84,10 @@ class login extends CI_Controller{
                     $site_name = $this->settings->getSettingByName("site_name");
                     $site_email = $this->settings->getSettingByName("site_email");
                     
-                    $this->email->from($site_email->value, 'CMS ('.$site_name->value.'):');
+                    $this->email->from($site_email->value, '('.$site_name->value.'):');
                     $this->email->to($email);
 
-                    $this->email->subject('CMS ('.$site_name->value.'): أستعادة الباسورد');
+                    $this->email->subject('('.$site_name->value.'): أستعادة الباسورد');
                     $message = '
                         <p>البيانات الخاص بك</p>
                         <p>الباسورد الجديد :'.$newPass.'</p>

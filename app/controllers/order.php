@@ -79,7 +79,7 @@ class order extends CI_Controller {
             $this->db->where('course_id',$courseId);
             $data['FILTER'] = $filter;
             $data['ORDERS'] = $this->orders->getOrder("all");
-            if($_POST){
+            if($_POST && $this->core->checkPermissions('order','show','all')){
                 $this->load->library('email');
                 $this->load->model('settings');
                 $site_name = $this->settings->getSettingByName("site_name");
@@ -133,7 +133,7 @@ class order extends CI_Controller {
             if(is_bool($userInfo))
                 redirect(STD_CMS_ERROR_PAGE);
             
-            if($_POST){
+            if($_POST && $this->core->checkPermissions('order','show','all')){
                 $this->load->library('email');
                 $this->load->model('settings');
                 $site_name = $this->settings->getSettingByName("site_name");

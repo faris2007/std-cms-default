@@ -23,6 +23,14 @@
                 <tr>
                     <td colspan="2"><input type="submit" value="تسجيل الدخول" /></td>
                 </tr>
+                <tr>
+                    <td colspan="2">هل فقدت كلمة المرور؟ يمكنك <a href="<?=base_url()?>login/resetpassword">استعادة الباسورد</a></td>
+                </tr>
+                <?php if(@$REGISTER): ?>
+                    <tr>
+                        <td colspan="2">ليس لديك حساب سابق؟ يمكنك <a href="<?=base_url()?>register">التسجيل</a></td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
     </form>

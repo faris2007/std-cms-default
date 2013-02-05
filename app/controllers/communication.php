@@ -14,10 +14,7 @@ class communication extends CI_Controller {
     }
     
     public function index(){
-        if($this->core->checkPermissions('communication','all','all')){
-            $this->show();
-        }else
-            redirect (STD_CMS_PERMISSION_PAGE);
+        $this->show();
     }
     
     public function show(){

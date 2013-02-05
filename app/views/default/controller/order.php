@@ -114,6 +114,7 @@
     </div>
 </div>
 <br />
+<?php if($userInfo->isAdmin): ?>
 <form method="post">
     <table class="tbl" style="width:80%;margin-top: 20px;">
         <thead>
@@ -138,6 +139,7 @@
         </tbody>
     </table>
 </form>
+<?php endif; ?>
 <?php elseif($STEP == 'user'): ?>
 <?php if($SENDMSG): ?>
         <div class="message">
@@ -201,29 +203,31 @@
     </div>
 </div>
 <br />
-<form method="post">
-    <table class="tbl" style="width:80%;margin-top: 20px;">
-        <thead>
-            <tr>
-                <td colspan="2">ارسال رسالة ل<?=$USER_NAME?></td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr style="background-color: palegoldenrod;">
-                <td>العنوان</td>
-                <td><input type="text" name="title" style="width: 95%;" id="title" required="required" /></td>
-            </tr>
-            <tr>
-                <td>المحتوى</td>
-                <td>
-                    <textarea id="content" name="content" rows="10" style="width: 95%"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="submit" value="أرسال"/></td>
-            </tr>
-        </tbody>
-    </table>
-</form>
+    <?php if($userInfo->isAdmin): ?>
+    <form method="post">
+        <table class="tbl" style="width:80%;margin-top: 20px;">
+            <thead>
+                <tr>
+                    <td colspan="2">ارسال رسالة ل<?=$USER_NAME?></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="background-color: palegoldenrod;">
+                    <td>العنوان</td>
+                    <td><input type="text" name="title" style="width: 95%;" id="title" required="required" /></td>
+                </tr>
+                <tr>
+                    <td>المحتوى</td>
+                    <td>
+                        <textarea id="content" name="content" rows="10" style="width: 95%"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="أرسال"/></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <?php endif; ?>
 <?php endif; ?>
 
