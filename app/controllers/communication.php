@@ -77,6 +77,7 @@ class communication extends CI_Controller {
                                 <p>تم الرد من الأدارة </p>
                                 <p>اسم المستخدم  :'.$this->input->post('username',true).'</p>
                                 <p>العنوان: '.$this->input->post('title',true).'</p>
+                                <p>'.  anchor(base_url(), $site_name->value).'</p>
                             ';
                             $this->email->message($message);
 
@@ -145,6 +146,7 @@ class communication extends CI_Controller {
                             <p>القسم : '.$this->cats->getNameOfCat($this->input->post('cat',true)).'</p>
                             <p>اسم المستخدم  :'.$this->input->post('username',true).'</p>
                             <p>العنوان: '.$this->input->post('title',true).'</p>
+                            <p>'.  anchor(base_url(), $site_name->value).'</p>
                         ';
                         $this->email->message($message);
 

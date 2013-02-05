@@ -53,7 +53,7 @@
                                                         <a href="<?=base_url()?>myprofile">بياناتي</a> |
                                                         <a href="<?=base_url()?>myorder">طلباتي</a> |
                                                         <a href="<?=base_url()?>logout">تسجيل الخروج</a> |
-                                                    مرحبا بك يا <?=$userInfo->full_name?>
+                                                    مرحبا يا <?=$userInfo->full_name?>
                                                     
                                                 </div>
                                                 <?php endif; ?>

@@ -76,6 +76,7 @@ class register extends CI_Controller {
                                 <p>شكراً لأختيارك موقعنا نتمنى لك التوفيق</p>
                                 <p>هذه الرسالة تأتي لتأكيد التسجيل لدينا </p>
                                 <p>اسم المستخدم  :'.$this->input->post('username',true).'</p>
+                                <p>'.  anchor(base_url(), $site_name->value).'</p>
                             ';
                             $this->email->message($message);
 

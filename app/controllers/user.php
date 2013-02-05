@@ -275,14 +275,15 @@ class user extends CI_Controller{
                     $site_name = $this->settings->getSettingByName("site_name");
                     $site_email = $this->settings->getSettingByName("site_email");
 
-                    $this->email->from($site_email->value, 'CMS ('.$site_name->value.'):');
+                    $this->email->from($site_email->value, '('.$site_name->value.'):');
                     $this->email->to($user->email);
 
-                    $this->email->subject('CMS ('.$site_name->value.'): تسجيل جديد');
+                    $this->email->subject('('.$site_name->value.'): تسجيل جديد');
                     $message = '
                         <p>شكراً لأختيارك موقعنا نتمنى لك التوفيق</p>
                         <p>تم تفعيل حسابك لدى موقعنا </p>
                         <p>اسم المستخدم  :'.$user->username.'</p>
+                        <p>'.  anchor(base_url(), $site_name->value).'</p>
                     ';
                     $this->email->message($message);
 

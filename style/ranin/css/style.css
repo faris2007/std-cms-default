@@ -19,7 +19,7 @@ body {
 }
  
 .header-right { float: right; width: 264px; position: relative; margin-right: -10px;  }
-.subscribe { position: absolute; font-size:14px; width: 345px; height: 48.9px; background: url(images/subscribe.png) no-repeat 0 0; font-family: 'museo', arial, helvetica, serif; line-height: 43px; margin: -20px 0px 10px 510px; padding: 0px 45px;  }
+.subscribe { position: absolute; font-size:12px; width: 345px; height: 48.9px; background: url(images/subscribe.png) no-repeat 0 0; font-family: 'museo', arial, helvetica, serif; line-height: 43px; margin: -20px 0px 10px 510px; padding: 0px 45px;  }
 .subscribe a { color: rgb(254, 255, 219); /*font-size: 16px;*/ position: relative; /*padding-left: 40px;*/ ; font-weight: bold;}
 .subscribe a span { background: url(images/sbubscribe-ico.png) no-repeat 0px 0px; width: 34px; height: 34px; position: absolute; display: block;  top: -5px; left: 0; }
 .subscribe a:hover { color: #f6c387; text-decoration: none; }
