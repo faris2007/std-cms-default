@@ -15,6 +15,7 @@ class setting extends CI_Controller {
         if($this->core->checkPermissions('setting','show','all')){
             if($_POST){
                  if($this->core->checkPermissions('setting','edit')){
+                     $this->load->model('settings');
                      $store = array(
                             0 => array(
                                     'name'      => "site_name",
@@ -72,10 +73,9 @@ class setting extends CI_Controller {
                 $folder = get_dir_file_info('./app/views/', $top_level_only = TRUE);
                 unset($folder['install']);
                 $data['STYLE'] = array_keys($folder);
-                $this->load->model('settings');
                 $this->load->model('groups');
                 $this->load->model('pages');
-                $settings = $this->settings->getSettings();
+                $settings = $this->core->getSettingByName("all");
                 if($settings){
                     $setting = array(
                         'site_name'             => 'SITENAME',
@@ -90,9 +90,9 @@ class setting extends CI_Controller {
                         'cms_register_active'   => 'REGISTERACTIVE',
                         'cms_home_page'         => 'HOMEPAGE'
                     );
-                    foreach ($settings as $value)
-                        if(isset($setting[$value->name]))
-                            $data[$setting[$value->name]] = $value->value;
+                    foreach ($setting as $key => $value)
+                        if(isset($settings[$key]))
+                            $data[$value] = $settings[$key];
                 }
                 $data['GROUP'] = $this->groups->getGroups('all');
                 $this->db->where(array(

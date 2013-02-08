@@ -8,7 +8,7 @@
 | This version for cms come from std-hosting.com
 |
 */
-define('STD_CMS_VER', '1.0.0');
+define('STD_CMS_VER', '0.0.0.02');
 define('STD_CMS_ERROR_PAGE', "page/error_page");
 define('STD_CMS_PERMISSION_PAGE','login/permission');
 

@@ -24,14 +24,13 @@ class home extends CI_Controller {
         
         public function index()
 	{
-            $this->load->model('settings');
-            $homepage = $this->settings->getSettingByName('cms_home_page');
-            if(!$homepage || $homepage->value == 'home'){
+            $homepage = $this->core->getSettingByName('cms_home_page');
+            if(!$homepage || $homepage == 'home'){
                 $data['CONTENT'] = "home";
                 $data['TITLE'] = "";
             }else{
                 $this->load->model('pages');
-                $pageId = $homepage->value;
+                $pageId = $homepage;
                 $pageInfo = $this->pages->getPage($pageId);
                 if(is_bool($pageInfo))
                 {

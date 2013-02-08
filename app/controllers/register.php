@@ -35,10 +35,9 @@ class register extends CI_Controller {
             redirect ();
         
         $this->load->helper('captcha');
-        $this->load->model('settings');
-        $enable_register = $this->settings->getSettingByName("cms_register_enable");
-        $group_register = $this->settings->getSettingByName("cms_register_group");
-        if($enable_register->value == 0){
+        $enable_register = $this->core->getSettingByName("cms_register_enable");
+        $group_register = $this->core->getSettingByName("cms_register_group");
+        if($enable_register == 0){
             $data['CONTENT'] = "msg";
             $data['MSG'] = 'عفواً التسجيل مغلق حالياً نرجوا منك زيارتنا لاحقا';
 
@@ -51,7 +50,7 @@ class register extends CI_Controller {
                     if($password == $repassword){
                         if($this->__check('username', $this->input->post('username',true)) && $this->__check('email', $this->input->post('email',true))){
                             
-                            $active_register = $this->settings->getSettingByName("cms_register_active");
+                            $active_register = $this->core->getSettingByName("cms_register_active");
                             $store = array(
                                 'username'      => $this->input->post('username',true),
                                 'full_name'     => $this->input->post('fullName',true),
@@ -60,23 +59,23 @@ class register extends CI_Controller {
                                 'mobile'        => $this->input->post('mobile',true),
                                 'isBanned'      => 0,
                                 'isDelete'      => 0,
-                                'isActive'      => $active_register->value,
-                                'group_id'      => ($group_register)? $group_register->value : 2
+                                'isActive'      => $active_register,
+                                'group_id'      => ($group_register)? $group_register : 2
                             );
                             $this->users->addNewUser($store);
                             $this->load->library('email');
-                            $site_name = $this->settings->getSettingByName("site_name");
-                            $site_email = $this->settings->getSettingByName("site_email");
+                            $site_name = $this->core->getSettingByName("site_name");
+                            $site_email = $this->core->getSettingByName("site_email");
 
-                            $this->email->from($site_email->value, 'CMS ('.$site_name->value.'):');
+                            $this->email->from($site_email, ' ('.$site_name.'):');
                             $this->email->to($this->input->post('email',true));
 
-                            $this->email->subject('CMS ('.$site_name->value.'): تسجيل جديد');
+                            $this->email->subject('('.$site_name.'): تسجيل جديد');
                             $message = '
                                 <p>شكراً لأختيارك موقعنا نتمنى لك التوفيق</p>
                                 <p>هذه الرسالة تأتي لتأكيد التسجيل لدينا </p>
                                 <p>اسم المستخدم  :'.$this->input->post('username',true).'</p>
-                                <p>'.  anchor(base_url(), $site_name->value).'</p>
+                                <p>'.  anchor(base_url(), $site_name).'</p>
                             ';
                             $this->email->message($message);
 

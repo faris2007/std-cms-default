@@ -5,7 +5,7 @@ class Core {
     private $CI;
     private $Token,$Old_Token,$New_Token,$Security_Key,$User_Agent;
     public  $site_language = 'english';
-    private $site_name,$site_style;
+    private $site_name,$site_style,$site_setting = array();
     private $site_style_default = "default";
 
     public function __construct()
@@ -19,32 +19,51 @@ class Core {
     public function load_setting()
     {
             $this->generate_token();
-            $this->CI->load->model('settings');            
-            $title = $this->CI->settings->getSettingByName("site_name");
-            $this->site_name = (!is_bool($title))? $title->value : '' ;
-            $style = $this->CI->settings->getSettingByName("style");
-            $this->site_style = (!is_bool($style)) ? $style->value : $this->site_style_default;
-            $enable = $this->CI->settings->getSettingByName("site_enable");
+            $this->CI->load->model('settings'); 
+            $result = $this->CI->settings->getSettings();
+            if($result){
+                foreach ($result as $value)
+                    $this->site_setting[$value->name] = $value->value;
+            }
+            $this->initlizeForCms();
+            
+    }
+    
+    public function getSettingByName($name){
+        if(empty($name))
+            return FALSE;
+        if($name == 'all')
+            return $this->site_setting;
+        else
+            return (isset($this->site_setting[$name])) ? $this->site_setting[$name] : false;
+    }
+
+
+    public function initlizeForCms(){
+            $title = $this->getSettingByName("site_name");
+            $this->site_name = (!is_bool($title))? $title : '' ;
+            $style = $this->getSettingByName("style");
+            $this->site_style = (!is_bool($style)) ? $style : $this->site_style_default;
+            $enable = $this->getSettingByName("site_enable");
             if(!is_bool($enable)){
-                if($enable->value == 0) {
+                if($enable == 0) {
                     $disable = TRUE;
                     $this->CI->load->model('users');
                     if($this->CI->users->isLogin()){
-                            $enableForGroup = $this->CI->settings->getSettingByName("disable_except_group");
-                            if($this->CI->users->getInfoUser('group') == $enableForGroup->value)
+                            $enableForGroup = $this->getSettingByName("disable_except_group");
+                            if($this->CI->users->getInfoUser('group') == $enableForGroup)
                                 $disable = FALSE;
                         }
                     if($this->CI->uri->segment(1, 0) !== 'login' && $disable){
-                        $disable_msg = $this->CI->settings->getSettingByName("disable_msg");
+                        $disable_msg = $this->getSettingByName("disable_msg");
                         exit($this->load_template(array(
                             'CONTENT'   => 'msg',
-                            'MSG'       => nl2br($disable_msg->value),
+                            'MSG'       => nl2br($disable_msg),
                             'DISABLE'   => TRUE
                         ),true));
                     }
                 }
             }
-            
     }
 
     public function generate_token()
@@ -91,6 +110,9 @@ class Core {
     public function load_template($temp_data = array(),$load_only = FALSE)
     {
 
+            // get Extra Menu If it have
+            $data = $this->extraMenuInTemplate();
+        
             // Page Title
             $data['HEAD']['TITLE'] = (isset($temp_data['TITLE'])) ? $this->site_name.' '.$temp_data['TITLE'] :$this->site_name;
 
@@ -191,6 +213,8 @@ class Core {
             // Disable Website
             $data['DISABLE'] = (isset($temp_data['DISABLE'])) ? $temp_data['DISABLE'] : false;
             
+            
+            
             // Main Template
             $load_only = (is_bool($load_only)) ? $load_only : FALSE;
 
@@ -202,6 +226,19 @@ class Core {
             }
     }
     
+    public function extraMenuInTemplate(){
+        $result = array(
+            'EXTMENU1'  => $this->getExtraMenu(1),
+            'EXTMENU2'  => $this->getExtraMenu(2),
+            'EXTMENU3'  => $this->getExtraMenu(3),
+            'EXTMENU4'  => $this->getExtraMenu(4),
+            'EXTMENU5'  => $this->getExtraMenu(5)
+        );
+        
+        return $result;
+    }
+
+
     public function checkPermissions($service_name = "admin",$function_name = "all",$value = "all")
     {
         if(empty($service_name) || empty($function_name) || empty($value) )

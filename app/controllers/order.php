@@ -81,9 +81,8 @@ class order extends CI_Controller {
             $data['ORDERS'] = $this->orders->getOrder("all");
             if($_POST && $this->core->checkPermissions('order','show','all')){
                 $this->load->library('email');
-                $this->load->model('settings');
-                $site_name = $this->settings->getSettingByName("site_name");
-                $site_email = $this->settings->getSettingByName("site_email");
+                $site_name = $this->core->getSettingByName("site_name");
+                $site_email = $this->core->getSettingByName("site_email");
                 $list = $data['ORDERS'];
                 $this->email->set_mailtype("html");
                 foreach ($list as  $address)
@@ -91,8 +90,8 @@ class order extends CI_Controller {
                     $this->email->clear();
 
                     $this->email->to($this->users->getEmail($address->users_id));
-                    $this->email->from($site_email->value, '('.$site_name->value.'):');
-                    $this->email->subject('('.$site_name->value.'):',$this->input->post('title',true));
+                    $this->email->from($site_email, '('.$site_name.'):');
+                    $this->email->subject('('.$site_name.'):',$this->input->post('title',true));
                     $this->email->message($this->input->post('content'));
                     $this->email->send();
                 }
@@ -135,13 +134,12 @@ class order extends CI_Controller {
             
             if($_POST && $this->core->checkPermissions('order','show','all')){
                 $this->load->library('email');
-                $this->load->model('settings');
-                $site_name = $this->settings->getSettingByName("site_name");
-                $site_email = $this->settings->getSettingByName("site_email");
+                $site_name = $this->core->getSettingByName("site_name");
+                $site_email = $this->core->getSettingByName("site_email");
                 $this->email->set_mailtype("html");
                 $this->email->to($userInfo->email);
-                $this->email->from($site_email->value, '('.$site_name->value.'):');
-                $this->email->subject('('.$site_name->value.'):',$this->input->post('title',true));
+                $this->email->from($site_email, '('.$site_name.'):');
+                $this->email->subject('('.$site_name.'):',$this->input->post('title',true));
                 $this->email->message($this->input->post('content'));
                 $this->email->send();
                 $data['SENDMSG'] = true;

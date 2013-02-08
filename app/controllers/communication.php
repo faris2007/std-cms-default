@@ -65,19 +65,18 @@ class communication extends CI_Controller {
                     if($this->communications->addNewCommunication($store)){
                         if($this->core->checkPermissions('communication','show','all')){
                             $this->load->library('email');
-                            $this->load->model('settings');
-                            $site_name = $this->settings->getSettingByName("site_name");
-                            $site_email = $this->settings->getSettingByName("site_email");
+                            $site_name = $this->core->getSettingByName("site_name");
+                            $site_email = $this->core->getSettingByName("site_email");
 
-                            $this->email->from($site_email->value, '('.$site_name->value.'):');
+                            $this->email->from($site_email, '('.$site_name.'):');
                             $this->email->to($this->users->getEmail($comm->users_id));
 
-                            $this->email->subject('('.$site_name->value.'): تم الرد من قبل'.$this->users->getUsername($this->users->getInfoUser('id')));
+                            $this->email->subject('('.$site_name.'): تم الرد من قبل'.$this->users->getUsername($this->users->getInfoUser('id')));
                             $message = '
                                 <p>تم الرد من الأدارة </p>
                                 <p>اسم المستخدم  :'.$this->input->post('username',true).'</p>
                                 <p>العنوان: '.$this->input->post('title',true).'</p>
-                                <p>'.  anchor(base_url(), $site_name->value).'</p>
+                                <p>'.  anchor(base_url(), $site_name).'</p>
                             ';
                             $this->email->message($message);
 
@@ -133,20 +132,19 @@ class communication extends CI_Controller {
                     );
                     if($this->communications->addNewCommunication($store)){
                         $this->load->library('email');
-                        $this->load->model('settings');
-                        $site_name = $this->settings->getSettingByName("site_name");
-                        $site_email = $this->settings->getSettingByName("site_email");
+                        $site_name = $this->core->getSettingByName("site_name");
+                        $site_email = $this->core->getSettingByName("site_email");
 
-                        $this->email->from($site_email->value, '('.$site_name->value.'):');
-                        $this->email->to($site_email->value);
+                        $this->email->from($site_email, '('.$site_name.'):');
+                        $this->email->to($site_email);
 
-                        $this->email->subject('('.$site_name->value.'): تم التواصل من قبل'.$this->users->getUsername($this->users->getInfoUser('id')));
+                        $this->email->subject('('.$site_name.'): تم التواصل من قبل'.$this->users->getUsername($this->users->getInfoUser('id')));
                         $message = '
                             <p>تم التواصل مع الأدارة </p>
                             <p>القسم : '.$this->cats->getNameOfCat($this->input->post('cat',true)).'</p>
                             <p>اسم المستخدم  :'.$this->input->post('username',true).'</p>
                             <p>العنوان: '.$this->input->post('title',true).'</p>
-                            <p>'.  anchor(base_url(), $site_name->value).'</p>
+                            <p>'.  anchor(base_url(), $site_name).'</p>
                         ';
                         $this->email->message($message);
 

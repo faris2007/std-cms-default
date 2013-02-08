@@ -5,7 +5,7 @@
                     <span class="slider-b"></span>
                     <div class="slider flexslider">
                             <ul class="slides">
-                                <?php if(isset($SLIDERS)): ?>
+                                <?php if($SLIDERS): ?>
                                     <?php foreach ($SLIDERS as $row): ?>
                                         <li>
                                                 <div class="img-holder">

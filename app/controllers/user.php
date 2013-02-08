@@ -98,17 +98,18 @@ class user extends CI_Controller{
                         );
                         $this->users->addNewUser($store);
                         $this->load->library('email');
-                        $site_name = $this->settings->getSettingByName("site_name");
-                        $site_email = $this->settings->getSettingByName("site_email");
+                        $site_name = $this->core->getSettingByName("site_name");
+                        $site_email = $this->core->getSettingByName("site_email");
 
-                        $this->email->from($site_email->value, 'CMS ('.$site_name->value.'):');
+                        $this->email->from($site_email, '('.$site_name.'):');
                         $this->email->to($this->input->post('email',true));
 
-                        $this->email->subject('CMS ('.$site_name->value.'): تسجيل جديد');
+                        $this->email->subject('('.$site_name.'): تسجيل جديد');
                         $message = '
                             <p>شكراً لأختيارك موقعنا نتمنى لك التوفيق</p>
                             <p>هذه الرسالة تأتي لتأكيد التسجيل لدينا </p>
                             <p>اسم المستخدم  :'.$this->input->post('username',true).'</p>
+                            <p>'.anchor(base_url(),$site_name).'</p>
                         ';
                         $this->email->message($message);
 
@@ -270,20 +271,19 @@ class user extends CI_Controller{
             
             if($this->users->updateUser($userId,$store)){
                 if($type == 'enable'){
-                    $this->load->model('settings');
                     $this->load->library('email');
-                    $site_name = $this->settings->getSettingByName("site_name");
-                    $site_email = $this->settings->getSettingByName("site_email");
+                    $site_name = $this->core->getSettingByName("site_name");
+                    $site_email = $this->core->getSettingByName("site_email");
 
-                    $this->email->from($site_email->value, '('.$site_name->value.'):');
+                    $this->email->from($site_email, '('.$site_name.'):');
                     $this->email->to($user->email);
 
-                    $this->email->subject('('.$site_name->value.'): تسجيل جديد');
+                    $this->email->subject('('.$site_name.'): تسجيل جديد');
                     $message = '
                         <p>شكراً لأختيارك موقعنا نتمنى لك التوفيق</p>
                         <p>تم تفعيل حسابك لدى موقعنا </p>
                         <p>اسم المستخدم  :'.$user->username.'</p>
-                        <p>'.  anchor(base_url(), $site_name->value).'</p>
+                        <p>'.  anchor(base_url(), $site_name).'</p>
                     ';
                     $this->email->message($message);
 

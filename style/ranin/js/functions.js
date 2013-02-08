@@ -10,19 +10,7 @@ $(document).ready(function(){
             }
     );
         
-    $('#signatureurl').popupWindow({ 
-        height:550, 
-        width:400, 
-        top:50, 
-        left:50 
-    }); 
-    $('#contracturl').popupWindow({ 
-        height:550, 
-        width:900,
-        scrollbars:1,
-        top:50, 
-        left:50 
-    }); 
+    
     if ($('#list').attr('dataajax') !== undefined) {
         $('#list').dataTable({
                     "aLengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],

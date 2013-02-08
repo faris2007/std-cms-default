@@ -7,16 +7,20 @@
     <link rel="shortcut icon" type="image/x-icon" href="<?=$STYLE_FOLDER?>css/images/favicon.ico" />
     <link rel="stylesheet" href="<?=$STYLE_FOLDER?>css/flexslider.css" type="text/css" media="all" />
     <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,500,700' rel='stylesheet' type='text/css' />
-	
     <script type="text/javascript">
         <?=(@$DISABLE)?'' :"var Token = '".$this->core->token(TRUE)."';\n"?>
         var base_url = '<?=base_url()?>';
         var style_dir = '<?=$STYLE_FOLDER?>';
-        var js_files = ["jquery","jquery.dataTables","jquery.flexslider-min","jquery-ui","tiny_mce/tiny_mce","functions","jquery.popupWindow"];
-        for (js_x in js_files){document.write('<script type="text/javascript" src="' + style_dir + 'js/' + js_files[js_x] + '.js"></' + 'script>');}
-	/*document.write('<link type="text/css" rel="stylesheet" href="' + style_dir + 'css/style_1.css">');*/
-        document.write('<link type="text/css" rel="stylesheet" href="' + style_dir + 'css/style.css">');
+        /*var js_files = ["jquery","jquery.dataTables","jquery.flexslider-min","jquery-ui","tiny_mce/tiny_mce","functions"];
+        for (js_x in js_files){document.write('<script type="text/javascript" src="' + style_dir + 'js/' + js_files[js_x] + '.js"></' + 'script>');}*/
     </script>
+    <script type="text/javascript" src="<?=$STYLE_FOLDER?>js/jquery.js"></script>
+    <script type="text/javascript" src="<?=$STYLE_FOLDER?>js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="<?=$STYLE_FOLDER?>js/jquery.flexslider-min.js"></script>
+    <script type="text/javascript" src="<?=$STYLE_FOLDER?>js/jquery-ui.js"></script>
+    <script type="text/javascript" src="<?=$STYLE_FOLDER?>js/tiny_mce/tiny_mce.js"></script>
+    <script type="text/javascript" src="<?=$STYLE_FOLDER?>js/functions.js"></script>
+    <link type="text/css" rel="stylesheet" href="<?=$STYLE_FOLDER?>css/style.css">
     <script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
     <!--[if IE 6]>
     <style>
@@ -120,33 +124,41 @@
 						<div class="col">
 							<h2>خدماتنا</h2>
 							<ul>
-							    <?php foreach ($this->core->getExtraMenu(4) as $row): ?>
-                                                                <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
-                                                            <?php endforeach; ?>
+							    <?php if($EXTMENU4): ?>
+                                                                <?php foreach ($EXTMENU4 as $row): ?>
+                                                                    <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
+                                                                <?php endforeach; ?>
+                                                            <?php endif; ?>
 							</ul>
 						</div>
 						<div class="col">
 							<h2>المشاريع</h2>
 							<ul>
-							    <?php foreach ($this->core->getExtraMenu(3) as $row): ?>
-                                                                <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
-                                                            <?php endforeach; ?>
+							    <?php if($EXTMENU3): ?>
+                                                                <?php foreach ($EXTMENU3 as $row): ?>
+                                                                    <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
+                                                                <?php endforeach; ?>
+                                                            <?php endif; ?>
 							</ul>
 						</div>
 						<div class="col">
 							<h2>الحلول واﻻستشارات</h2>
 							<ul>
-							    <?php foreach ($this->core->getExtraMenu(2) as $row): ?>
-                                                                <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
-                                                            <?php endforeach; ?>
+							    <?php if($EXTMENU2): ?>
+                                                                <?php foreach ($EXTMENU2 as $row): ?>
+                                                                    <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
+                                                                <?php endforeach; ?>
+                                                            <?php endif; ?>
 							</ul>
 						</div>
 						<div class="col">
 							<h2>شركاؤنا</h2>
                                                         <ul>
-                                                            <?php foreach ($this->core->getExtraMenu(1) as $row): ?>
-                                                                <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
-                                                            <?php endforeach; ?>
+                                                            <?php if($EXTMENU1): ?>
+                                                                <?php foreach ($EXTMENU1 as $row): ?>
+                                                                    <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
+                                                                <?php endforeach; ?>
+                                                            <?php endif; ?>
                                                         </ul>
 						</div>
 						<div class="cl">&nbsp;</div>
@@ -155,9 +167,11 @@
 					<div class="footer-bottom">
 						<nav class="footer-nav">
 							<ul>
-                                                            <?php foreach ($this->core->getExtraMenu(5) as $row): ?>
-                                                                <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
-                                                            <?php endforeach; ?>
+                                                            <?php if($EXTMENU5): ?>
+                                                                <?php foreach ($EXTMENU5 as $row): ?>
+                                                                    <li><a href="<?=$row->url?>"><?=$row->title?></a></li>
+                                                                <?php endforeach; ?>
+                                                            <?php endif; ?>
 							</ul>
 						</nav>
 						<p class="copy"> جميع الحقوق محفوظة 2012 مركز رنين الليل لريادة الأعمال &copy; <span>|</span> <strong><?=@$DEVELOPMENT?></strong></p>
