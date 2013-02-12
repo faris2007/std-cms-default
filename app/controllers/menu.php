@@ -206,9 +206,8 @@ class menu extends CI_Controller {
                 base_url().'admin'  => "لوحة التحكم",
                 base_url().'menu'   => "إدارة القوائم",
             );
-            if(!is_null($parent_id))
-            {
-                $menuArray = $this->menus->getParentThisMenu($parent_id);
+            $menuArray = $this->menus->getParentThisMenu($menuId);
+            if($menuArray){
                 $menus = explode(',', $menuArray);
                 foreach ($menus as $val){
                     $menuOne = unserialize($val);
