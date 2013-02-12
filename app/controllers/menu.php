@@ -170,7 +170,7 @@ class menu extends CI_Controller {
                         $data['TITLE'] = "-- إدارة القوائم";
                         $url = base_url().'menu';
                         $url .= (!is_null($menuInfo->parent_id))?'/show/'.$menuInfo->parent_id:'';
-                        $data['MSG'] = 'تم حفظ البيانات بشكل صحيح <br />'.  anchor($url.$menuId, "للعودة للإدارة القوائم أضغط هنا");
+                        $data['MSG'] = 'تم حفظ البيانات بشكل صحيح <br />'.  anchor($url, "للعودة للإدارة القوائم أضغط هنا");
                     }else{
                         $data['MENUTITLE'] = $menuInfo->title;
                         $data['MENUURL'] = $menuInfo->url;
